@@ -15,7 +15,7 @@ import java.net.InetSocketAddress;
 import java.time.Duration;
 
 @Plugin(
-        id = "project-id",
+        id = "@project.id@",
         name = "@project.name@",
         version = "@project.version@",
         description = "@project.description@"

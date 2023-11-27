@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
     id("java")
 }
@@ -20,6 +22,27 @@ project.subprojects {
     afterEvaluate {
         if (this.plugins.hasPlugin("java")) {
             this.applyJava()
+        }
+
+        tasks {
+            val generateSourcesTask = register<Copy>("resolveTokens") {
+                from(sourceSets.main.get().allSource.asPath)
+                into("$buildDir/generated/sources/resolved")
+                filter<ReplaceTokens>(
+                        "tokens" to mapOf(
+                                "project.version" to project.version.toString(),
+                                "project.name" to project.name,
+                                "project.group" to project.group.toString(),
+                                "project.id" to project.name,
+                                "project.description" to (project.description ?: "none")
+                        )
+                )
+            }
+
+            compileJava.configure {
+                setSource("$buildDir/generated/sources/resolve")
+                dependsOn(generateSourcesTask)
+            }
         }
     }
 }

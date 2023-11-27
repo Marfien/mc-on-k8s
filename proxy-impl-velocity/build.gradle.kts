@@ -1,6 +1,3 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-import java.util.*
-
 plugins {
     id("java")
 }
