@@ -26,7 +26,8 @@ project.subprojects {
 
         tasks {
             val generateSourcesTask = register<Copy>("resolveTokens") {
-                from(sourceSets.main.get().allSource.asPath)
+                this.doNotTrackState("File names might be too long")
+                from("src/main/")
                 into("$buildDir/generated/sources/resolved")
                 filter<ReplaceTokens>(
                         "tokens" to mapOf(
