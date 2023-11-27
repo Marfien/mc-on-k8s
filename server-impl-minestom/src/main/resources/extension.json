@@ -1,0 +1,5 @@
+{
+  "entrypoint": "dev.marfien.minecraftonk8s.server.minestom.MinestomServerBridgeExtension",
+  "name": "@project.id@",
+  "version": "@project.version"
+}
