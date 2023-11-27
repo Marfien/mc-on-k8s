@@ -12,7 +12,7 @@ public class GameServerAgonesBridge {
     private final AgonesClient agonesClient = AgonesClient.create();
     private final AtomicBoolean allocated = new AtomicBoolean(false);
 
-    protected void ready() {
+    public void ready() {
         this.agonesClient.setReady();
         this.agonesClient.startHealthTask(HEALTH_SEND_INTERVALL);
     }
@@ -23,7 +23,7 @@ public class GameServerAgonesBridge {
         this.agonesClient.allocate(new AllocationObserver());
     }
 
-    protected void handleShutdown() {
+    public void handleShutdown() {
         this.agonesClient.close();
     }
 

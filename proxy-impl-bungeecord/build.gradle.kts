@@ -8,6 +8,7 @@ repositories {
         url = uri("https://oss.sonatype.org/content/repositories/snapshots")
     }
     maven {
+        name = "minecraft-repo"
         url = uri("https://libraries.minecraft.net")
     }
 }

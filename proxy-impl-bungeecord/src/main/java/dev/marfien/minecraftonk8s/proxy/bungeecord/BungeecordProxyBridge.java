@@ -9,6 +9,7 @@ import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
+import net.md_5.bungee.event.EventPriority;
 
 import java.net.InetSocketAddress;
 import java.time.Duration;
@@ -34,8 +35,10 @@ public class BungeecordProxyBridge extends ProxyAgonesBridge implements Listener
                 .schedule(this.plugin, task, delay.toMillis(), TimeUnit.MILLISECONDS);
     }
 
-    @EventHandler
+    @EventHandler(priority = Byte.MAX_VALUE)
     private void onLogin(PreLoginEvent event) {
+        if (event.isCancelled()) return;
+
         super.handleLogin().ifPresent(component -> {
             event.setCancelled(true);
             event.setReason(TextComponent.fromArray(this.serializer.serialize(component)));

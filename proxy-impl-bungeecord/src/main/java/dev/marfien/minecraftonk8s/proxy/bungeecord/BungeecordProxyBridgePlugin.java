@@ -4,21 +4,17 @@ import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeecordProxyBridgePlugin extends Plugin {
 
-    private final BungeecordProxyBridge connector = new BungeecordProxyBridge(this);
-
-    @Override
-    public void onLoad() {
-        this.connector.ready();
-    }
+    private final BungeecordProxyBridge bridge = new BungeecordProxyBridge(this);
 
     @Override
     public void onEnable() {
-        super.getProxy().getPluginManager().registerListener(this, this.connector);
+        this.bridge.ready();
+        super.getProxy().getPluginManager().registerListener(this, this.bridge);
     }
 
     @Override
     public void onDisable() {
-        this.connector.handleShutdown();
+        this.bridge.handleShutdown();
     }
 
 }
