@@ -1,0 +1,17 @@
+[versions]
+grpc = "1.59.0"
+
+[libraries]
+annotations = { module = "org.jetbrains:annotations", version = "24.0.1" }
+protobuf = { module = "com.google.protobuf:protobuf-java", version = "3.24.4" }
+grpc-stub = { module = "io.grpc:grpc-stub", version.ref = "grpc" }
+grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc" }
+annotationsapi = { module = "org.apache.tomcat:annotations-api", version = "6.0.53" }
+proxy-velocity = { module = "com.velocitypowered:velocity-api", version = "3.2.0-SNAPSHOT" }
+proxy-bungeecord = { module = "net.md-5:bungeecord-api", version = "1.20-R0.2-SNAPSHOT" }
+adventure-api = { module = "net.kyori:adventure-api", version = "4.14.0" }
+adventure-bungeecord = { module = "net.kyori:adventure-platform-bungeecord", version = "4.3.1" }
+kubernetes-client = { module = "io.fabric8:kubernetes-client", version = "6.9.2" }
+
+[plugins]
+protobuf = { id = "com.google.protobuf", version = "0.9.4" }
