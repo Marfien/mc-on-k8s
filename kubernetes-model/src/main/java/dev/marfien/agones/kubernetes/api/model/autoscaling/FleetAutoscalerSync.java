@@ -1,7 +1,5 @@
 package dev.marfien.agones.kubernetes.api.model.autoscaling;
 
-import dev.marfien.agones.kubernetes.model.util.FixedIntervalSync;
-
 public class FleetAutoscalerSync {
 
     private String type;

@@ -11,5 +11,5 @@ repositories {
 
 dependencies {
     implementation(project(":server-api"))
-    implementation(libs.server.spigot)
+    compileOnly(libs.server.spigot)
 }

@@ -1,10 +1,5 @@
 package dev.marfien.agones.kubernetes.api.model.autoscaling;
 
-import dev.marfien.agones.kubernetes.model.util.BufferPolicy;
-import dev.marfien.agones.kubernetes.model.util.WebhookPolicy;
-import dev.marfien.agones.kubernetes.model.util.counter.CounterPolicy;
-import dev.marfien.agones.kubernetes.model.util.list.ListPolicy;
-
 public class FleetAutoscalerPolicy {
 
     private String type;

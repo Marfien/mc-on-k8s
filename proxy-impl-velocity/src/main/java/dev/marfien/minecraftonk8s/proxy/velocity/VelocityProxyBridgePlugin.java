@@ -15,18 +15,18 @@ import java.net.InetSocketAddress;
 import java.time.Duration;
 
 @Plugin(
-        id = "@project.id@",
+        id = "project-id",
         name = "@project.name@",
         version = "@project.version@",
         description = "@project.description@"
 )
-public class VelocityProxyBridge extends ProxyAgonesBridge {
+public class VelocityProxyBridgePlugin extends ProxyAgonesBridge {
 
     private final Scheduler scheduler;
     private final ProxyServer proxyServer;
 
     @Inject
-    public VelocityProxyBridge(Scheduler scheduler, ProxyServer proxyServer) {
+    public VelocityProxyBridgePlugin(Scheduler scheduler, ProxyServer proxyServer) {
         this.scheduler = scheduler;
         this.proxyServer = proxyServer;
     }

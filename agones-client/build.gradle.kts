@@ -25,6 +25,9 @@ sourceSets {
 }
 
 protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.get()}"
+    }
     plugins {
         id("grpc") {
             artifact = "io.grpc:protoc-gen-grpc-java:${libs.versions.grpc.get()}"
