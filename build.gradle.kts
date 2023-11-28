@@ -11,6 +11,15 @@ repositories {
     mavenCentral()
 }
 
+// Don't build a jar for parent project
+tasks {
+    jar {
+        enabled = false
+    }
+}
+
+// Configuration of subprojects
+
 project.subprojects {
     this.group = this.rootProject.group
     this.version = this.rootProject.version
