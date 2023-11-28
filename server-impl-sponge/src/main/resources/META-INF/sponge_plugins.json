@@ -15,7 +15,7 @@
   "plugins": [
     {
       "id": "@project.id@",
-      "name": "@project.name",
+      "name": "@project.name@",
       "version": "@project.version@",
       "entrypoint": "dev.marfien.minecraftonk8s.server.sponge.SpongeServerBridgePlugin",
       "description": "@project.description@"

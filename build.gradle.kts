@@ -20,29 +20,19 @@ project.subprojects {
     }
 
     afterEvaluate {
-        if (this.plugins.hasPlugin("java")) {
+        if (plugins.hasPlugin("java")) {
             this.applyJava()
         }
 
         tasks {
-            val generateSourcesTask = register<Copy>("resolveTokens") {
-                this.doNotTrackState("File names might be too long")
-                from("src/main/")
-                into("$buildDir/generated/sources/resolved")
-                filter<ReplaceTokens>(
-                        "tokens" to mapOf(
-                                "project.version" to project.version.toString(),
-                                "project.name" to (project.displayName),
-                                "project.group" to project.group.toString(),
-                                "project.id" to project.name,
-                                "project.description" to (project.description ?: "none")
-                        )
-                )
+            findByName("replaceTokens")?.let {
+                named<Copy>(it.name) {
+                    this.applyTokenFilter()
+                }
             }
 
-            compileJava.configure {
-                setSource("$buildDir/generated/sources/resolve")
-                dependsOn(generateSourcesTask)
+            processResources {
+                this.applyTokenFilter()
             }
         }
     }
@@ -69,4 +59,16 @@ fun Project.applyJava() {
             useJUnitPlatform()
         }
     }
+}
+
+fun Copy.applyTokenFilter() {
+    filter<ReplaceTokens>(
+            "tokens" to mapOf(
+                    "project.version" to project.version.toString(),
+                    "project.name" to (project.displayName),
+                    "project.group" to project.group.toString(),
+                    "project.id" to project.name,
+                    "project.description" to (project.description ?: "none")
+            )
+    )
 }

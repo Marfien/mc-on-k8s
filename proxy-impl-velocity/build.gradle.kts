@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     implementation(project(":proxy-api"))
+    implementation(project(":commons"))
     compileOnly(libs.proxy.velocity)
     annotationProcessor(libs.proxy.velocity)
 }

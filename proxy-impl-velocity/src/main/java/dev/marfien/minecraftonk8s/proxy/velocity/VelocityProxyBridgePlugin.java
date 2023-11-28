@@ -9,16 +9,17 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.scheduler.Scheduler;
+import dev.marfien.minecraftonk8s.commons.ProjectConstance;
 import dev.marfien.minecraftonk8s.proxy.api.ProxyAgonesBridge;
 
 import java.net.InetSocketAddress;
 import java.time.Duration;
 
 @Plugin(
-        id = "@project.id@",
-        name = "@project.name@",
-        version = "@project.version@",
-        description = "@project.description@"
+        id = ProjectConstance.ID,
+        name = ProjectConstance.NAME,
+        version = ProjectConstance.VERSION,
+        description = ProjectConstance.DESCRIPTION
 )
 public class VelocityProxyBridgePlugin extends ProxyAgonesBridge {
 
