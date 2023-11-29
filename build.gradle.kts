@@ -2,10 +2,10 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
     id("java")
+    id("maven-publish")
 }
 
 group = "dev.marfien.minecraftonk8s"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -31,6 +31,10 @@ project.subprojects {
     afterEvaluate {
         if (plugins.hasPlugin("java")) {
             this.applyJava()
+        }
+
+        if (plugins.hasPlugin("maven-deploy")) {
+            this.applyPublishing()
         }
 
         tasks {
@@ -66,6 +70,19 @@ fun Project.applyJava() {
 
         test {
             useJUnitPlatform()
+        }
+    }
+}
+
+fun Project.applyPublishing() = publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/octocat/hello-world")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 }
