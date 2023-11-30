@@ -4,7 +4,7 @@ run-name: Commit of ${{ github.actor  }} on ${{ github.ref_name }}
 on: [push, pull_request]
 
 env:
-  SCRIPT_DIR: ".github/workflows/scripts"
+  SCRIPT_DIR: "./.github/workflows/scripts"
 
 permissions:
   contents: read
@@ -16,7 +16,7 @@ jobs:
       - name: Create dotenv
         env:
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-        run: pwd && chmod +rx $SCRIPT_DIR/env.sh && $SCRIPT_DIR/env.sh
+        run: ls && chmod +rx $SCRIPT_DIR/env.sh && $SCRIPT_DIR/env.sh
       - name: Upload dotenv
         uses: actions/upload-artifact@v3
         with:
