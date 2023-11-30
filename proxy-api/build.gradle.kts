@@ -1,5 +1,5 @@
 plugins {
-    id("mc-on-k8s.java-conventions")
+    id("mc-on-k8s.java-publish-conventions")
     id("java-library")
 }
 
