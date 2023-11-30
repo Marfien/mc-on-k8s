@@ -4,33 +4,33 @@ import io.fabric8.kubernetes.api.model.ServiceReference;
 
 public class WebhookPolicy {
 
-    private String url;
+  private String url;
 
-    private ServiceReference service;
+  private ServiceReference service;
 
-    private byte[] caBundle;
+  private byte[] caBundle;
 
-    public String getUrl() {
-        return this.url;
-    }
+  public String getUrl() {
+    return this.url;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public ServiceReference getService() {
-        return this.service;
-    }
+  public ServiceReference getService() {
+    return this.service;
+  }
 
-    public void setService(ServiceReference service) {
-        this.service = service;
-    }
+  public void setService(ServiceReference service) {
+    this.service = service;
+  }
 
-    public byte[] getCaBundle() {
-        return this.caBundle;
-    }
+  public byte[] getCaBundle() {
+    return this.caBundle;
+  }
 
-    public void setCaBundle(byte[] caBundle) {
-        this.caBundle = caBundle;
-    }
+  public void setCaBundle(byte[] caBundle) {
+    this.caBundle = caBundle;
+  }
 }

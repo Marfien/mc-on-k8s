@@ -8,9 +8,8 @@ import org.bukkit.event.player.PlayerLoginEvent;
 
 public class BukkitServerBridge extends SubServerAgonesBridge implements Listener {
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onJoin(PlayerLoginEvent event) {
-        super.handlePlayerLogin();
-    }
-
+  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+  public void onJoin(PlayerLoginEvent event) {
+    super.handlePlayerLogin();
+  }
 }

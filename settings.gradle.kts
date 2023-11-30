@@ -1,12 +1,22 @@
-rootProject.name = "mc-on-k8s"
-include("agones-client")
-include("kubernetes-model")
-include("proxy-api")
-include("proxy-impl-velocity")
-include("proxy-impl-bungeecord")
-include("server-api")
-include("gameserver-base-api")
-include("server-impl-bukkit")
-include("server-impl-sponge")
-include("server-impl-minestom")
-include("commons")
+rootProject.name = "minecraft-on-k8s"
+
+pluginManagement {
+    includeBuild("build-logic")
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+fun isSubProject(file: File): Boolean {
+    if (!file.isDirectory) return false
+
+    val files = file.list()
+
+    return files != null
+            && files.contains("build.gradle.kts")
+            && !files.contains("settings.gradle.kts")
+}
+
+rootDir.listFiles { it: File -> isSubProject(it)}?.forEach { include(it.name) }
+

@@ -4,51 +4,52 @@ import io.grpc.stub.StreamObserver;
 
 public interface VoidStreamObserver {
 
-    void onNext();
+  void onNext();
 
-    void onError(Throwable t);
+  void onError(Throwable t);
 
-    void onCompleted();
+  void onCompleted();
 
-    default StreamObserver<dev.agones.sdk.Empty> toSdk() {
-        return new StreamObserver<>() {
-            @Override
-            public void onNext(final dev.agones.sdk.Empty value) {
-                VoidStreamObserver.this.onNext();
-            }
+  default StreamObserver<dev.agones.sdk.Empty> toSdk() {
+    return new StreamObserver<>() {
+      @Override
+      public void onNext(final dev.agones.sdk.Empty value) {
+        VoidStreamObserver.this.onNext();
+      }
 
-            @Override
-            public void onError(final Throwable t) {
-                VoidStreamObserver.this.onError(t);
-            }
+      @Override
+      public void onError(final Throwable t) {
+        VoidStreamObserver.this.onError(t);
+      }
 
-            @Override
-            public void onCompleted() {
-                VoidStreamObserver.this.onCompleted();
-            }
-        };
-    }
+      @Override
+      public void onCompleted() {
+        VoidStreamObserver.this.onCompleted();
+      }
+    };
+  }
 
-    default StreamObserver<dev.agones.sdk.alpha.Empty> toAlpha() {
-        return new StreamObserver<>() {
-            @Override
-            public void onNext(final dev.agones.sdk.alpha.Empty value) {
-                VoidStreamObserver.this.onNext();
-            }
+  default StreamObserver<dev.agones.sdk.alpha.Empty> toAlpha() {
+    return new StreamObserver<>() {
+      @Override
+      public void onNext(final dev.agones.sdk.alpha.Empty value) {
+        VoidStreamObserver.this.onNext();
+      }
 
-            @Override
-            public void onError(final Throwable t) {
-                VoidStreamObserver.this.onError(t);
-            }
+      @Override
+      public void onError(final Throwable t) {
+        VoidStreamObserver.this.onError(t);
+      }
 
-            @Override
-            public void onCompleted() {
-                VoidStreamObserver.this.onCompleted();
-            }
-        };
-    }
+      @Override
+      public void onCompleted() {
+        VoidStreamObserver.this.onCompleted();
+      }
+    };
+  }
 
-    public static final VoidStreamObserver NO_OP = new VoidStreamObserver() {
+  public static final VoidStreamObserver NO_OP =
+      new VoidStreamObserver() {
         @Override
         public void onNext() {}
 
@@ -57,6 +58,5 @@ public interface VoidStreamObserver {
 
         @Override
         public void onCompleted() {}
-    };
-
+      };
 }

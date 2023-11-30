@@ -2,43 +2,43 @@ package dev.marfien.agones.kubernetes.api.model;
 
 public class AggregatedCounterStatus {
 
-    private long allocatedCount;
+  private long allocatedCount;
 
-    private long allocatedCapacity;
+  private long allocatedCapacity;
 
-    private long count;
+  private long count;
 
-    private long capacity;
+  private long capacity;
 
-    public long getAllocatedCount() {
-        return this.allocatedCount;
-    }
+  public long getAllocatedCount() {
+    return this.allocatedCount;
+  }
 
-    public void setAllocatedCount(long allocatedCount) {
-        this.allocatedCount = allocatedCount;
-    }
+  public void setAllocatedCount(long allocatedCount) {
+    this.allocatedCount = allocatedCount;
+  }
 
-    public long getAllocatedCapacity() {
-        return this.allocatedCapacity;
-    }
+  public long getAllocatedCapacity() {
+    return this.allocatedCapacity;
+  }
 
-    public void setAllocatedCapacity(long allocatedCapacity) {
-        this.allocatedCapacity = allocatedCapacity;
-    }
+  public void setAllocatedCapacity(long allocatedCapacity) {
+    this.allocatedCapacity = allocatedCapacity;
+  }
 
-    public long getCount() {
-        return this.count;
-    }
+  public long getCount() {
+    return this.count;
+  }
 
-    public void setCount(long count) {
-        this.count = count;
-    }
+  public void setCount(long count) {
+    this.count = count;
+  }
 
-    public long getCapacity() {
-        return this.capacity;
-    }
+  public long getCapacity() {
+    return this.capacity;
+  }
 
-    public void setCapacity(long capacity) {
-        this.capacity = capacity;
-    }
+  public void setCapacity(long capacity) {
+    this.capacity = capacity;
+  }
 }

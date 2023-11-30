@@ -1,5 +1,6 @@
 plugins {
-    id("java")
+    id("mc-on-k8s.java-conventions")
+    id("mc-on-k8s.replace-tokens")
 }
 
 repositories {
@@ -11,7 +12,6 @@ repositories {
 
 dependencies {
     implementation(project(":proxy-api"))
-    implementation(project(":commons"))
     compileOnly(libs.proxy.velocity)
     annotationProcessor(libs.proxy.velocity)
 }

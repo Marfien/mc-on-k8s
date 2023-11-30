@@ -7,16 +7,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class BukkitServerBridgePlugin extends JavaPlugin {
 
-    private final SubServerAgonesBridge bridge = new BukkitServerBridge();
+  private final SubServerAgonesBridge bridge = new BukkitServerBridge();
 
-    @Override
-    public void onEnable() {
-        Bukkit.getPluginManager().registerEvents((Listener) this.bridge, this);
-        this.bridge.ready();
-    }
+  @Override
+  public void onEnable() {
+    Bukkit.getPluginManager().registerEvents((Listener) this.bridge, this);
+    this.bridge.ready();
+  }
 
-    @Override
-    public void onDisable() {
-        this.bridge.handleShutdown();
-    }
+  @Override
+  public void onDisable() {
+    this.bridge.handleShutdown();
+  }
 }

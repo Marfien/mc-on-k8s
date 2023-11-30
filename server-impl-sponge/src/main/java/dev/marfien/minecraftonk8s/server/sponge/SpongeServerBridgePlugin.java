@@ -12,21 +12,20 @@ import org.spongepowered.plugin.builtin.jvm.Plugin;
 @Plugin("@project.id@")
 public class SpongeServerBridgePlugin extends SubServerAgonesBridge {
 
-    @Listener(order = Order.POST)
-    public void onServerStarted(StartedEngineEvent<Server> event) {
-        super.ready();
-    }
+  @Listener(order = Order.POST)
+  public void onServerStarted(StartedEngineEvent<Server> event) {
+    super.ready();
+  }
 
-    @Listener(order = Order.PRE)
-    public void onServerStopping(StoppingEngineEvent<Server> event) {
-        super.handleShutdown();
-    }
+  @Listener(order = Order.PRE)
+  public void onServerStopping(StoppingEngineEvent<Server> event) {
+    super.handleShutdown();
+  }
 
-    @Listener(order = Order.POST)
-    public void onPlayerLogin(ServerSideConnectionEvent.Login event) {
-        if (event.isCancelled()) return;
+  @Listener(order = Order.POST)
+  public void onPlayerLogin(ServerSideConnectionEvent.Login event) {
+    if (event.isCancelled()) return;
 
-        super.handlePlayerLogin();
-    }
-
+    super.handlePlayerLogin();
+  }
 }

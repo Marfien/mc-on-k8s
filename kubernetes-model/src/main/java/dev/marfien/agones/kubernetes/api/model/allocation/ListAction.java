@@ -4,23 +4,23 @@ import java.util.List;
 
 public class ListAction {
 
-    private List<String> addValues;
+  private List<String> addValues;
 
-    private long capacity;
+  private long capacity;
 
-    public List<String> getAddValues() {
-        return this.addValues;
-    }
+  public List<String> getAddValues() {
+    return this.addValues;
+  }
 
-    public void setAddValues(List<String> addValues) {
-        this.addValues = addValues;
-    }
+  public void setAddValues(List<String> addValues) {
+    this.addValues = addValues;
+  }
 
-    public long getCapacity() {
-        return this.capacity;
-    }
+  public long getCapacity() {
+    return this.capacity;
+  }
 
-    public void setCapacity(long capacity) {
-        this.capacity = capacity;
-    }
+  public void setCapacity(long capacity) {
+    this.capacity = capacity;
+  }
 }

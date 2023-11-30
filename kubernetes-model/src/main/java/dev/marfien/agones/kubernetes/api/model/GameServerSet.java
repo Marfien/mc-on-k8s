@@ -9,6 +9,5 @@ import io.fabric8.kubernetes.model.annotation.Version;
 @Version("v1")
 @Group("agones.dev")
 @Kind("GameServerSet")
-public class GameServerSet extends CustomResource<GameServerSetSpec, GameServerSetStatus> implements Namespaced {
-
-}
+public class GameServerSet extends CustomResource<GameServerSetSpec, GameServerSetStatus>
+    implements Namespaced {}

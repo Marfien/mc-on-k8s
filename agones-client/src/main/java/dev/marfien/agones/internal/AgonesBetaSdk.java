@@ -5,13 +5,13 @@ import io.grpc.ManagedChannel;
 
 public class AgonesBetaSdk {
 
-    private final SDKGrpc.SDKStub stub;
+  private final SDKGrpc.SDKStub stub;
 
-    public AgonesBetaSdk(ManagedChannel channel) {
-        this.stub = SDKGrpc.newStub(channel);
-    }
+  public AgonesBetaSdk(ManagedChannel channel) {
+    this.stub = SDKGrpc.newStub(channel);
+  }
 
-    public SDKGrpc.SDKStub getStub() {
-        return this.stub;
-    }
+  public SDKGrpc.SDKStub getStub() {
+    return this.stub;
+  }
 }

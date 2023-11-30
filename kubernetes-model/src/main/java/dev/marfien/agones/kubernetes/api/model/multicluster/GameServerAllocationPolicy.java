@@ -9,5 +9,6 @@ import io.fabric8.kubernetes.model.annotation.Version;
 @Version("v1")
 @Group("multicluster.agones.dev")
 @Kind("GameServerAllocationPolicy")
-public class GameServerAllocationPolicy extends CustomResource<GameServerAllocationPolicySpec, GameServerAllocationPolicyStatus> implements Namespaced {
-}
+public class GameServerAllocationPolicy
+    extends CustomResource<GameServerAllocationPolicySpec, GameServerAllocationPolicyStatus>
+    implements Namespaced {}

@@ -9,5 +9,4 @@ import io.fabric8.kubernetes.model.annotation.Version;
 @Version("v1")
 @Group("agones.dev")
 @Kind("Fleet")
-public class Fleet extends CustomResource<FleetSpec, FleetStatus> implements Namespaced {
-}
+public class Fleet extends CustomResource<FleetSpec, FleetStatus> implements Namespaced {}

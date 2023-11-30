@@ -21,3 +21,4 @@ server-minestom = { module = "com.github.Minestom:Minestom", version = "cb389225
 
 [plugins]
 protobuf = { id = "com.google.protobuf", version = "0.9.4" }
+spotless = { id = "com.diffplug.spotless", version = "6.23.2" }

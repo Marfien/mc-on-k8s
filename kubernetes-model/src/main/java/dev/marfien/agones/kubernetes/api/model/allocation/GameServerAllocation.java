@@ -8,5 +8,5 @@ import io.fabric8.kubernetes.model.annotation.Version;
 @Version("v1")
 @Group("allocation.agones.dev")
 @Kind("GameServerAllocation")
-public class GameServerAllocation extends CustomResource<GameServerAllocationSpec, GameServerAllocationStatus> {
-}
+public class GameServerAllocation
+    extends CustomResource<GameServerAllocationSpec, GameServerAllocationStatus> {}
