@@ -13,10 +13,11 @@ jobs:
   env:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Create dotenv
         env:
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-        run: ls .github && chmod +rx $SCRIPT_DIR/env.sh && $SCRIPT_DIR/env.sh
+        run: chmod +rx $SCRIPT_DIR/env.sh && $SCRIPT_DIR/env.sh
       - name: Upload dotenv
         uses: actions/upload-artifact@v3
         with:
