@@ -1,5 +1,5 @@
 name: Build with gradle
-run-name: Commit of ${{ github.actor  }} on ${{ github.ref_name }}
+run-name: Commit "${{ github.event.head_commit.message }}" on ${{ github.ref_name }}
 
 on: [push, pull_request]
 
@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   env:
+    if: ${{ !contains(github.event.head_commit.message, "--skip-ci") }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,6 +25,7 @@ jobs:
           name: dotenv
           path: .env
   build:
+    if: ${{ !contains(github.event.head_commit.message, "--skip-ci") }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
