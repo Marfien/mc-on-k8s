@@ -1,5 +1,5 @@
 name: Build with gradle
-run-name: Commit "${{ github.event.head_commit.message }}" on ${{ github.ref_name }}
+run-name: "Commit on ${{ github.ref_name }}: ${{ github.event.head_commit.message }}"
 
 on: [push, pull_request]
 
