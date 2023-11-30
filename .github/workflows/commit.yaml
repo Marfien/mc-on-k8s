@@ -21,6 +21,7 @@ jobs:
       - name: Upload dotenv
         uses: actions/upload-artifact@v3
         with:
+          name: dotenvπ
           path: .env
   build:
     runs-on: ubuntu-latest
