@@ -7,7 +7,7 @@ if [[ "$COMMIT_MESSAGE" == *"--deploy"* ]]; then
   # set version for snapshot deployment
   GRADLE_COMMAND="-Pversion=$GRADLE_SNAPSHOT_VERSION $GRADLE_COMMAND"
 
-  GRADLE_COMMAND="-Dpublish.user=$GITHUB_ACTOR -Dpublish.password=$GITUB_TOKEN $GRADLE_COMMAND deploy"
+  GRADLE_COMMAND="-Dpublish.user=$GITHUB_ACTOR -Dpublish.password=$GITUB_TOKEN $GRADLE_COMMAND publish"
 else
   GRADLE_COMMAND="$GRADLE_COMMAND build"
 fi
