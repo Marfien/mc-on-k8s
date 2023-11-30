@@ -2,9 +2,6 @@
 
 set -e
 
-printenv
-exit 0
-
 GRADLE_COMMAND="clean"
 if [[ "$COMMIT_MESSAGE" == *"--deploy"* ]]; then
   # set version for snapshot deployment
