@@ -37,6 +37,7 @@ tasks {
 
 extensions.configure<SpotlessExtension> {
     java {
+        target("src")
         removeUnusedImports()
         googleJavaFormat().reorderImports(true)
         formatAnnotations()
