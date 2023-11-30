@@ -13,3 +13,5 @@ fi
 if [[ $COMMIT_MESSAGE == *"--skip-test"* ]]; then
   GRADLE_COMMAND="$GRADLE_COMMAND -x check"
 fi
+
+./gradlew $GRADLE_COMMAND
