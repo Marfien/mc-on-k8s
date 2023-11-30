@@ -25,6 +25,9 @@ jobs:
           path: .env
   build:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     needs:
       - env
     steps:
@@ -45,3 +48,5 @@ jobs:
           cache: gradle
       - name: Build with Gradle
         run: chmod +rx $SCRIPT_DIR/gradle_build.sh && $SCRIPT_DIR/gradle_build.sh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

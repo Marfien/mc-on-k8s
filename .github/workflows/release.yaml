@@ -1,0 +1,14 @@
+
+#sed -i '' "s/^version=.*$/version=$new_version/" gradle.properties
+name: Create Release
+run-name: Creating realease ${{ github.tag }}
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  check-tag:
+  env:
+  gradle:
