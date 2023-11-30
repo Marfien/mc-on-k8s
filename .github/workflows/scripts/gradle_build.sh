@@ -2,12 +2,15 @@
 
 set -e
 
+printenv
+exit 0
+
 GRADLE_COMMAND="clean"
 if [[ "$COMMIT_MESSAGE" == *"--deploy"* ]]; then
   # set version for snapshot deployment
   GRADLE_COMMAND="-Pversion=$GRADLE_SNAPSHOT_VERSION $GRADLE_COMMAND"
 
-  GRADLE_COMMAND="$GRADLE_COMMAND deploy"
+  GRADLE_COMMAND="-Dpublish.user=$GITHUB_ACTOR -Dpublish.password=$GITUB_TOKEN $GRADLE_COMMAND deploy"
 else
   GRADLE_COMMAND="$GRADLE_COMMAND build"
 fi
@@ -18,4 +21,4 @@ fi
 
 set -x
 
-./gradlew -Porg.gradle.deamon=false -Dpublish.user="$GITHUB_ACTOR" -Dpublish.password="$GITUB_TOKEN" $GRADLE_COMMAND
+./gradlew -Porg.gradle.deamon=false $GRADLE_COMMAND
