@@ -16,7 +16,7 @@ jobs:
       - name: Create dotenv
         env:
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-        run: ls $SCRIPT_DIR && chmod +rx $SCRIPT_DIR/env.sh && $SCRIPT_DIR/env.sh
+        run: pwd && chmod +rx $SCRIPT_DIR/env.sh && $SCRIPT_DIR/env.sh
       - name: Upload dotenv
         uses: actions/upload-artifact@v3
         with:
