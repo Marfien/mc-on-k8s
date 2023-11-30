@@ -16,6 +16,6 @@ if [[ $COMMIT_MESSAGE == *"--skip-test"* ]]; then
   GRADLE_COMMAND="$GRADLE_COMMAND -x check"
 fi
 
-set -X
+set -x
 
 ./gradlew -Porg.gradle.deamon=false -Dpublish.user="$GITHUB_ACTOR" -Dpublish.password="$GITUB_TOKEN" "$GRADLE_COMMAND"
