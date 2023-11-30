@@ -1,5 +1,5 @@
 name: Build with gradle
-run-name: Commit of ${{ github.user  }}
+run-name: Commit of ${{ github.actor  }} on ${{ github.ref_name }}
 
 on: [push, pull_request]
 
@@ -14,16 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Dotenv
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: dotenv
       - name: Load Dotenv
-        uses: falti/dotenv-action@v0.3.1
+        uses: falti/dotenv-action@v1
         with:
           path: .env
       - uses: actions/checkout@v4
       - name: Setup JDK-17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
