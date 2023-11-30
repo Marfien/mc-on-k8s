@@ -3,8 +3,7 @@
 GRADLE_COMMAND="clean"
 if [[ "$COMMIT_MESSAGE" == *"--deploy"* ]]; then
   # set version for snapshot deployment
-  CURRENT_VERSION=$(grep "^version=" gradle.properties)
-  GRADLE_COMMAND="-Pversion=${CURRENT_VERSION#*=}-$GITHUB_REF_NAME $GRADLE_COMMAND"
+  GRADLE_COMMAND="-Pversion=$GRADLE_SNAPSHOT_VERSION $GRADLE_COMMAND"
 
   GRADLE_COMMAND="$GRADLE_COMMAND deploy"
 else

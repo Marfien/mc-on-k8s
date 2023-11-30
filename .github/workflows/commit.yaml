@@ -10,10 +10,23 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  env:
     runs-on: ubuntu-latest
     steps:
-      - name: Download Dotenv
+      - name: Create dotenv
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: chmod +rx $SCRIPT_DIR/env.sh && $SCRIPT_DIR/env.sh
+      - name: Upload dotenv
+        uses: actions/upload-artifact@v3
+        with:
+          path: .env
+  build:
+    runs-on: ubuntu-latest
+    needs:
+      - env
+    steps:
+      - name: Download dotenv
         uses: actions/download-artifact@v3
         with:
           name: dotenv
@@ -29,6 +42,4 @@ jobs:
           distribution: 'temurin'
           cache: gradle
       - name: Build with Gradle
-        env:
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: chmod +rx $SCRIPT_DIR/gradle_build.sh && $SCRIPT_DIR/gradle_build.sh
