@@ -18,4 +18,4 @@ fi
 
 set -x
 
-./gradlew $GRADLE_COMMAND --no-deamon
+./gradlew $GRADLE_COMMAND --no-daemon
