@@ -32,7 +32,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup dotenv
-        run: $SCRIPT_DIR/env.sh && $SCRIPT_DIR/release_version.sh
+        run: chmod +rx $SCRIPT_DIR/env.sh && $SCRIPT_DIR/env.sh
+      - name: Setup dotenv for release
+        run: chmod +rx $SCRIPT_DIR/release_version.sh && $SCRIPT_DIR/release_version.sh
       - name: Upload dotenv
         uses: actions/upload-artifact@v3
         with:
@@ -59,7 +61,7 @@ jobs:
       - name: Update version in dev
         env:
           BRANCHES: "main develop"
-        run: $SCRIPT_DIR/update_versions.sh
+        run: chmod +rx $SCRIPT_DIR/release_version.sh && $SCRIPT_DIR/update_versions.sh
   create-tag:
     runs-on: ubuntu-latest
     needs:
