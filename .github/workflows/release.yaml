@@ -110,7 +110,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload artifacts
-        uses: actions/upload-artifacts@v3
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: '*/**/libs/*.jar'
@@ -128,11 +128,12 @@ jobs:
       - name: Load Dotenv
         uses: xom9ikk/dotenv@v2
       - name: Download binaries
-        uses: actions/download-artifacts@v4
+        uses: actions/download-artifact@v4
         with:
           name: binaries
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v{{ env.RELEASE_VERSION }}
+          tag_name: 'refs/tags/v{{ env.RELEASE_VERSION }}'
           generate_release_notes: true
+          files:
