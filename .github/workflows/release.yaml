@@ -136,4 +136,4 @@ jobs:
         with:
           tag_name: 'refs/tags/v{{ env.RELEASE_VERSION }}'
           generate_release_notes: true
-          files:
+          files: '*/**libs/*.jar'
