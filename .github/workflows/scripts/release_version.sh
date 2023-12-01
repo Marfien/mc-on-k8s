@@ -17,5 +17,5 @@ if [[ "$INPUT_CUSTOM_VERSION" ]]; then
 else
   raw_version="$(grep "^version=" gradle.properties)"
   version=$(increment_version "${raw_version#*=}" 1)
-  echo "RELEASE_VERSION=$version >> .env"
+  echo "RELEASE_VERSION=$version" >> .env
 fi
