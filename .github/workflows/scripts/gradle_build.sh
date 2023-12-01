@@ -5,9 +5,10 @@ set -e
 GRADLE_COMMAND="clean"
 if [[ "$COMMIT_MESSAGE" == *"--deploy"* ]]; then
   # set version for snapshot deployment
-  GRADLE_COMMAND="-Pversion=$GRADLE_SNAPSHOT_VERSION $GRADLE_COMMAND"
-
-  GRADLE_COMMAND="-Dpublish.user=$GITHUB_ACTOR -Dpublish.password=$GITUB_TOKEN $GRADLE_COMMAND publish"
+  GRADLE_COMMAND="-Pversion=$GRADLE_SNAPSHOT_VERSION -Dpublish.user=$GITHUB_ACTOR -Dpublish.password=$GITUB_TOKEN $GRADLE_COMMAND publish"
+elif [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+  # set version for releases
+  GRADLE_COMMAND="-Pversion=$GRADLE_VERSION -Dpublish.user=$GITHUB_ACTOR -Dpublish.password=$GITUB_TOKEN $GRADLE_COMMAND publish"
 else
   GRADLE_COMMAND="$GRADLE_COMMAND build"
 fi
