@@ -1,6 +1,6 @@
 #sed -i '' "s/^version=.*$/version=$new_version/" gradle.properties
 name: Create Release
-run-name: Creating realease ${{ github.tag }}
+run-name: ${{ github.event.inputs.custom-version && format('Creating release for version "{0}"', github.event.inputs.custom-version) || format('Upgrading {0}-version', github.event.inputs.version-upgrade) }}
 
 on:
   workflow_dispatch:
