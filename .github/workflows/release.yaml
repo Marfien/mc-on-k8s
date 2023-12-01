@@ -21,7 +21,7 @@ on:
         type: string
 
 env:
-  SCRIPT_DIR: "./.github/workflows/scripts"
+  SCRIPT_DIR: ".github/workflows/scripts"
 
 jobs:
   env:
@@ -61,7 +61,7 @@ jobs:
       - name: Update versions
         env:
           BRANCHES: "main develop"
-        run: chmod +rx $SCRIPT_DIR/update_in_branches.sh && $SCRIPT_DIR/update_in_branches.sh
+        run: chmod +rx $SCRIPT_DIR/update_in_branch.sh && $SCRIPT_DIR/update_in_branch.sh
   create-tag:
     runs-on: ubuntu-latest
     needs:
