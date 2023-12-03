@@ -118,6 +118,7 @@ jobs:
         run: chmod +rx $SCRIPT_DIR/gradle_build.sh && $SCRIPT_DIR/gradle_build.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_BUILD: true
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
