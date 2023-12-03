@@ -140,9 +140,18 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: binaries
+      - name: Construct binary paths
+        id: binary_paths
+        run: |
+          {
+            echo 'BINARIES<<EOF'
+            find . -name "*.jar" -type f
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: 'refs/tags/v${{ env.RELEASE_VERSION }}'
-          generate_release_notes: true
-          files: '*/**libs/*.jar'
+          name: Release v${{ env.RELEASE_VERSION }}
+          fail_on_unmatched_files: true
+          files: ${{ steps.binary_paths.outputs.BINARIES }}
