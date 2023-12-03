@@ -45,6 +45,7 @@ jobs:
     needs:
       - env
     permissions:
+      pull-requests: write
       contents: write
     steps:
       - name: Download dotenv
