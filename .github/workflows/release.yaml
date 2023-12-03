@@ -137,7 +137,7 @@ jobs:
       - name: Load Dotenv
         uses: xom9ikk/dotenv@v2
       - name: Download binaries
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: binaries
       - name: Create Release
