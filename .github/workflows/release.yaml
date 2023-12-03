@@ -65,7 +65,7 @@ jobs:
           git commit -m "Updated version to $RELEASE_VERSION"
           git push origin develop
       - name: Create Merge Request
-        run: gh pr create -B main -H develop -t "Release for version $RELEASE_VERSION" -b "Release for version $RELEASE_VERSION created" -a "@$GITHUB_ACTOR"
+        run: gh pr create -B main -H develop -t "Release for version $RELEASE_VERSION" -b "Release for version $RELEASE_VERSION created" -a "$GITHUB_ACTOR"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   create-tag:
