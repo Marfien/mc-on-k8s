@@ -19,4 +19,3 @@ fun isSubProject(file: File): Boolean {
 }
 
 rootDir.listFiles { it: File -> isSubProject(it)}?.forEach { include(it.name) }
-

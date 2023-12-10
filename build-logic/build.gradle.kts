@@ -8,7 +8,8 @@ plugins {
 
 dependencies {
     implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
-    implementation("com.diffplug.spotless:spotless-plugin-gradle:${libs.plugins.spotless.get().version}")
+    implementation(libs.plugin.spotless)
+    implementation(libs.plugin.shadow)
 }
 
 spotless {
