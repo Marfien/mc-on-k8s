@@ -56,7 +56,7 @@ public abstract class ProxyAgonesBridge extends GameServerAgonesBridge {
 
   private void shuttingDown() {
     this.shuttingDown = true;
-    super.getAgonesClient().setLable("@project.group@/shutting-down", "true");
+    super.getAgonesClient().setLable("mc-on-k8s.marfien.dev/accept-players", "false");
   }
 
   protected abstract void schedule(Duration delay, Runnable task);
