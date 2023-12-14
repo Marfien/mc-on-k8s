@@ -7,10 +7,11 @@ plugins {
 }
 
 dependencies {
-    compileOnlyApi(libs.protobuf)
-    compileOnlyApi(libs.grpc.protobuf)
-    compileOnlyApi(libs.grpc.stub)
-    compileOnlyApi(libs.annotationsapi)
+    implementation(libs.protobuf)
+    implementation(libs.grpc.protobuf)
+    implementation(libs.grpc.stub)
+    implementation(libs.annotationsapi)
+    implementation(libs.grpc.netty)
 }
 
 sourceSets {

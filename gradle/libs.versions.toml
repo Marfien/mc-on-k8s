@@ -10,6 +10,7 @@ protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
 grpc-stub = { module = "io.grpc:grpc-stub", version.ref = "grpc" }
 grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc" }
 grpc-gen = { module = "io.grpc:protoc-gen-grpc-java", version.ref = "grpc" }
+grpc-netty = { module = "io.grpc:grpc-netty", version.ref = "grpc" }
 annotationsapi = { module = "org.apache.tomcat:annotations-api", version = "6.0.53" }
 proxy-velocity = { module = "com.velocitypowered:velocity-api", version = "3.2.0-SNAPSHOT" }
 proxy-bungeecord = { module = "net.md-5:bungeecord-api", version = "1.20-R0.2-SNAPSHOT" }

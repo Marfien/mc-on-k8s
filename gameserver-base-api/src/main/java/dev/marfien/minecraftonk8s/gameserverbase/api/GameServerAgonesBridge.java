@@ -2,12 +2,12 @@ package dev.marfien.minecraftonk8s.gameserverbase.api;
 
 import dev.marfien.agones.AgonesClient;
 import dev.marfien.agones.observer.VoidStreamObserver;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameServerAgonesBridge {
 
-  private static final int HEALTH_SEND_INTERVALL =
-      Integer.getInteger("AGONES_HEALTH_SEND_INTERVALL");
+  private static final int HEALTH_SEND_INTERVALL = Integer.parseInt(Objects.requireNonNullElse(System.getenv("HEALTH_SEND_INTERVALL"), String.valueOf(10)));
 
   private final AgonesClient agonesClient = AgonesClient.create();
   private final AtomicBoolean allocated = new AtomicBoolean(false);

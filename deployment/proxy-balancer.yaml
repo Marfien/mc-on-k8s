@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-balancer
+spec:
+  selector:
+    mc-on-k8s.marfien.dev/accept-players: true
+  ports:
+    - protocol: TCP
+      port: 25565
+      targetPort: 25577
+  type: LoadBalancer
+  

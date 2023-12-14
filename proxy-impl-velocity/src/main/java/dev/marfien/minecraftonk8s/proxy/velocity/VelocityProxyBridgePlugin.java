@@ -24,8 +24,8 @@ public class VelocityProxyBridgePlugin extends ProxyAgonesBridge {
   private final ProxyServer proxyServer;
 
   @Inject
-  public VelocityProxyBridgePlugin(Scheduler scheduler, ProxyServer proxyServer) {
-    this.scheduler = scheduler;
+  public VelocityProxyBridgePlugin(ProxyServer proxyServer) {
+    this.scheduler = proxyServer.getScheduler();
     this.proxyServer = proxyServer;
   }
 
