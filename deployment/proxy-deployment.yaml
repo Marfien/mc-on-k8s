@@ -32,7 +32,7 @@ spec:
                 limits:
                   memory: 512M # conf
 ---
-apiVersion: "autoscaling.agones.dev/v1"
+apiVersion: autoscaling.agones.dev/v1
 kind: FleetAutoscaler
 metadata:
   name: proxy-fleet-autoscaler
@@ -41,13 +41,13 @@ spec:
   policy:
     type: Buffer
     buffer:
-      bufferSize: 1
-      minReplicas: 2
-      maxReplicas: 10
+      bufferSize: 1 # conf
+      minReplicas: 2 # conf
+      maxReplicas: 10 # conf
   sync:
     type: FixedInterval
     fixedInterval:
-      seconds: 30
+      seconds: 30 # conf
 ---
 apiVersion: v1
 kind: Service
@@ -58,6 +58,6 @@ spec:
     mc-on-k8s.marfien.dev/accept-players: true
   ports:
     - protocol: TCP
-      port: 25565
-      targetPort: 25577
+      port: 25565 # conf
+      targetPort: 25577 # conf
   type: LoadBalancer
