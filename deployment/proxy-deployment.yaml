@@ -1,0 +1,63 @@
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: proxy-fleet
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+  template:
+    spec:
+      ports:
+        - name: default
+          type: dynamic
+          containerPort: 25577
+          protocol: TCP
+      health:
+        disabled: false
+        initialDelaySeconds: 10 # conf
+        periodSeconds: 10 # conf
+      template:
+        spec:
+          os:
+            name: linux
+          containers:
+            - name: proxy-server
+              image: ghcr.io/marfien/mc-on-k8s/proxy-velocity:latest
+              resources:
+                requests:
+                  memory: 512M # conf
+                limits:
+                  memory: 512M # conf
+---
+apiVersion: "autoscaling.agones.dev/v1"
+kind: FleetAutoscaler
+metadata:
+  name: proxy-fleet-autoscaler
+spec:
+  fleetName: proxy-fleet
+  policy:
+    type: Buffer
+    buffer:
+      bufferSize: 1
+      minReplicas: 2
+      maxReplicas: 10
+  sync:
+    type: FixedInterval
+    fixedInterval:
+      seconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-player-balancer
+spec:
+  selector:
+    mc-on-k8s.marfien.dev/accept-players: true
+  ports:
+    - protocol: TCP
+      port: 25565
+      targetPort: 25577
+  type: LoadBalancer

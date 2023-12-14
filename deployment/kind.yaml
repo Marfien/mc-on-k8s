@@ -1,0 +1,9 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: minecraft-on-k8s
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 25565
+        hostPort: 25565
+        protocol: TCP

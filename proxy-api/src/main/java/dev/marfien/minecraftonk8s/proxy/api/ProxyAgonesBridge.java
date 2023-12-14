@@ -35,6 +35,7 @@ public abstract class ProxyAgonesBridge extends GameServerAgonesBridge {
               .runnableInformer(1000)
               .addEventHandler(new GameServerEventHandler(this));
       this.informer.start();
+      super.getAgonesClient().setLable(" mc-on-k8s.marfien.dev/accept-players", "true");
     }
   }
 
@@ -56,7 +57,7 @@ public abstract class ProxyAgonesBridge extends GameServerAgonesBridge {
 
   private void shuttingDown() {
     this.shuttingDown = true;
-    super.getAgonesClient().setLable("@project.group@/shutting-down", "true");
+    super.getAgonesClient().setLable(" mc-on-k8s.marfien.dev/accept-players", "false");
   }
 
   protected abstract void schedule(Duration delay, Runnable task);
