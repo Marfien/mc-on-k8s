@@ -1,0 +1,50 @@
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: gameserver-fleet
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+  template:
+    spec:
+      ports:
+        - name: default
+          type: dynamic
+          containerPort: 25577
+          protocol: TCP
+      health:
+        disabled: false
+        initialDelaySeconds: 10 # conf
+        periodSeconds: 10 # conf
+      template:
+        spec:
+          os:
+            name: linux
+          containers:
+            - name: proxy-server
+              image: ghcr.io/marfien/mc-on-k8s/server-bukkit:latest
+              resources:
+                requests:
+                  memory: 512M # conf
+                limits:
+                  memory: 512M # conf
+---
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+metadata:
+  name: gameserver-fleet-autoscaler
+spec:
+  fleetName: gameserver-fleet
+  policy:
+    type: Buffer
+    buffer:
+      bufferSize: 2 # conf
+      minReplicas: 3 # conf
+      maxReplicas: 10 # conf
+  sync:
+    type: FixedInterval
+    fixedInterval:
+      seconds: 30 # conf

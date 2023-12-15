@@ -9,6 +9,7 @@ FROM eclipse-temurin:17-jre-alpine
 WORKDIR /home/app/
 
 RUN echo "eula=true" >> eula.txt
+RUN echo "online-mode=false" >> server.properties
 
 COPY --from=build paper.jar .
 COPY --from=build cache/ ./cache/
