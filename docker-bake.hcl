@@ -38,7 +38,7 @@ target "gameserver-bukkit" {
 }
 
 target "gameserver-minestom" {
-  context = "./proxy-impl-minestom/"
+  context = "./server-impl-minestom/"
   tags = makeTags("server", "minestom")
 }
 
