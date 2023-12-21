@@ -5,6 +5,8 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.extensions.Extension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MinestomServerBridgeExtension extends Extension {
 

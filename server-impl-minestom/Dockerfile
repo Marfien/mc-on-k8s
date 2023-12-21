@@ -20,4 +20,6 @@ EOF
 RUN echo "java -jar server.jar" >> start.sh
 RUN chmod +rx ./start.sh
 
+ADD build/libs/server-impl-minestom-1.0.0-all.jar extensions/bridge.jar
+
 ENTRYPOINT ["java", "-jar", "server.jar"]
