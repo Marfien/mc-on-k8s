@@ -12,7 +12,7 @@ spec:
     spec:
       ports:
         - name: default
-          type: dynamic
+          portPolicy: dynamic
           containerPort: 25577
           protocol: TCP
       health:
@@ -55,7 +55,7 @@ metadata:
   name: proxy-player-balancer
 spec:
   selector:
-    mc-on-k8s.marfien.dev/accept-players: true
+    mc-on-k8s.marfien.dev/accept-players: 'true'
   ports:
     - protocol: TCP
       port: 25565 # conf

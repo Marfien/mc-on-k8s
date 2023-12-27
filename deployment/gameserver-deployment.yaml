@@ -12,7 +12,7 @@ spec:
     spec:
       ports:
         - name: default
-          type: dynamic
+          portPolicy: dynamic
           containerPort: 25577
           protocol: TCP
       health:

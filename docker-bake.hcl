@@ -42,9 +42,16 @@ target "gameserver-minestom" {
   tags = makeTags("server", "minestom")
 }
 
-target "gameserver-sponge" {
+target "gameserver-sponge-vanilla" {
   context = "./server-impl-sponge/"
-  tags = makeTags("server", "sponge")
+  dockerfile = "vanilla.Dockerfile"
+  tags = makeTags("server", "sponge-vanilla")
+}
+
+target "gameserver-sponge-forge" {
+  context = "./server-impl-sponge/"
+  dockerfile = "forge.Dockerfile"
+  tags = makeTags("server", "sponge-forge")
 }
 
 function "makeTags" {
