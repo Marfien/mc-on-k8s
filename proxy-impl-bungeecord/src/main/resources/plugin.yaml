@@ -1,4 +1,0 @@
-name: @project.name@
-version: @project.version@
-description: @project.description@
-main: dev.marfien.minecraftonk8s.proxy.bungeecord.BungeecordProxyBridgePlugin

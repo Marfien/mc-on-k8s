@@ -1,4 +1,0 @@
-name: @project.id@
-version: @project.version@
-description: @project.description@
-main: dev.marfien.minecraftonk8s.server.bukkit.BukkitServerBridgePlugin
