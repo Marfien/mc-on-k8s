@@ -20,9 +20,9 @@ else
   exit 1
 fi
 
-echo "Bootstraping flux on branch '$GIT_GIT_BRANCH'..."
+echo "Bootstraping flux on branch '$GIT_BRANCH'..."
 flux bootstrap github \
   --owner='marfien' \
   --repository='mc-on-k8s' \
   --branch="$GIT_BRANCH" \
-  --path='.k8s/flux'
+  --path='.k8s/flux/base'
