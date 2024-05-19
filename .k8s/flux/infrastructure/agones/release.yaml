@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: agones
+  namespace: agones-system
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: agones
+      sourceRef:
+        kind: HelmRepository
+        name: agones-stable
+        namespace: flux-system
+      interval: 10m
+  values:
+    replicaCount: 2
