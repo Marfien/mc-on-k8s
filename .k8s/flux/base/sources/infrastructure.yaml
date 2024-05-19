@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 1m
   dependsOn:
-    - flux-system
+    - name: flux-system
   path: "./.k8s/flux/infrastructure"
   prune: true
   sourceRef:
