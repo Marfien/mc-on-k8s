@@ -1,17 +1,19 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-GIT_BRANCH="$(git ref-parse --abbrev-ref HEAD)"
+GIT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 CLUSTER_NAME="mc-on-k8s-$GIT_BRANCH"
 
-if [ -z "$GITHUB_TOKEN" ]; then
+if false && [ -z "$GITHUB_TOKEN" ]; then
   echo "Please provide a personal access token for github in GITHUB_TOKEN"
   exit 1;
 fi
 
 echo "Creating cluster '$CLUSTER_NAME'..."
-if where minikube; then
+if minikube >> /dev/null; then
+  minikube delete -p "$CLUSTER_NAME"
   minikube start -p "$CLUSTER_NAME"
-elif where kind; then
+elif kind >> /dev/null; then
+  kind delete cluster --name "$CLUSTER_NAME"
   kind create cluster --name "$CLUSTER_NAME"
 else
   echo "No supported kubernetes environment found!"
@@ -20,7 +22,6 @@ fi
 
 echo "Bootstraping flux on branch '$GIT_GIT_BRANCH'..."
 flux bootstrap github \
-  --token-auth \
   --owner='marfien' \
   --repository='mc-on-k8s' \
   --branch="$GIT_BRANCH" \
