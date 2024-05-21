@@ -1,18 +1,13 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 GIT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 CLUSTER_NAME="mc-on-k8s-$GIT_BRANCH"
 
-if false && [ -z "$GITHUB_TOKEN" ]; then
-  echo "Please provide a personal access token for github in GITHUB_TOKEN"
-  exit 1;
-fi
-
 echo "Creating cluster '$CLUSTER_NAME'..."
-if minikube >> /dev/null; then
+if command -v minikube >> /dev/null; then
   minikube delete -p "$CLUSTER_NAME"
   minikube start -p "$CLUSTER_NAME"
-elif kind >> /dev/null; then
+elif command -v kind >> /dev/null; then
   kind delete cluster --name "$CLUSTER_NAME"
   kind create cluster --name "$CLUSTER_NAME"
 else
