@@ -1,6 +1,6 @@
 package dev.marfien.minecraftonk8s.api.model.allocation;
 
-import dev.marfien.agonesconnect.common.model.Priority;
+import dev.marfien.minecraftonk8s.api.model.Priority;
 import java.util.List;
 import java.util.Map;
 

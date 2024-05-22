@@ -1,6 +1,6 @@
 package dev.marfien.minecraftonk8s.api.model.allocation;
 
-import dev.marfien.agonesconnect.common.model.GameServerStatusPort;
+import dev.marfien.minecraftonk8s.api.model.GameServerStatusPort;
 import io.fabric8.kubernetes.api.model.NodeAddress;
 import java.util.List;
 
