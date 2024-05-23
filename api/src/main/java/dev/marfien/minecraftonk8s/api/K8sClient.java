@@ -11,37 +11,28 @@ import tr.com.infumia.agones4j.Agones;
 
 public class K8sClient {
 
-    public static Agones createAgonesClientAgones(boolean withGameServerWatcherExecutor, Duration gameServerWatcherExecutorInterval) {
-        Agones.Builder builder = Agones.builder();
-        if (withGameServerWatcherExecutor) {
-            builder.withGameServerWatcherExecutor(Executors.newSingleThreadExecutor());
-        }
-
-        if (gameServerWatcherExecutorInterval != null) {
-            builder.withHealthCheck(Duration.ZERO, gameServerWatcherExecutorInterval);
-            builder.withHealthCheckExecutor(Executors.newSingleThreadScheduledExecutor());
-        }
-
-        return builder.withChannel().build();
+    public static Agones createAgonesClientAgones() {
+        return Agones.builder().withChannel().build();
     }
 
-    public static void use(Consumer<KubernetesClient> consumer) {
-        try (KubernetesClient client = new KubernetesClientBuilder().withConfig(new ConfigBuilder().withTrustCerts().build()).build()) {
+    public static void useClient(Consumer<KubernetesClient> consumer) {
+        try (KubernetesClient client = createKubernetesClient()) {
             consumer.accept(client);
         }
     }
 
     public static void self(Consumer<PodResource> consumer) {
-        try (KubernetesClient client = createKubernetesClient()) {
-            consumer.accept(
-                    client.pods()
-                            .inNamespace(System.getenv("KUBERNETES_NAMESPACE"))
-                            .withName(System.getenv("KUBERNETES_POD_NAME"))
-            );
-        }
+        useClient(client -> {
+            PodResource pod = client.pods()
+                .inNamespace(System.getenv("POD_NAMESPACE"))
+                .withName(System.getenv("GAMESERVER_NAME"));
+            consumer.accept(pod);
+        });
     }
 
     public static KubernetesClient createKubernetesClient() {
-        return new KubernetesClientBuilder().withConfig(new ConfigBuilder().withTrustCerts().build()).build();
+        return new KubernetesClientBuilder()
+            .withConfig(new ConfigBuilder().withTrustCerts().build())
+            .build();
     }
 }
