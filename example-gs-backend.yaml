@@ -1,0 +1,203 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    agones.dev/container: simple-game-server
+    agones.dev/ready-container-id: docker://8f3c564832cdb3c7c86edc32cf23ed582552dbe27de23edb01058a1951253cf9
+    agones.dev/sdk-version: 1.39.0
+    cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+  creationTimestamp: "2024-05-23T09:59:40Z"
+  labels:
+    agones.dev/gameserver: simple-game-server-j6zgw
+    agones.dev/role: gameserver
+    agones.dev/safe-to-evict: "false"
+  name: simple-game-server-j6zgw
+  namespace: default
+  ownerReferences:
+  - apiVersion: agones.dev/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: GameServer
+    name: simple-game-server-j6zgw
+    uid: 99c64bb0-d03d-4541-b684-560dd4c0d163
+  resourceVersion: "820"
+  uid: 2096eea6-6dc0-47db-881b-b561d978a5e5
+spec:
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - podAffinityTerm:
+          labelSelector:
+            matchLabels:
+              agones.dev/role: gameserver
+          topologyKey: kubernetes.io/hostname
+        weight: 100
+  containers:
+  - args:
+    - --grpc-port=9357
+    - --http-port=9358
+    env:
+    - name: GAMESERVER_NAME
+      value: simple-game-server-j6zgw
+    - name: POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.namespace
+    - name: FEATURE_GATES
+      value: CountsAndLists=false&DisableResyncOnSDKServer=false&Example=false&FleetAllocationOverflow=true&GKEAutopilotExtendedDurationPods=false&PlayerAllocationFilter=false&PlayerTracking=false
+    - name: LOG_LEVEL
+      value: Info
+    image: us-docker.pkg.dev/agones-images/release/agones-sdk:1.39.0
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /healthz
+        port: 8080
+        scheme: HTTP
+      initialDelaySeconds: 3
+      periodSeconds: 3
+      successThreshold: 1
+      timeoutSeconds: 1
+    name: agones-gameserver-sidecar
+    resources:
+      requests:
+        cpu: 30m
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-m2vpd
+      readOnly: true
+  - env:
+    - name: AGONES_SDK_GRPC_PORT
+      value: "9357"
+    - name: AGONES_SDK_HTTP_PORT
+      value: "9358"
+    image: us-docker.pkg.dev/agones-images/examples/simple-game-server:0.31
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /gshealthz
+        port: 8080
+        scheme: HTTP
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      successThreshold: 1
+      timeoutSeconds: 1
+    name: simple-game-server
+    ports:
+    - containerPort: 7654
+      hostPort: 7795
+      protocol: UDP
+    resources:
+      limits:
+        cpu: 20m
+        memory: 64Mi
+      requests:
+        cpu: 20m
+        memory: 64Mi
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: empty
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostname: simple-game-server-j6zgw
+  nodeName: agones-test
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: agones-sdk
+  serviceAccountName: agones-sdk
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - emptyDir: {}
+    name: empty
+  - name: kube-api-access-m2vpd
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2024-05-23T10:00:09Z"
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2024-05-23T09:59:41Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2024-05-23T10:00:09Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2024-05-23T10:00:09Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2024-05-23T09:59:41Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://b95cc4ec5b55ea80ab82d81276fb08e0162d9409921b74a67c0d97781e0ad9a9
+    image: us-docker.pkg.dev/agones-images/release/agones-sdk:1.39.0
+    imageID: docker-pullable://us-docker.pkg.dev/agones-images/release/agones-sdk@sha256:58c704a5c0265c46e507575cbc5597f4f9e4c30a2233395e7c9c2b606b3d7dd8
+    lastState: {}
+    name: agones-gameserver-sidecar
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2024-05-23T09:59:57Z"
+  - containerID: docker://8f3c564832cdb3c7c86edc32cf23ed582552dbe27de23edb01058a1951253cf9
+    image: us-docker.pkg.dev/agones-images/examples/simple-game-server:0.31
+    imageID: docker-pullable://us-docker.pkg.dev/agones-images/examples/simple-game-server@sha256:cf8e9c38653a1d6b1123f85445ef380f2284b42c7c7df83a09c149928e91b24f
+    lastState: {}
+    name: simple-game-server
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2024-05-23T10:00:09Z"
+  hostIP: 192.168.58.2
+  hostIPs:
+  - ip: 192.168.58.2
+  phase: Running
+  podIP: 10.244.0.12
+  podIPs:
+  - ip: 10.244.0.12
+  qosClass: Burstable
+  startTime: "2024-05-23T09:59:41Z"
