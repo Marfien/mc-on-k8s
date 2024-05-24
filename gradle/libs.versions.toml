@@ -8,3 +8,4 @@ grpc-protobuf = { group = "io.grpc", name = "grpc-netty", version.ref = "grpc" }
 
 agones4j = { group = "com.github.infumia", name = "agones4j", version = "1.0.3" }
 kubernetes-client = { group = "io.fabric8", name = "kubernetes-client", version = "6.12.1" }
+kubernetes-crdsgen = { group = "io.fabric8", name = "crd-generator-apt", version = "6.12.1" }
