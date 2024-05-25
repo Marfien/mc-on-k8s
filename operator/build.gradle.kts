@@ -17,11 +17,10 @@ dependencies {
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:quarkus-operator-sdk-bom:${quarkusPlatformVersion}"))
     implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk")
     implementation("io.quarkus:quarkus-arc")
+    implementation(project(":model"))
+
     testImplementation("io.quarkus:quarkus-junit5")
 }
-
-group = "dev.marfien.minecraftonk8s"
-version = "1.0-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17

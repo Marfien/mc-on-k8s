@@ -1,5 +1,6 @@
 plugins {
     id("java-library")
+    id("org.kordamp.gradle.jandex") version "2.0.0"
 }
 
 repositories {
@@ -14,4 +15,9 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
