@@ -1,26 +1,19 @@
 package dev.marfien.minecraftonk8s.api.model;
 
 import io.fabric8.kubernetes.api.model.ObjectMeta;
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class GameServerTemplateSpec {
 
-  private ObjectMeta metadata;
+    private ObjectMeta metadata;
 
-  private GameServerSpec spec;
+    private GameServerSpec spec;
 
-  public ObjectMeta getMetadata() {
-    return this.metadata;
-  }
-
-  public void setMetadata(ObjectMeta metadata) {
-    this.metadata = metadata;
-  }
-
-  public GameServerSpec getSpec() {
-    return this.spec;
-  }
-
-  public void setSpec(GameServerSpec spec) {
-    this.spec = spec;
-  }
 }

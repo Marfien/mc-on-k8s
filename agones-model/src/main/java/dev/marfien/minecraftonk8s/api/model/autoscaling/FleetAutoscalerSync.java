@@ -1,24 +1,18 @@
 package dev.marfien.minecraftonk8s.api.model.autoscaling;
 
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class FleetAutoscalerSync {
 
-  private String type;
+    private String type;
 
-  private FixedIntervalSync fixedInterval;
+    private FixedIntervalSync fixedInterval;
 
-  public String getType() {
-    return this.type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
-  }
-
-  public FixedIntervalSync getFixedInterval() {
-    return this.fixedInterval;
-  }
-
-  public void setFixedInterval(FixedIntervalSync fixedInterval) {
-    this.fixedInterval = fixedInterval;
-  }
 }

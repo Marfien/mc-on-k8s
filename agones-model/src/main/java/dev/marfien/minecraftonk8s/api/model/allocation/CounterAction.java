@@ -1,34 +1,20 @@
 package dev.marfien.minecraftonk8s.api.model.allocation;
 
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class CounterAction {
 
-  private String action;
+    private String action;
 
-  private long amount;
+    private long amount;
 
-  private long capacity;
+    private long capacity;
 
-  public String getAction() {
-    return this.action;
-  }
-
-  public void setAction(String action) {
-    this.action = action;
-  }
-
-  public long getAmount() {
-    return this.amount;
-  }
-
-  public void setAmount(long amount) {
-    this.amount = amount;
-  }
-
-  public long getCapacity() {
-    return this.capacity;
-  }
-
-  public void setCapacity(long capacity) {
-    this.capacity = capacity;
-  }
 }

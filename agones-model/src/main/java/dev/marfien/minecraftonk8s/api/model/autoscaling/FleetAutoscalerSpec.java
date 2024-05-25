@@ -1,34 +1,20 @@
 package dev.marfien.minecraftonk8s.api.model.autoscaling;
 
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class FleetAutoscalerSpec {
 
-  private String fleetName;
+    private String fleetName;
 
-  private FleetAutoscalerPolicy policy;
+    private FleetAutoscalerPolicy policy;
 
-  private FleetAutoscalerSync sync;
+    private FleetAutoscalerSync sync;
 
-  public String getFleetName() {
-    return this.fleetName;
-  }
-
-  public void setFleetName(String fleetName) {
-    this.fleetName = fleetName;
-  }
-
-  public FleetAutoscalerPolicy getPolicy() {
-    return this.policy;
-  }
-
-  public void setPolicy(FleetAutoscalerPolicy policy) {
-    this.policy = policy;
-  }
-
-  public FleetAutoscalerSync getSync() {
-    return this.sync;
-  }
-
-  public void setSync(FleetAutoscalerSync sync) {
-    this.sync = sync;
-  }
 }

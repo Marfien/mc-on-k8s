@@ -1,34 +1,20 @@
 package dev.marfien.minecraftonk8s.api.model.multicluster;
 
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class GameServerAllocationPolicySpec {
 
-  private int priority;
+    private int priority;
 
-  private int weight;
+    private int weight;
 
-  private ClusterConnectionInfo connectionInfo;
+    private ClusterConnectionInfo connectionInfo;
 
-  public int getPriority() {
-    return this.priority;
-  }
-
-  public void setPriority(int priority) {
-    this.priority = priority;
-  }
-
-  public int getWeight() {
-    return this.weight;
-  }
-
-  public void setWeight(int weight) {
-    this.weight = weight;
-  }
-
-  public ClusterConnectionInfo getConnectionInfo() {
-    return this.connectionInfo;
-  }
-
-  public void setConnectionInfo(ClusterConnectionInfo connectionInfo) {
-    this.connectionInfo = connectionInfo;
-  }
 }

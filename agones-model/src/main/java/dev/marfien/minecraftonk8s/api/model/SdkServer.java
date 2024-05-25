@@ -1,34 +1,20 @@
 package dev.marfien.minecraftonk8s.api.model;
 
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class SdkServer {
 
-  private String logLevel;
+    private String logLevel;
 
-  private int grpcPort;
+    private int grpcPort;
 
-  private int httpPort;
+    private int httpPort;
 
-  public String getLogLevel() {
-    return this.logLevel;
-  }
-
-  public void setLogLevel(String logLevel) {
-    this.logLevel = logLevel;
-  }
-
-  public int getGrpcPort() {
-    return this.grpcPort;
-  }
-
-  public void setGrpcPort(int grpcPort) {
-    this.grpcPort = grpcPort;
-  }
-
-  public int getHttpPort() {
-    return this.httpPort;
-  }
-
-  public void setHttpPort(int httpPort) {
-    this.httpPort = httpPort;
-  }
 }

@@ -1,26 +1,19 @@
 package dev.marfien.minecraftonk8s.api.model;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class ListStatus {
 
-  private long capacity;
+    private long capacity;
 
-  private List<String> values;
+    private List<String> values;
 
-  public long getCapacity() {
-    return this.capacity;
-  }
-
-  public void setCapacity(long capacity) {
-    this.capacity = capacity;
-  }
-
-  public List<String> getValues() {
-    return this.values;
-  }
-
-  public void setValues(List<String> values) {
-    this.values = values;
-  }
 }

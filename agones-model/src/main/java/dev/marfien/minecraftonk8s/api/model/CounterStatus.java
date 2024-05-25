@@ -1,24 +1,18 @@
 package dev.marfien.minecraftonk8s.api.model;
 
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class CounterStatus {
 
-  private long count;
+    private long count;
 
-  private long capacity;
+    private long capacity;
 
-  public long getCount() {
-    return this.count;
-  }
-
-  public void setCount(long count) {
-    this.count = count;
-  }
-
-  public long getCapacity() {
-    return this.capacity;
-  }
-
-  public void setCapacity(long capacity) {
-    this.capacity = capacity;
-  }
 }

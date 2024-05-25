@@ -1,24 +1,18 @@
 package dev.marfien.minecraftonk8s.api.model;
 
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class GameServerStatusPort {
 
-  private String name;
+    private String name;
 
-  private int port;
+    private int port;
 
-  public String getName() {
-    return this.name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public int getPort() {
-    return this.port;
-  }
-
-  public void setPort(int port) {
-    this.port = port;
-  }
 }

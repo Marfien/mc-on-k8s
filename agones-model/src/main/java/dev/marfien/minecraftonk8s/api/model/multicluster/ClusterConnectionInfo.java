@@ -1,56 +1,25 @@
 package dev.marfien.minecraftonk8s.api.model.multicluster;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClusterConnectionInfo {
 
-  private String clusterName;
+    private String clusterName;
 
-  private List<String> allocationEndpoints;
+    private List<String> allocationEndpoints;
 
-  private String secretName;
+    private String secretName;
 
-  private String namespace;
+    private String namespace;
 
-  private byte[] serverCa;
+    private byte[] serverCa;
 
-  public String getClusterName() {
-    return this.clusterName;
-  }
-
-  public void setClusterName(String clusterName) {
-    this.clusterName = clusterName;
-  }
-
-  public List<String> getAllocationEndpoints() {
-    return this.allocationEndpoints;
-  }
-
-  public void setAllocationEndpoints(List<String> allocationEndpoints) {
-    this.allocationEndpoints = allocationEndpoints;
-  }
-
-  public String getSecretName() {
-    return this.secretName;
-  }
-
-  public void setSecretName(String secretName) {
-    this.secretName = secretName;
-  }
-
-  public String getNamespace() {
-    return this.namespace;
-  }
-
-  public void setNamespace(String namespace) {
-    this.namespace = namespace;
-  }
-
-  public byte[] getServerCa() {
-    return this.serverCa;
-  }
-
-  public void setServerCa(byte[] serverCa) {
-    this.serverCa = serverCa;
-  }
 }

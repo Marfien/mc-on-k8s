@@ -18,6 +18,7 @@ dependencies {
     implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk")
     implementation("io.quarkus:quarkus-arc")
     implementation(project(":model"))
+    implementation(project(":agones-model"))
 
     testImplementation("io.quarkus:quarkus-junit5")
 }

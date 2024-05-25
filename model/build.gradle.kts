@@ -8,6 +8,9 @@ repositories {
 }
 
 dependencies {
+    compileOnly(libs.bundles.annotations)
+    annotationProcessor(libs.bundles.annotations)
+
     api(libs.kubernetes.client)
     api(project(":agones-model"))
     annotationProcessor(libs.kubernetes.crdsgen)

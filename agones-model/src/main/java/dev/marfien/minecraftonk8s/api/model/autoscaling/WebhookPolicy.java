@@ -1,36 +1,24 @@
 package dev.marfien.minecraftonk8s.api.model.autoscaling;
 
 import io.fabric8.kubernetes.api.model.ServiceReference;
+import io.sundr.builder.annotations.BuildableReference;
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder", refs = {
+        @BuildableReference(ServiceReference.class)
+})
 public class WebhookPolicy {
 
-  private String url;
+    private String url;
 
-  private ServiceReference service;
+    private ServiceReference service;
 
-  private byte[] caBundle;
+    private byte[] caBundle;
 
-  public String getUrl() {
-    return this.url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
-
-  public ServiceReference getService() {
-    return this.service;
-  }
-
-  public void setService(ServiceReference service) {
-    this.service = service;
-  }
-
-  public byte[] getCaBundle() {
-    return this.caBundle;
-  }
-
-  public void setCaBundle(byte[] caBundle) {
-    this.caBundle = caBundle;
-  }
 }

@@ -1,54 +1,24 @@
 package dev.marfien.minecraftonk8s.api.model.autoscaling;
 
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class FleetAutoscalerStatus {
 
-  private int currentReplicas;
+    private int currentReplicas;
 
-  private int desiredReplicas;
+    private int desiredReplicas;
 
-  private String lastScaleTime;
+    private String lastScaleTime;
 
-  private boolean ableToScale;
+    private boolean ableToScale;
 
-  private boolean scalingLimited;
+    private boolean scalingLimited;
 
-  public int getCurrentReplicas() {
-    return this.currentReplicas;
-  }
-
-  public void setCurrentReplicas(int currentReplicas) {
-    this.currentReplicas = currentReplicas;
-  }
-
-  public int getDesiredReplicas() {
-    return this.desiredReplicas;
-  }
-
-  public void setDesiredReplicas(int desiredReplicas) {
-    this.desiredReplicas = desiredReplicas;
-  }
-
-  public String getLastScaleTime() {
-    return this.lastScaleTime;
-  }
-
-  public void setLastScaleTime(String lastScaleTime) {
-    this.lastScaleTime = lastScaleTime;
-  }
-
-  public boolean isAbleToScale() {
-    return this.ableToScale;
-  }
-
-  public void setAbleToScale(boolean ableToScale) {
-    this.ableToScale = ableToScale;
-  }
-
-  public boolean isScalingLimited() {
-    return this.scalingLimited;
-  }
-
-  public void setScalingLimited(boolean scalingLimited) {
-    this.scalingLimited = scalingLimited;
-  }
 }

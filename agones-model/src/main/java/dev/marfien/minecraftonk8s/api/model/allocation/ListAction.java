@@ -1,26 +1,19 @@
 package dev.marfien.minecraftonk8s.api.model.allocation;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class ListAction {
 
-  private List<String> addValues;
+    private List<String> addValues;
 
-  private long capacity;
+    private long capacity;
 
-  public List<String> getAddValues() {
-    return this.addValues;
-  }
-
-  public void setAddValues(List<String> addValues) {
-    this.addValues = addValues;
-  }
-
-  public long getCapacity() {
-    return this.capacity;
-  }
-
-  public void setCapacity(long capacity) {
-    this.capacity = capacity;
-  }
 }

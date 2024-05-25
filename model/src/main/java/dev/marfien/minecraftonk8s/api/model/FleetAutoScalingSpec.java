@@ -1,16 +1,22 @@
 package dev.marfien.minecraftonk8s.api.model;
 
 import dev.marfien.minecraftonk8s.api.model.autoscaling.FleetAutoscalerPolicy;
+import io.sundr.builder.Editable;
+import io.sundr.builder.annotations.Buildable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class FleetAutoScalingSpec {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+public class FleetAutoScalingSpec implements Editable<FleetAutoScalingSpecBuilder> {
 
     private FleetAutoscalerPolicy policy;
 
-    public FleetAutoscalerPolicy getPolicy() {
-        return policy;
-    }
-
-    public void setPolicy(FleetAutoscalerPolicy policy) {
-        this.policy = policy;
+    @Override
+    public FleetAutoScalingSpecBuilder edit() {
+        return new FleetAutoScalingSpecBuilder(this);
     }
 }

@@ -1,32 +1,23 @@
 package dev.marfien.minecraftonk8s.api.model.minecraftserver;
 
-public class MinecraftServerStatus {
+import io.fabric8.kubernetes.api.builder.Editable;
+import io.sundr.builder.annotations.Buildable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+public class MinecraftServerStatus implements Editable<MinecraftServerStatusBuilder> {
 
     private boolean ready;
     private String ip;
     private int port;
 
-    public boolean isReady() {
-        return ready;
-    }
-
-    public void setReady(boolean ready) {
-        this.ready = ready;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
+    @Override
+    public MinecraftServerStatusBuilder edit() {
+        return new MinecraftServerStatusBuilder(this);
     }
 }

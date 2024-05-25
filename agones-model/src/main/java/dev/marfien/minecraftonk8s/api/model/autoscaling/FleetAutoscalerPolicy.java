@@ -1,54 +1,24 @@
 package dev.marfien.minecraftonk8s.api.model.autoscaling;
 
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class FleetAutoscalerPolicy {
 
-  private String type;
+    private String type;
 
-  private BufferPolicy buffer;
+    private BufferPolicy buffer;
 
-  private WebhookPolicy webhook;
+    private WebhookPolicy webhook;
 
-  private CounterPolicy counter;
+    private CounterPolicy counter;
 
-  private ListPolicy list;
+    private ListPolicy list;
 
-  public String getType() {
-    return this.type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
-  }
-
-  public BufferPolicy getBuffer() {
-    return this.buffer;
-  }
-
-  public void setBuffer(BufferPolicy buffer) {
-    this.buffer = buffer;
-  }
-
-  public WebhookPolicy getWebhook() {
-    return this.webhook;
-  }
-
-  public void setWebhook(WebhookPolicy webhook) {
-    this.webhook = webhook;
-  }
-
-  public CounterPolicy getCounter() {
-    return this.counter;
-  }
-
-  public void setCounter(CounterPolicy counter) {
-    this.counter = counter;
-  }
-
-  public ListPolicy getList() {
-    return this.list;
-  }
-
-  public void setList(ListPolicy list) {
-    this.list = list;
-  }
 }

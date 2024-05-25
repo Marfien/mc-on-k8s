@@ -1,14 +1,16 @@
 package dev.marfien.minecraftonk8s.api.model;
 
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Eviction {
 
-  private String safe;
+    private String safe;
 
-  public String getSafe() {
-    return this.safe;
-  }
-
-  public void setSafe(String safe) {
-    this.safe = safe;
-  }
 }

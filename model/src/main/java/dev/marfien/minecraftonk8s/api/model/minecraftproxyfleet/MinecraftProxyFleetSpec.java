@@ -2,34 +2,24 @@ package dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet;
 
 import dev.marfien.minecraftonk8s.api.model.FleetAutoScalingSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxy.MinecraftProxySpec;
+import io.fabric8.kubernetes.api.builder.Editable;
+import io.sundr.builder.annotations.Buildable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class MinecraftProxyFleetSpec {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+public class MinecraftProxyFleetSpec implements Editable<MinecraftProxyFleetSpecBuilder> {
 
     private int targetReplicas;
     private MinecraftProxySpec template;
     private FleetAutoScalingSpec autoScaling;
 
-    public int getTargetReplicas() {
-        return targetReplicas;
-    }
-
-    public void setTargetReplicas(int targetReplicas) {
-        this.targetReplicas = targetReplicas;
-    }
-
-    public MinecraftProxySpec getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(MinecraftProxySpec template) {
-        this.template = template;
-    }
-
-    public FleetAutoScalingSpec getAutoScaling() {
-        return autoScaling;
-    }
-
-    public void setAutoScaling(FleetAutoScalingSpec autoScaling) {
-        this.autoScaling = autoScaling;
+    @Override
+    public MinecraftProxyFleetSpecBuilder edit() {
+        return new MinecraftProxyFleetSpecBuilder(this);
     }
 }

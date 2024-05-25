@@ -1,26 +1,19 @@
 package dev.marfien.minecraftonk8s.api.model.allocation;
 
 import java.util.Map;
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class MetaPatch {
 
-  private Map<String, String> labels;
+    private Map<String, String> labels;
 
-  private Map<String, String> annotations;
+    private Map<String, String> annotations;
 
-  public Map<String, String> getLabels() {
-    return this.labels;
-  }
-
-  public void setLabels(Map<String, String> labels) {
-    this.labels = labels;
-  }
-
-  public Map<String, String> getAnnotations() {
-    return this.annotations;
-  }
-
-  public void setAnnotations(Map<String, String> annotations) {
-    this.annotations = annotations;
-  }
 }

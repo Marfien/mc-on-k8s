@@ -1,32 +1,23 @@
 package dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet;
 
-public class MinecraftProxyFleetStatus {
+import io.fabric8.kubernetes.api.builder.Editable;
+import io.sundr.builder.annotations.Buildable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+public class MinecraftProxyFleetStatus implements Editable<MinecraftProxyFleetStatusBuilder> {
 
     private int replicas;
     private int readyReplicas;
     private int allocatedReplicas;
 
-    public int getReplicas() {
-        return replicas;
-    }
-
-    public void setReplicas(int replicas) {
-        this.replicas = replicas;
-    }
-
-    public int getReadyReplicas() {
-        return readyReplicas;
-    }
-
-    public void setReadyReplicas(int readyReplicas) {
-        this.readyReplicas = readyReplicas;
-    }
-
-    public int getAllocatedReplicas() {
-        return allocatedReplicas;
-    }
-
-    public void setAllocatedReplicas(int allocatedReplicas) {
-        this.allocatedReplicas = allocatedReplicas;
+    @Override
+    public MinecraftProxyFleetStatusBuilder edit() {
+        return new MinecraftProxyFleetStatusBuilder(this);
     }
 }

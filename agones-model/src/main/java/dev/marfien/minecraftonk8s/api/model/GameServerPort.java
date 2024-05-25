@@ -1,64 +1,26 @@
 package dev.marfien.minecraftonk8s.api.model;
 
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class GameServerPort {
 
-  private String name;
+    private String name;
 
-  private String portPolicy;
+    private String portPolicy;
 
-  private String container;
+    private String container;
 
-  private int containerPort;
+    private int containerPort;
 
-  private int hostPort;
+    private int hostPort;
 
-  private String protocol;
+    private String protocol;
 
-  public String getName() {
-    return this.name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getPortPolicy() {
-    return this.portPolicy;
-  }
-
-  public void setPortPolicy(String portPolicy) {
-    this.portPolicy = portPolicy;
-  }
-
-  public String getContainer() {
-    return this.container;
-  }
-
-  public void setContainer(String container) {
-    this.container = container;
-  }
-
-  public int getContainerPort() {
-    return this.containerPort;
-  }
-
-  public void setContainerPort(int containerPort) {
-    this.containerPort = containerPort;
-  }
-
-  public int getHostPort() {
-    return this.hostPort;
-  }
-
-  public void setHostPort(int hostPort) {
-    this.hostPort = hostPort;
-  }
-
-  public String getProtocol() {
-    return this.protocol;
-  }
-
-  public void setProtocol(String protocol) {
-    this.protocol = protocol;
-  }
 }

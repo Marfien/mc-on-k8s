@@ -1,36 +1,21 @@
 package dev.marfien.minecraftonk8s.api.model.autoscaling;
 
 import io.fabric8.kubernetes.api.model.IntOrString;
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class BufferPolicy {
 
-  private int maxReplicas;
+    private int maxReplicas;
 
-  private int minReplicas;
+    private int minReplicas;
 
-  private IntOrString bufferSize;
+    private IntOrString bufferSize;
 
-  public int getMaxReplicas() {
-    return this.maxReplicas;
-  }
-
-  public void setMaxReplicas(int maxReplicas) {
-    this.maxReplicas = maxReplicas;
-  }
-
-  public int getMinReplicas() {
-    return this.minReplicas;
-  }
-
-  public void setMinReplicas(int minReplicas) {
-    this.minReplicas = minReplicas;
-  }
-
-  public IntOrString getBufferSize() {
-    return this.bufferSize;
-  }
-
-  public void setBufferSize(IntOrString bufferSize) {
-    this.bufferSize = bufferSize;
-  }
 }

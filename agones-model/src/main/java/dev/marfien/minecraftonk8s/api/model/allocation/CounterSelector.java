@@ -1,44 +1,22 @@
 package dev.marfien.minecraftonk8s.api.model.allocation;
 
+import lombok.AllArgsConstructor;
+import io.sundr.builder.annotations.Buildable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
+@NoArgsConstructor
+@AllArgsConstructor
 public class CounterSelector {
 
-  private long minCount;
+    private long minCount;
 
-  private long maxCount;
+    private long maxCount;
 
-  private long minAvailable;
+    private long minAvailable;
 
-  private long maxAvailable;
+    private long maxAvailable;
 
-  public long getMinCount() {
-    return this.minCount;
-  }
-
-  public void setMinCount(long minCount) {
-    this.minCount = minCount;
-  }
-
-  public long getMaxCount() {
-    return this.maxCount;
-  }
-
-  public void setMaxCount(long maxCount) {
-    this.maxCount = maxCount;
-  }
-
-  public long getMinAvailable() {
-    return this.minAvailable;
-  }
-
-  public void setMinAvailable(long minAvailable) {
-    this.minAvailable = minAvailable;
-  }
-
-  public long getMaxAvailable() {
-    return this.maxAvailable;
-  }
-
-  public void setMaxAvailable(long maxAvailable) {
-    this.maxAvailable = maxAvailable;
-  }
 }
