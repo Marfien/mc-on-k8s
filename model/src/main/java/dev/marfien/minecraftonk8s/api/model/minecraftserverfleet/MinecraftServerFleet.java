@@ -8,9 +8,6 @@ import io.fabric8.kubernetes.model.annotation.ShortNames;
 import io.fabric8.kubernetes.model.annotation.Version;
 import io.sundr.builder.Editable;
 import io.sundr.builder.annotations.Buildable;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Group("mconk8s.marfien.dev")
 @Version("v1alpha1")

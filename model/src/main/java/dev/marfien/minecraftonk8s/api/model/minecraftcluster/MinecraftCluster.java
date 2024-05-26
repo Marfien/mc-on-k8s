@@ -15,7 +15,8 @@ import io.sundr.builder.annotations.Buildable;
 @Plural("minecraftclusters")
 @ShortNames({"mcc", "mccluster", "mcclusters"})
 @Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
-public class MinecraftCluster extends CustomResource<MinecraftClusterSpec, MinecraftClusterStatus> implements
+public class MinecraftCluster extends
+        CustomResource<MinecraftClusterSpec, MinecraftClusterStatus> implements
         Editable<MinecraftClusterBuilder> {
 
     @Override
@@ -23,7 +24,12 @@ public class MinecraftCluster extends CustomResource<MinecraftClusterSpec, Minec
         return new MinecraftClusterBuilder(this);
     }
 
-    public static class MinecraftClusterSpec {}
-    public static class MinecraftClusterStatus {}
+    public static class MinecraftClusterSpec {
+
+    }
+
+    public static class MinecraftClusterStatus {
+
+    }
 
 }

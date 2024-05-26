@@ -1,8 +1,8 @@
 package dev.marfien.minecraftonk8s.api.model.autoscaling;
 
 import io.fabric8.kubernetes.api.model.IntOrString;
-import lombok.AllArgsConstructor;
 import io.sundr.builder.annotations.Buildable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -1,7 +1,7 @@
 package dev.marfien.minecraftonk8s.api.model;
 
-import lombok.AllArgsConstructor;
 import io.sundr.builder.annotations.Buildable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Health {
 
-    private boolean disabled;
+    private boolean disabled = false;
 
-    private int periodSeconds;
+    private int periodSeconds = 5;
 
-    private int failureThreshold;
+    private int failureThreshold = 3;
 
-    private int initialDelaySeconds;
+    private int initialDelaySeconds = 5;
 
 }

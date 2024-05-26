@@ -1,10 +1,10 @@
 package dev.marfien.minecraftonk8s.api.model.allocation;
 
 import dev.marfien.minecraftonk8s.api.model.Priority;
+import io.sundr.builder.annotations.Buildable;
 import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
-import io.sundr.builder.annotations.Buildable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

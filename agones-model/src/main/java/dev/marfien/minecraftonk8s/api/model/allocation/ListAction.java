@@ -1,8 +1,8 @@
 package dev.marfien.minecraftonk8s.api.model.allocation;
 
+import io.sundr.builder.annotations.Buildable;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import io.sundr.builder.annotations.Buildable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

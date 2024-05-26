@@ -1,8 +1,8 @@
 package dev.marfien.minecraftonk8s.api.model;
 
 import io.fabric8.kubernetes.api.model.ObjectMeta;
-import lombok.AllArgsConstructor;
 import io.sundr.builder.annotations.Buildable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

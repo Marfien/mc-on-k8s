@@ -1,9 +1,9 @@
 package dev.marfien.minecraftonk8s.api.model.allocation;
 
 import io.fabric8.kubernetes.api.model.LabelSelector;
+import io.sundr.builder.annotations.Buildable;
 import io.sundr.builder.annotations.BuildableReference;
 import lombok.AllArgsConstructor;
-import io.sundr.builder.annotations.Buildable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

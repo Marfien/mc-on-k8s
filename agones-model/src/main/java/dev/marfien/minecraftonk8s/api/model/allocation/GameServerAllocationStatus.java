@@ -2,10 +2,10 @@ package dev.marfien.minecraftonk8s.api.model.allocation;
 
 import dev.marfien.minecraftonk8s.api.model.GameServerStatusPort;
 import io.fabric8.kubernetes.api.model.NodeAddress;
-import java.util.List;
-import io.sundr.builder.annotations.BuildableReference;
-import lombok.AllArgsConstructor;
 import io.sundr.builder.annotations.Buildable;
+import io.sundr.builder.annotations.BuildableReference;
+import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

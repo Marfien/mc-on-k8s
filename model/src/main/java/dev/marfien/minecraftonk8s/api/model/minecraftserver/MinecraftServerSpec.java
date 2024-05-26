@@ -4,10 +4,10 @@ import io.fabric8.kubernetes.api.builder.Editable;
 import io.fabric8.kubernetes.api.model.PodTemplateSpec;
 import io.sundr.builder.annotations.Buildable;
 import io.sundr.builder.annotations.BuildableReference;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,6 +21,8 @@ public class MinecraftServerSpec implements Editable<MinecraftServerSpecBuilder>
     private Set<String> tags;
 
     private PodTemplateSpec template;
+
+    private String sdkServerLogLevel = "info";
 
     @Override
     public MinecraftServerSpecBuilder edit() {

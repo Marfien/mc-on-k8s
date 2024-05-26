@@ -14,7 +14,8 @@ import io.sundr.builder.annotations.Buildable;
 @Plural("minecraftservers")
 @ShortNames({"mcs", "mcserver", "mcservers"})
 @Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
-public class MinecraftServer extends CustomResource<MinecraftServerSpec, MinecraftServerStatus> implements
+public class MinecraftServer extends
+        CustomResource<MinecraftServerSpec, MinecraftServerStatus> implements
         Namespaced, Editable<MinecraftServerBuilder> {
 
     @Override
