@@ -1,9 +1,8 @@
 package dev.marfien.minecraftonk8s.api.model.minecraftserverfleet;
 
-import dev.marfien.minecraftonk8s.api.model.FleetAutoScalingSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
 import io.fabric8.kubernetes.api.builder.Editable;
-import io.fabric8.kubernetes.api.model.apps.DeploymentStrategy;
+import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.sundr.builder.annotations.Buildable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,15 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
-public class MinecraftServerFleetSpec implements Editable<MinecraftServerFleetSpecBuilder> {
+public class MinecraftServerTemplateSpec implements Editable<MinecraftServerTemplateSpecBuilder> {
 
-    private int targetReplicas;
-    private MinecraftServerTemplateSpec template;
-    private FleetAutoScalingSpec autoScaling;
-    private DeploymentStrategy deploymentStrategy;
+    private ObjectMeta metadata;
+    private MinecraftServerSpec spec;
 
     @Override
-    public MinecraftServerFleetSpecBuilder edit() {
-        return new MinecraftServerFleetSpecBuilder(this);
+    public MinecraftServerTemplateSpecBuilder edit() {
+        return new MinecraftServerTemplateSpecBuilder(this);
     }
 }

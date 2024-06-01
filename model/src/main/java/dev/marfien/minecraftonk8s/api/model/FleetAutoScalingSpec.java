@@ -1,7 +1,7 @@
 package dev.marfien.minecraftonk8s.api.model;
 
 import dev.marfien.minecraftonk8s.api.model.autoscaling.FleetAutoscalerPolicy;
-import io.sundr.builder.Editable;
+import io.fabric8.kubernetes.api.builder.Editable;
 import io.sundr.builder.annotations.Buildable;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,0 +1,57 @@
+package dev.marfien.minecraftonk8s.operator.minecraftserver;
+
+import dev.marfien.minecraftonk8s.api.model.GameServer;
+import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
+import dev.marfien.minecraftonk8s.operator.minecraftserver.dependentresource.GameServerDependentResource;
+import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
+import io.javaoperatorsdk.operator.api.reconciler.Context;
+import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
+import io.javaoperatorsdk.operator.api.reconciler.DeleteControl;
+import io.javaoperatorsdk.operator.api.reconciler.ErrorStatusHandler;
+import io.javaoperatorsdk.operator.api.reconciler.ErrorStatusUpdateControl;
+import io.javaoperatorsdk.operator.api.reconciler.Reconciler;
+import io.javaoperatorsdk.operator.api.reconciler.UpdateControl;
+import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
+
+@ControllerConfiguration(
+        dependents = {
+                @Dependent(type = GameServerDependentResource.class)
+        }
+)
+public class MinecraftServerReconciler implements Reconciler<MinecraftServer>,
+        ErrorStatusHandler<MinecraftServer>, Cleaner<MinecraftServer> {
+
+    public static final String SELECTOR = "mconk8s.marfien.dev/managed-by-mcs-reconciler";
+
+    @Override
+    public UpdateControl<MinecraftServer> reconcile(MinecraftServer minecraftServer,
+            Context<MinecraftServer> context) throws Exception {
+        GameServer backedGameServer = context.getSecondaryResource(GameServer.class).orElseThrow();
+
+        boolean ready = minecraftServer.getStatus().isReady() || backedGameServer.getStatus().getState().equalsIgnoreCase("ready");
+
+        MinecraftServer updated = minecraftServer.edit()
+                .editStatus()
+                .withIp(backedGameServer.getStatus().getAddress())
+                // TODO: This should be the actual port of the game server
+                .withPort(25565)
+                .withReady(ready)
+                .endStatus()
+                .build();
+
+        return UpdateControl.updateStatus(updated);
+    }
+
+
+    @Override
+    public ErrorStatusUpdateControl<MinecraftServer> updateErrorStatus(MinecraftServer resource,
+            Context<MinecraftServer> context, Exception e) {
+        resource.getStatus().setErrorMessage(e.getMessage());
+        return ErrorStatusUpdateControl.updateStatus(resource);
+    }
+
+    @Override
+    public DeleteControl cleanup(MinecraftServer resource, Context<MinecraftServer> context) {
+        return DeleteControl.defaultDelete();
+    }
+}

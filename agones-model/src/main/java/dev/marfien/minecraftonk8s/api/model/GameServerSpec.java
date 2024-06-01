@@ -1,6 +1,7 @@
 package dev.marfien.minecraftonk8s.api.model;
 
 import io.fabric8.kubernetes.api.model.PodTemplateSpec;
+import io.sundr.builder.Editable;
 import io.sundr.builder.annotations.Buildable;
 import io.sundr.builder.annotations.BuildableReference;
 import java.util.List;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder", refs = {
         @BuildableReference(PodTemplateSpec.class)
 })
-public class GameServerSpec {
+public class GameServerSpec implements Editable<GameServerSpecBuilder> {
 
     private String container;
 
@@ -37,4 +38,8 @@ public class GameServerSpec {
 
     private Eviction eviction;
 
+    @Override
+    public GameServerSpecBuilder edit() {
+        return new GameServerSpecBuilder(this);
+    }
 }

@@ -16,6 +16,8 @@ public class MinecraftServerFleetStatus implements Editable<MinecraftServerFleet
     private int readyReplicas;
     private int allocatedReplicas;
 
+    private String errorMessage;
+
     @Override
     public MinecraftServerFleetStatusBuilder edit() {
         return new MinecraftServerFleetStatusBuilder(this);

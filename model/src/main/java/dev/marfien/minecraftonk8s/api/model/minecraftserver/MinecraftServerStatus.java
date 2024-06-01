@@ -16,6 +16,8 @@ public class MinecraftServerStatus implements Editable<MinecraftServerStatusBuil
     private String ip;
     private int port;
 
+    private String errorMessage;
+
     @Override
     public MinecraftServerStatusBuilder edit() {
         return new MinecraftServerStatusBuilder(this);
