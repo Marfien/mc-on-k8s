@@ -12,8 +12,10 @@ import io.sundr.builder.annotations.BuildableReference;
 @Version("v1")
 @Group("multicluster.agones.dev")
 @Kind("GameServerAllocationPolicy")
-@Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder", refs = {
-        @BuildableReference(ObjectMeta.class)
+@Buildable(editableEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder",
+        lazyCollectionInitEnabled = false, refs = {
+        @BuildableReference(io.fabric8.kubernetes.api.model.ObjectMeta.class),
+        @BuildableReference(CustomResource.class),
 })
 public class GameServerAllocationPolicy
         extends CustomResource<GameServerAllocationPolicySpec, GameServerAllocationPolicyStatus>

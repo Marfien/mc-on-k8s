@@ -32,7 +32,7 @@ tasks {
     }
 
     compileJava {
-        finalizedBy(deleteTask)
+        //finalizedBy(deleteTask)
     }
 
 }
