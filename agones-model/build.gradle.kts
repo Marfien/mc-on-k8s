@@ -13,6 +13,8 @@ repositories {
 dependencies {
     compileOnly(libs.bundles.annotations)
     annotationProcessor(libs.bundles.annotations)
+    // https://github.com/sundrio/sundrio/issues/104#issuecomment-460770907
+    annotationProcessor(libs.kubernetes.client)
 
     api(libs.kubernetes.client)
 }
@@ -20,19 +22,4 @@ dependencies {
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
-}
-
-tasks {
-
-    val deleteTask = register<Delete>("deleteGeneratedFabric8Builder") {
-        val buildDir = project.layout.buildDirectory
-        val pkg = "io.fabric8".replace('.', '/')
-        delete(buildDir.dir("generated/sources/annotationProcessor/java/main/${pkg}"))
-        delete(buildDir.dir("classes/java/main/${pkg}"))
-    }
-
-    compileJava {
-        //finalizedBy(deleteTask)
-    }
-
 }

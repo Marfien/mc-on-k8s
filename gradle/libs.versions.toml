@@ -3,7 +3,7 @@ grpc = "1.61.1"
 
 [libraries]
 lombok = { group = "org.projectlombok", name = "lombok", version = "1.18.32" }
-sumdrio-builder = { group = "io.sundr", name = "builder-annotations", version = "0.103.1" }
+sundrio-builder = { group = "io.sundr", name = "builder-annotations", version = "0.200.0" }
 
 grpc-netty = { group = "io.grpc", name = "grpc-netty", version.ref = "grpc" }
 grpc-stub = { group = "io.grpc", name = "grpc-netty", version.ref = "grpc" }
@@ -14,4 +14,4 @@ kubernetes-client = { group = "io.fabric8", name = "kubernetes-client", version 
 kubernetes-crdsgen = { group = "io.fabric8", name = "crd-generator-apt", version = "6.11.0" }
 
 [bundles]
-annotations = ["lombok", "sumdrio-builder"]
+annotations = ["lombok", "sundrio-builder"]

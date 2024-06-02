@@ -1,6 +1,8 @@
 package dev.marfien.minecraftonk8s.operator.minecraftserverfleet;
 
+import dev.marfien.minecraftonk8s.api.model.Fleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleet;
+import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleetBuilder;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.api.reconciler.DeleteControl;
@@ -17,14 +19,24 @@ public class MinecraftServerFleetReconciler implements Reconciler<MinecraftServe
     @Override
     public UpdateControl<MinecraftServerFleet> reconcile(MinecraftServerFleet resource,
             Context<MinecraftServerFleet> context) throws Exception {
-        return null;
+
+        Fleet dependent = context.getSecondaryResource(Fleet.class).orElseThrow();
+        MinecraftServerFleet updated = new MinecraftServerFleetBuilder(resource)
+                .withNewStatus()
+                .withReplicas(dependent.getStatus().getReplicas())
+                    .withReadyReplicas(dependent.getStatus().getReadyReplicas())
+                    .withAllocatedReplicas(dependent.getStatus().getAllocatedReplicas())
+                    .endStatus()
+                .build();
+
+        return UpdateControl.patchStatus(updated);
     }
 
     @Override
     public ErrorStatusUpdateControl<MinecraftServerFleet> updateErrorStatus(
             MinecraftServerFleet resource, Context<MinecraftServerFleet> context, Exception e) {
         resource.getStatus().setErrorMessage(e.getMessage());
-        return ErrorStatusUpdateControl.updateStatus(resource);
+        return ErrorStatusUpdateControl.patchStatus(resource);
     }
 
     @Override
