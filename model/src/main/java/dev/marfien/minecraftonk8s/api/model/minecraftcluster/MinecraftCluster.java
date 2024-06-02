@@ -1,5 +1,6 @@
 package dev.marfien.minecraftonk8s.api.model.minecraftcluster;
 
+import dev.marfien.minecraftonk8s.api.model.Constants;
 import dev.marfien.minecraftonk8s.api.model.minecraftcluster.MinecraftCluster.MinecraftClusterSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftcluster.MinecraftCluster.MinecraftClusterStatus;
 import io.fabric8.kubernetes.api.builder.Editable;
@@ -10,8 +11,8 @@ import io.fabric8.kubernetes.model.annotation.ShortNames;
 import io.fabric8.kubernetes.model.annotation.Version;
 import io.sundr.builder.annotations.Buildable;
 
-@Group("mconk8s.marfien.dev")
-@Version("v1alpha1")
+@Group(Constants.GROUP)
+@Version(Constants.VERSION)
 @Plural("minecraftclusters")
 @ShortNames({"mcc", "mccluster", "mcclusters"})
 @Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")

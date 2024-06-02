@@ -1,7 +1,6 @@
 package dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet;
 
 import dev.marfien.minecraftonk8s.api.model.FleetAutoScalingSpec;
-import dev.marfien.minecraftonk8s.api.model.minecraftproxy.MinecraftProxySpec;
 import io.fabric8.kubernetes.api.builder.Editable;
 import io.sundr.builder.annotations.Buildable;
 import lombok.AllArgsConstructor;
