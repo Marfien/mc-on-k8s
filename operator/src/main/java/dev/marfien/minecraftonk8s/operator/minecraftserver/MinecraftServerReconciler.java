@@ -32,10 +32,16 @@ public class MinecraftServerReconciler implements Reconciler<MinecraftServer>,
 
         MinecraftServer updated = minecraftServer.edit()
                 .editStatus()
-                .withIp(backedGameServer.getStatus().getAddress())
-                // TODO: This should be the actual port of the game server
-                .withPort(25565)
-                .withReady(ready)
+                    .withIp(backedGameServer.getStatus().getAddress())
+                    // TODO: This should be the actual port of the game server
+                    .withPort(25565)
+                    .withReady(ready)
+                    .addNewCondition()
+                        .withStatus(ready ? "True" : "False")
+                        .withType("Ready")
+                        .withReason("GameServerReady")
+                        .withMessage("The game server is ready")
+                    .endCondition()
                 .endStatus()
                 .build();
 
@@ -46,8 +52,18 @@ public class MinecraftServerReconciler implements Reconciler<MinecraftServer>,
     @Override
     public ErrorStatusUpdateControl<MinecraftServer> updateErrorStatus(MinecraftServer resource,
             Context<MinecraftServer> context, Exception e) {
-        resource.getStatus().setErrorMessage(e.getMessage());
-        return ErrorStatusUpdateControl.updateStatus(resource);
+        return ErrorStatusUpdateControl.updateStatus(
+                resource.edit()
+                        .editStatus()
+                            .addNewCondition()
+                                .withStatus("False")
+                                .withType("Error")
+                                .withReason("ReconcileError")
+                                .withMessage(e.getMessage())
+                            .endCondition()
+                        .endStatus()
+                        .build()
+        );
     }
 
     @Override
