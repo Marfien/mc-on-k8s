@@ -25,7 +25,6 @@ public class GameServerDependentResource extends
 
     @Override
     protected GameServer desired(MinecraftServer primary, Context<MinecraftServer> context) {
-
         MinecraftServerSpec spec = primary.getSpec();
         PodTemplateSpec template = spec.getTemplate();
 
