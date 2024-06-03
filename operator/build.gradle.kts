@@ -20,6 +20,9 @@ dependencies {
     implementation(project(":model"))
     implementation(project(":agones-model"))
 
+    implementation(libs.lombok)
+    annotationProcessor(libs.lombok)
+
     testImplementation("io.quarkus:quarkus-junit5")
 }
 

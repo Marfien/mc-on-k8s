@@ -2,17 +2,15 @@ package dev.marfien.minecraftonk8s.operator.minecraftserverfleet.dependentresour
 
 import dev.marfien.minecraftonk8s.agones.model.Fleet;
 import dev.marfien.minecraftonk8s.agones.model.FleetBuilder;
-import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleetSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerTemplateSpec;
 import dev.marfien.minecraftonk8s.operator.minecraftserver.MinecraftServerReconciler;
 import dev.marfien.minecraftonk8s.operator.minecraftserverfleet.MinecraftServerFleetReconciler;
-import io.fabric8.kubernetes.api.model.Container;
+import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.KubernetesDependent;
-import java.util.List;
 import java.util.Map;
 
 @KubernetesDependent(labelSelector = MinecraftServerReconciler.SELECTOR)
@@ -36,36 +34,13 @@ public class FleetDependentResource extends
                     .withName(primary.getMetadata().getName())
                     .addToLabels(LABELS)
                     .withNamespace(primary.getMetadata().getNamespace())
-                    .endMetadata()
+                .endMetadata()
                 .withNewSpec()
                     .withNewTemplate()
                         .withMetadata(template.getMetadata())
-                        .withNewSpec()
-                            .withNewSdkServer()
-                                .withLogLevel(template.getSpec().getSdkServerLogLevel())
-                                .endSdkServer()
-                            .withNewTemplateLike(template.getSpec().getTemplate())
-                                .editSpec()
-                                    .withContainers(patchContainers(template.getSpec().getTemplate().getSpec().getContainers(), template.getSpec()))
-                                    .endSpec()
-                                .endTemplate()
-                            .endSpec()
-                        .endTemplate()
-                    .endSpec()
+                        .withSpec(GameServerUtil.toGameServerSpec(template.getSpec()))
+                    .endTemplate()
+                .endSpec()
                 .build();
-    }
-
-    private List<Container> patchContainers(List<Container> containers, MinecraftServerSpec spec) {
-        return containers.stream()
-                .parallel()
-                .map(container ->
-                        container.edit()
-                                .addNewEnv()
-                                .withName("MCS_TAGS")
-                                .withValue(String.join(";", spec.getTags()))
-                                .endEnv()
-                                .build()
-                )
-                .toList();
     }
 }
