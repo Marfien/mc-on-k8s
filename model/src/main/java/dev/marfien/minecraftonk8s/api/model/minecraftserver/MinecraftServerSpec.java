@@ -17,8 +17,9 @@ import lombok.NoArgsConstructor;
 })
 public class MinecraftServerSpec implements Editable<MinecraftServerSpecBuilder> {
 
-    private Set<String> clusterRef;
     private Set<String> tags;
+
+    private String clusterRef;
 
     private PodTemplateSpec template;
 

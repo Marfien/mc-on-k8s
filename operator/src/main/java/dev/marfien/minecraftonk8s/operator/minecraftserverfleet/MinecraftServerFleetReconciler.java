@@ -2,7 +2,6 @@ package dev.marfien.minecraftonk8s.operator.minecraftserverfleet;
 
 import dev.marfien.minecraftonk8s.agones.model.Fleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleet;
-import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleetBuilder;
 import dev.marfien.minecraftonk8s.operator.minecraftserverfleet.dependentresource.FleetDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
@@ -28,21 +27,22 @@ public class MinecraftServerFleetReconciler implements Reconciler<MinecraftServe
     public UpdateControl<MinecraftServerFleet> reconcile(
             MinecraftServerFleet resource, Context<MinecraftServerFleet> context) throws Exception {
         Fleet dependent = context.getSecondaryResource(Fleet.class).orElseThrow();
-        MinecraftServerFleet updated = new MinecraftServerFleetBuilder(resource)
-                .withNewStatus()
-                    .withReplicas(dependent.getStatus().getReplicas())
-                    .withReadyReplicas(dependent.getStatus().getReadyReplicas())
-                    .withAllocatedReplicas(dependent.getStatus().getAllocatedReplicas())
-                .addNewCondition()
-                    .withStatus("True")
-                    .withType("Reconciled")
-                    .withReason("FleetReconciled")
-                    .withMessage("The fleet has been reconciled successfully.")
-                .endCondition()
-                .endStatus()
-                .build();
 
-        return UpdateControl.patchStatus(updated);
+        return UpdateControl.patchStatus(
+                resource.edit()
+                        .editStatus()
+                            .withReplicas(dependent.getStatus().getReplicas())
+                            .withReadyReplicas(dependent.getStatus().getReadyReplicas())
+                            .withAllocatedReplicas(dependent.getStatus().getAllocatedReplicas())
+                            .addNewCondition()
+                                .withStatus("True")
+                                .withType("Reconciled")
+                                .withReason("FleetReconciled")
+                                .withMessage("The fleet has been reconciled successfully.")
+                            .endCondition()
+                        .endStatus()
+                        .build()
+        );
     }
 
     @Override

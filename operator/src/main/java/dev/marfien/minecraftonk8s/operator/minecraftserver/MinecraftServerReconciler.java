@@ -1,6 +1,7 @@
 package dev.marfien.minecraftonk8s.operator.minecraftserver;
 
 import dev.marfien.minecraftonk8s.agones.model.GameServer;
+import dev.marfien.minecraftonk8s.api.model.minecraftcluster.MinecraftCluster;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
 import dev.marfien.minecraftonk8s.operator.minecraftserver.dependentresource.GameServerDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
@@ -24,28 +25,31 @@ public class MinecraftServerReconciler implements Reconciler<MinecraftServer>,
     public static final String SELECTOR = "mconk8s.marfien.dev/managed-by-mcs-reconciler";
 
     @Override
-    public UpdateControl<MinecraftServer> reconcile(MinecraftServer minecraftServer,
-            Context<MinecraftServer> context) throws Exception {
+    public UpdateControl<MinecraftServer> reconcile(
+            MinecraftServer minecraftServer, Context<MinecraftServer> context) throws Exception {
+        String clusterName = minecraftServer.getSpec().getClusterRef();
+        MinecraftCluster cluster = context.getClient().resources(MinecraftCluster.class).withName(clusterName).require();
         GameServer backedGameServer = context.getSecondaryResource(GameServer.class).orElseThrow();
 
         boolean ready = minecraftServer.getStatus().isReady() || backedGameServer.getStatus().getState().equalsIgnoreCase("ready");
 
-        MinecraftServer updated = minecraftServer.edit()
-                .editStatus()
-                    .withIp(backedGameServer.getStatus().getAddress())
-                    // TODO: This should be the actual port of the game server
-                    .withPort(25565)
-                    .withReady(ready)
-                    .addNewCondition()
-                        .withStatus(ready ? "True" : "False")
-                        .withType("Ready")
-                        .withReason("GameServerReady")
-                        .withMessage("The game server is ready")
-                    .endCondition()
-                .endStatus()
-                .build();
-
-        return UpdateControl.updateStatus(updated);
+        return UpdateControl.updateStatus(
+                minecraftServer.edit()
+                        .editStatus()
+                            .withClusterId(cluster.getMetadata().getUid())
+                            .withIp(backedGameServer.getStatus().getAddress())
+                            // TODO: This should be the actual port of the game server
+                            .withPort(25565)
+                            .withReady(ready)
+                            .addNewCondition()
+                                .withStatus(ready ? "True" : "False")
+                                .withType("Ready")
+                                .withReason("GameServerReady")
+                                .withMessage("The game server is ready")
+                            .endCondition()
+                        .endStatus()
+                        .build()
+        );
     }
 
 

@@ -23,6 +23,8 @@ import lombok.NoArgsConstructor;
 )
 public class MinecraftProxyFleetStatus implements Editable<MinecraftProxyFleetStatusBuilder> {
 
+    private String clusterId;
+
     private int replicas;
     private int readyReplicas;
     private int allocatedReplicas;

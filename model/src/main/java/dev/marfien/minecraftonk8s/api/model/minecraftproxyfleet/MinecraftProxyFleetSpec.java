@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
 public class MinecraftProxyFleetSpec implements Editable<MinecraftProxyFleetSpecBuilder> {
 
+    private String clusterRef;
+
     private int replicas;
     private MinecraftProxySpec template;
     private FleetAutoScalingSpec autoScaling;

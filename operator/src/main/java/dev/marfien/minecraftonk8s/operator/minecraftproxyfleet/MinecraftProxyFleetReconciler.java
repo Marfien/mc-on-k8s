@@ -1,6 +1,9 @@
 package dev.marfien.minecraftonk8s.operator.minecraftproxyfleet;
 
+import dev.marfien.minecraftonk8s.agones.model.Fleet;
+import dev.marfien.minecraftonk8s.api.model.minecraftcluster.MinecraftCluster;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleet;
+import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleetBuilder;
 import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresource.FleetDependentResource;
 import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresource.ServiceDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
@@ -49,6 +52,26 @@ public class MinecraftProxyFleetReconciler implements Reconciler<MinecraftProxyF
     @Override
     public UpdateControl<MinecraftProxyFleet> reconcile(MinecraftProxyFleet resource,
             Context<MinecraftProxyFleet> context) throws Exception {
-        return null;
+        String clusterName = resource.getSpec().getClusterRef();
+        MinecraftCluster cluster = context.getClient().resources(MinecraftCluster.class).withName(clusterName).require();
+        Fleet proxyFleet = context.getSecondaryResource(Fleet.class).orElseThrow();
+
+        return UpdateControl.patchStatus(
+                resource.edit()
+                        .editStatus()
+                            .withClusterId(cluster.getMetadata().getUid())
+                            .withReplicas(proxyFleet.getStatus().getReplicas())
+                            .withReadyReplicas(proxyFleet.getStatus().getReadyReplicas())
+                            .withAllocatedReplicas(proxyFleet.getStatus().getAllocatedReplicas())
+                            .addNewCondition()
+                                .withStatus("True")
+                                .withType("Reconciled")
+                                .withReason("FleetReconciled")
+                                .withMessage("The fleet has been reconciled successfully.")
+                            .endCondition()
+                        .endStatus()
+                        .build()
+        );
+
     }
 }

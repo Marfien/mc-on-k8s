@@ -16,8 +16,6 @@ import lombok.NoArgsConstructor;
 })
 public class MinecraftProxySpec implements Editable<MinecraftProxySpecBuilder> {
 
-    private String clusterRef;
-
     private PodTemplateSpec template;
 
     private String sdkServerLogLevel = "info";
