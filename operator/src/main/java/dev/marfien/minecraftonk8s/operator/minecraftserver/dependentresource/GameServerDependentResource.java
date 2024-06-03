@@ -1,7 +1,7 @@
 package dev.marfien.minecraftonk8s.operator.minecraftserver.dependentresource;
 
 import dev.marfien.minecraftonk8s.agones.model.GameServer;
-import dev.marfien.minecraftonk8s.api.model.GameServerBuilder;
+import dev.marfien.minecraftonk8s.agones.model.GameServerBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
 import dev.marfien.minecraftonk8s.operator.minecraftserver.MinecraftServerReconciler;

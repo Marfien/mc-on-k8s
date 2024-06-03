@@ -1,7 +1,7 @@
 package dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresource;
 
 import dev.marfien.minecraftonk8s.agones.model.Fleet;
-import dev.marfien.minecraftonk8s.api.model.FleetBuilder;
+import dev.marfien.minecraftonk8s.agones.model.FleetBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleetSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxySpec;

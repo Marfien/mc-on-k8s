@@ -1,6 +1,5 @@
 package dev.marfien.minecraftonk8s.agones.model;
 
-import dev.marfien.minecraftonk8s.api.model.GameServerSpecBuilder;
 import io.fabric8.kubernetes.api.model.PodTemplateSpec;
 import io.sundr.builder.Editable;
 import io.sundr.builder.annotations.Buildable;
