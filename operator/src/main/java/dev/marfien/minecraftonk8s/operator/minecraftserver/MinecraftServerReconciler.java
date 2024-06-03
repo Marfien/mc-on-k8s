@@ -1,6 +1,6 @@
 package dev.marfien.minecraftonk8s.operator.minecraftserver;
 
-import dev.marfien.minecraftonk8s.api.model.GameServer;
+import dev.marfien.minecraftonk8s.agones.model.GameServer;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
 import dev.marfien.minecraftonk8s.operator.minecraftserver.dependentresource.GameServerDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;

@@ -1,6 +1,6 @@
 package dev.marfien.minecraftonk8s.operator.minecraftserverfleet;
 
-import dev.marfien.minecraftonk8s.api.model.Fleet;
+import dev.marfien.minecraftonk8s.agones.model.Fleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleetBuilder;
 import dev.marfien.minecraftonk8s.operator.minecraftserverfleet.dependentresource.FleetDependentResource;
@@ -25,9 +25,8 @@ public class MinecraftServerFleetReconciler implements Reconciler<MinecraftServe
     public static final String SELECTOR = "mconk8s.marfien.dev/managed-by-mcsf-reconciler";
 
     @Override
-    public UpdateControl<MinecraftServerFleet> reconcile(MinecraftServerFleet resource,
-            Context<MinecraftServerFleet> context) throws Exception {
-
+    public UpdateControl<MinecraftServerFleet> reconcile(
+            MinecraftServerFleet resource, Context<MinecraftServerFleet> context) throws Exception {
         Fleet dependent = context.getSecondaryResource(Fleet.class).orElseThrow();
         MinecraftServerFleet updated = new MinecraftServerFleetBuilder(resource)
                 .withNewStatus()

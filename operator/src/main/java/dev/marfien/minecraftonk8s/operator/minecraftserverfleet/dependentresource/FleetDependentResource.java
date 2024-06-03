@@ -1,10 +1,7 @@
 package dev.marfien.minecraftonk8s.operator.minecraftserverfleet.dependentresource;
 
-import dev.marfien.minecraftonk8s.api.model.Fleet;
+import dev.marfien.minecraftonk8s.agones.model.Fleet;
 import dev.marfien.minecraftonk8s.api.model.FleetBuilder;
-import dev.marfien.minecraftonk8s.api.model.GameServer;
-import dev.marfien.minecraftonk8s.api.model.GameServerBuilder;
-import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleetSpec;
@@ -12,7 +9,6 @@ import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServer
 import dev.marfien.minecraftonk8s.operator.minecraftserver.MinecraftServerReconciler;
 import dev.marfien.minecraftonk8s.operator.minecraftserverfleet.MinecraftServerFleetReconciler;
 import io.fabric8.kubernetes.api.model.Container;
-import io.fabric8.kubernetes.api.model.PodTemplateSpec;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.KubernetesDependent;

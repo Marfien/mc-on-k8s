@@ -20,6 +20,8 @@ public class MinecraftProxySpec implements Editable<MinecraftProxySpecBuilder> {
 
     private PodTemplateSpec template;
 
+    private String sdkServerLogLevel = "info";
+
     @Override
     public MinecraftProxySpecBuilder edit() {
         return new MinecraftProxySpecBuilder(this);

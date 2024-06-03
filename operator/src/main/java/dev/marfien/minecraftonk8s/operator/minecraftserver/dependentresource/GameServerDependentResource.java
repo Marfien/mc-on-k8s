@@ -1,6 +1,6 @@
 package dev.marfien.minecraftonk8s.operator.minecraftserver.dependentresource;
 
-import dev.marfien.minecraftonk8s.api.model.GameServer;
+import dev.marfien.minecraftonk8s.agones.model.GameServer;
 import dev.marfien.minecraftonk8s.api.model.GameServerBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
@@ -34,17 +34,17 @@ public class GameServerDependentResource extends
                     .withName(primary.getMetadata().getName())
                     .addToLabels(LABELS)
                     .withNamespace(primary.getMetadata().getNamespace())
-                    .endMetadata()
+                .endMetadata()
                 .withNewSpec()
                     .withNewSdkServer()
                         .withLogLevel(spec.getSdkServerLogLevel())
-                        .endSdkServer()
+                    .endSdkServer()
                     .withNewTemplateLike(template)
-//                        .editSpec()
-//                            .withContainers(patchContainers(template.getSpec().getContainers(), spec))
-//                            .endSpec()
-                        .endTemplate()
-                    .endSpec()
+                        .editSpec()
+                            .withContainers(patchContainers(template.getSpec().getContainers(), spec))
+                        .endSpec()
+                    .endTemplate()
+                .endSpec()
                 .build();
     }
 
@@ -54,8 +54,8 @@ public class GameServerDependentResource extends
                 .map(container ->
                         container.edit()
                                 .addNewEnv()
-                                .withName("MCS_TAGS")
-                                .withValue(String.join(";", spec.getTags()))
+                                    .withName("MCS_TAGS")
+                                    .withValue(String.join(";", spec.getTags()))
                                 .endEnv()
                                 .build()
                 )

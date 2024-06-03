@@ -1,7 +1,6 @@
 package dev.marfien.minecraftonk8s.api.model.minecraftserverfleet;
 
 import dev.marfien.minecraftonk8s.api.model.FleetAutoScalingSpec;
-import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
 import io.fabric8.kubernetes.api.builder.Editable;
 import io.fabric8.kubernetes.api.model.apps.DeploymentStrategy;
 import io.sundr.builder.annotations.Buildable;
