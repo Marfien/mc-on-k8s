@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class MinecraftServerFleetSpec implements Editable<MinecraftServerFleetSpecBuilder> {
 
     private int targetReplicas;
-    private MinecraftServerTemplateSpec template;
+    private MinecraftServerSpecTemplate template;
     private FleetAutoScalingSpec autoScaling;
     private DeploymentStrategy deploymentStrategy;
 

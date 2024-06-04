@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
 public class FleetAutoScalingSpec implements Editable<FleetAutoScalingSpecBuilder> {
 
+    // TODO
     private FleetAutoscalerPolicy policy;
 
     @Override

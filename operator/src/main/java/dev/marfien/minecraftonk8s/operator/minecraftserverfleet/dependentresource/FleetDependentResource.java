@@ -4,7 +4,7 @@ import dev.marfien.minecraftonk8s.agones.model.Fleet;
 import dev.marfien.minecraftonk8s.agones.model.FleetBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleetSpec;
-import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerTemplateSpec;
+import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerSpecTemplate;
 import dev.marfien.minecraftonk8s.operator.minecraftserver.MinecraftServerReconciler;
 import dev.marfien.minecraftonk8s.operator.minecraftserverfleet.MinecraftServerFleetReconciler;
 import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
@@ -27,7 +27,7 @@ public class FleetDependentResource extends
     protected Fleet desired(MinecraftServerFleet primary, Context<MinecraftServerFleet> context) {
 
         MinecraftServerFleetSpec spec = primary.getSpec();
-        MinecraftServerTemplateSpec template = spec.getTemplate();
+        MinecraftServerSpecTemplate template = spec.getTemplate();
 
         return new FleetBuilder()
                 .withNewMetadata()
