@@ -1,6 +1,10 @@
+val quarkusPlatformGroupId: String by project
+val quarkusPlatformArtifactId: String by project
+val quarkusPlatformVersion: String by project
+
 plugins {
-    java
-    id("io.quarkus")
+    id("java")
+    alias(libs.plugins.quarkus)
 }
 
 repositories {
@@ -8,13 +12,9 @@ repositories {
     mavenLocal()
 }
 
-val quarkusPlatformGroupId: String by project
-val quarkusPlatformArtifactId: String by project
-val quarkusPlatformVersion: String by project
-
 dependencies {
-    implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
-    implementation(enforcedPlatform("${quarkusPlatformGroupId}:quarkus-operator-sdk-bom:${quarkusPlatformVersion}"))
+    implementation(enforcedPlatform(libs.quarkus.platform.core))
+    implementation(enforcedPlatform(libs.quarkus.platform.operatorsdk))
     implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk")
     implementation("io.quarkus:quarkus-arc")
     implementation(project(":packages:kubernetes:model"))
@@ -27,8 +27,10 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        val javaVersion: String by project
+        languageVersion.set(JavaLanguageVersion.of(javaVersion))
+    }
 }
 
 tasks.withType<Test> {

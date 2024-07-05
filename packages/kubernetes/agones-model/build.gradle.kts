@@ -3,9 +3,6 @@ plugins {
     id("org.kordamp.gradle.jandex") version "2.0.0"
 }
 
-group = "dev.marfien.minecraftonk8s"
-version = "1.0.0"
-
 repositories {
     mavenCentral()
 }
@@ -20,6 +17,8 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        val javaVersion: String by project
+        languageVersion.set(JavaLanguageVersion.of(javaVersion))
+    }
 }

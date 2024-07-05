@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Buildable(editableEnabled = false, lazyCollectionInitEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder")
-public class MinecraftServerSpecTemplate implements Editable<MinecraftServerTemplateSpecBuilder> {
+public class MinecraftServerSpecTemplate implements Editable<MinecraftServerSpecTemplateBuilder> {
 
     private ObjectMeta metadata;
     private MinecraftServerSpec spec;
 
     @Override
-    public MinecraftServerTemplateSpecBuilder edit() {
-        return new MinecraftServerTemplateSpecBuilder(this);
+    public MinecraftServerSpecTemplateBuilder edit() {
+        return new MinecraftServerSpecTemplateBuilder(this);
     }
 }

@@ -2,9 +2,6 @@ plugins {
     id("java")
 }
 
-group = "dev.marfien.minecraftonk8s"
-version = "1.0.0"
-
 repositories {
     mavenCentral()
 }
@@ -16,4 +13,11 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+java {
+    toolchain {
+        val javaVersion: String by project
+        languageVersion.set(JavaLanguageVersion.of(javaVersion))
+    }
 }

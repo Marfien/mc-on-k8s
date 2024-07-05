@@ -1,5 +1,6 @@
 [versions]
 grpc = "1.61.1"
+quarkus = "3.10.2"
 
 [libraries]
 lombok = { group = "org.projectlombok", name = "lombok", version = "1.18.32" }
@@ -12,6 +13,14 @@ grpc-protobuf = { group = "io.grpc", name = "grpc-netty", version.ref = "grpc" }
 agones4j = { group = "com.github.infumia", name = "agones4j", version = "1.0.3" }
 kubernetes-client = { group = "io.fabric8", name = "kubernetes-client", version = "[6.10,7.0[" }
 kubernetes-crdsgen = { group = "io.fabric8", name = "crd-generator-apt", version = "6.11.0" }
+
+quarkus-platform-core = { group = "io.quarkus.platform", name = "quarkus-bom", version.ref = "quarkus" }
+quarkus-platform-operatorsdk = { group = "io.quarkus.platform", name = "quarkus-operator-sdk-bom", version.ref = "quarkus" }
+
+[plugins]
+quarkus = { id = "io.quarkus", version.ref = "quarkus" }
+shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
+spotless = { id = "com.diffplug.spotless", version = "6.23.2" }
 
 [bundles]
 annotations = ["lombok", "sundrio-builder"]

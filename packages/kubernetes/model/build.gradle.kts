@@ -23,6 +23,8 @@ tasks.test {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        val javaVersion: String by project
+        languageVersion.set(JavaLanguageVersion.of(javaVersion))
+    }
 }
