@@ -17,8 +17,8 @@ dependencies {
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:quarkus-operator-sdk-bom:${quarkusPlatformVersion}"))
     implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk")
     implementation("io.quarkus:quarkus-arc")
-    implementation(project(":model"))
-    implementation(project(":agones-model"))
+    implementation(project(":packages:kubernetes:model"))
+    implementation(project(":packages:kubernetes:agones-model"))
 
     implementation(libs.lombok)
     annotationProcessor(libs.lombok)

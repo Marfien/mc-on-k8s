@@ -13,6 +13,7 @@ pluginManagement {
 
 rootProject.name = "minecraft-on-k8s"
 
-include("agones-model")
-include("model")
-include("operator")
+include(":packages:kubernetes:agones-model")
+include(":packages:kubernetes:model")
+include(":packages:kubernetes:operator")
+include(":packages:clients:proxy:proxy-api")
