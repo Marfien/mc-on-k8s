@@ -1,10 +1,6 @@
 plugins {
     id("java-library")
-    id("org.kordamp.gradle.jandex") version "2.0.0"
-}
-
-repositories {
-    mavenCentral()
+    alias(libs.plugins.jandex)
 }
 
 dependencies {
@@ -16,10 +12,6 @@ dependencies {
     api(libs.kubernetes.client)
     api(project(":packages:kubernetes:agones-model"))
     annotationProcessor(libs.kubernetes.crdsgen)
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
 
 java {

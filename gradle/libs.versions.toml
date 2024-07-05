@@ -21,6 +21,7 @@ quarkus-platform-operatorsdk = { group = "io.quarkus.platform", name = "quarkus-
 quarkus = { id = "io.quarkus", version.ref = "quarkus" }
 shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
 spotless = { id = "com.diffplug.spotless", version = "6.23.2" }
+jandex = { id = "org.kordamp.gradle.jandex", version = "2.0.0" }
 
 [bundles]
 annotations = ["lombok", "sundrio-builder"]

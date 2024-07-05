@@ -1,15 +1,6 @@
-val quarkusPlatformGroupId: String by project
-val quarkusPlatformArtifactId: String by project
-val quarkusPlatformVersion: String by project
-
 plugins {
     id("java")
     alias(libs.plugins.quarkus)
-}
-
-repositories {
-    mavenCentral()
-    mavenLocal()
 }
 
 dependencies {
@@ -17,6 +8,7 @@ dependencies {
     implementation(enforcedPlatform(libs.quarkus.platform.operatorsdk))
     implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk")
     implementation("io.quarkus:quarkus-arc")
+
     implementation(project(":packages:kubernetes:model"))
     implementation(project(":packages:kubernetes:agones-model"))
 

@@ -1,10 +1,6 @@
 plugins {
     id("java-library")
-    id("org.kordamp.gradle.jandex") version "2.0.0"
-}
-
-repositories {
-    mavenCentral()
+    alias(libs.plugins.jandex)
 }
 
 dependencies {
