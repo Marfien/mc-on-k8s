@@ -2,12 +2,6 @@ plugins {
     id("java-library")
 }
 
-dependencies {
-    api(libs.bundles.agones)
-    api(project(":packages:clients:client-api"))
-    api(libs.slf4j.api)
-}
-
 java {
     toolchain {
         val javaVersion: String by project

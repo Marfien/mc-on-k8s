@@ -6,12 +6,16 @@ import dev.marfien.minecraftonk8s.client.common.ClientInterface.ScheduledTask;
 import dev.marfien.minecraftonk8s.client.common.config.ClientConfiguration;
 import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectionHook;
 import io.grpc.stub.StreamObserver;
-import net.infumia.agones4j.Agones;
 import java.time.Duration;
 import java.util.UUID;
+import net.infumia.agones4j.Agones;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class ClientAgent<I extends ClientInterface, C extends ClientConfiguration>
         implements ClientAPI {
+
+    protected final Logger logger = LoggerFactory.getLogger("ClientAgent");
 
     protected final Agones agones = Agones.builder().withTarget().build();
 
@@ -31,23 +35,41 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
                 () -> healthCheckStream.onNext(Empty.getDefaultInstance()), 0, 1000);
     }
 
-    public void onStart() {
-        startHealthCheck();
-        this.agones.ready();
+    public void onStartup() {
+        try {
+            startHealthCheck();
+            this.agones.ready();
+            this.agones.getGameServerFuture().thenAccept(gameServer ->
+                    this.logger.info("Backing agones game server: {}/{}",
+                            gameServer.getObjectMeta().getNamespace(),
+                            gameServer.getObjectMeta().getName()
+                    )
+            );
 
-        switch (this.configuration.getAllocationStrategy()) {
-            case ALWAYS -> this.agones.allocate();
-            case PLAYERS -> this.clientInterface.addHook(new PlayerAllocationHook());
-            default -> { /* manuel is not manged by agent */ }
+            switch (this.configuration.getAllocationStrategy()) {
+                case ALWAYS -> this.agones.allocate();
+                case PLAYERS -> this.clientInterface.addHook(new PlayerAllocationHook());
+                default -> { /* manuel is not manged by agent */ }
+            }
+        } catch (Exception e) {
+            this.logger.error("Failed to initialize agent. Stopping", e);
+            shutdown();
         }
     }
 
-    public void onStop() {
+    public void onShutdown() {
         if (this.healthCheckTask != null) {
             this.healthCheckTask.cancel();
         }
+    }
 
-        this.agones.shutdown();
+    public void shutdown() {
+        try {
+            this.agones.shutdown();
+        } catch (Exception e) {
+            this.logger.error("Failed to request shutdown from agones. Shutting down manually", e);
+            System.exit(0);
+        }
     }
 
     @Override
@@ -70,7 +92,7 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
         @Override
         public void onPlayerConnected(UUID playerId) {
             if (clientInterface.getPlayerCount() == 1) {
-                agones.allocate();
+                allocate();
             }
         }
 

@@ -6,6 +6,8 @@ quarkus = "3.10.2"
 lombok = { group = "org.projectlombok", name = "lombok", version = "1.18.32" }
 sundrio-builder = { group = "io.sundr", name = "builder-annotations", version = "0.200.0" }
 
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "2.0.13" }
+
 grpc-netty = { group = "io.grpc", name = "grpc-netty", version.ref = "grpc" }
 grpc-stub = { group = "io.grpc", name = "grpc-stub", version.ref = "grpc" }
 grpc-protobuf = { group = "io.grpc", name = "grpc-protobuf", version.ref = "grpc" }

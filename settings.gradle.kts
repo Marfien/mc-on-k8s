@@ -7,6 +7,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "minecraft-on-k8s"
 
+include(":packages:common")
+
 include(
         ":packages:kubernetes:agones-model",
         ":packages:kubernetes:model",
