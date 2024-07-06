@@ -1,14 +1,17 @@
 package dev.marfien.minecraftonk8s.client.common;
 
 import agones.dev.sdk.Sdk.Empty;
+import dev.marfien.minecraftonk8s.client.api.ClientAPI;
 import dev.marfien.minecraftonk8s.client.common.ClientInterface.ScheduledTask;
 import dev.marfien.minecraftonk8s.client.common.config.ClientConfiguration;
 import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectionHook;
 import io.grpc.stub.StreamObserver;
 import net.infumia.agones4j.Agones;
+import java.time.Duration;
 import java.util.UUID;
 
-public abstract class ClientAgent<I extends ClientInterface, C extends ClientConfiguration> {
+public abstract class ClientAgent<I extends ClientInterface, C extends ClientConfiguration>
+        implements ClientAPI {
 
     protected final Agones agones = Agones.builder().withTarget().build();
 
@@ -44,6 +47,21 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
             this.healthCheckTask.cancel();
         }
 
+        this.agones.shutdown();
+    }
+
+    @Override
+    public void allocate() {
+        this.agones.allocate();
+    }
+
+    @Override
+    public void reserve(int seconds) {
+        this.agones.reserve(Duration.ofSeconds(seconds));
+    }
+
+    @Override
+    public void requestShutdown() {
         this.agones.shutdown();
     }
 

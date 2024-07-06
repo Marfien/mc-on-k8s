@@ -13,7 +13,10 @@ include(
         ":packages:kubernetes:operator"
 )
 
-include("packages:clients:client-common")
+include(
+        "packages:clients:client-api",
+        "packages:clients:client-common"
+)
 
 include(
         ":packages:clients:proxy:proxy-agent",
