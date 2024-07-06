@@ -1,5 +1,9 @@
 plugins {
-    id("java")
+    id("java-library")
+}
+
+dependencies {
+    api(libs.bundles.agones)
 }
 
 java {

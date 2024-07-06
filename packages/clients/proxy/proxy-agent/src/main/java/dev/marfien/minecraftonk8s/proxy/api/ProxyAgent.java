@@ -1,6 +1,6 @@
-package dev.marfien.minecraftonk8s.proxy.shared;
+package dev.marfien.minecraftonk8s.proxy.api;
 
-public interface ProxyConnector {
+public interface ProxyAgent {
 
     void addServer(String serverName, String address, int port);
     void removeServer(String serverName);

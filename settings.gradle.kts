@@ -2,7 +2,6 @@ dependencyResolutionManagement {
     repositories {
         mavenCentral()
         gradlePluginPortal()
-        mavenLocal()
     }
 }
 
@@ -14,8 +13,10 @@ include(
         ":packages:kubernetes:operator"
 )
 
+include("packages:clients:client-common")
+
 include(
-        ":packages:clients:proxy:proxy-api",
+        ":packages:clients:proxy:proxy-agent",
         ":packages:clients:proxy:proxy-impl-bungeecord",
         ":packages:clients:proxy:proxy-impl-velocity"
 )
