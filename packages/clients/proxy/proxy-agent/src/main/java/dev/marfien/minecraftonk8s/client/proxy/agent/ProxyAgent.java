@@ -1,11 +1,19 @@
 package dev.marfien.minecraftonk8s.client.proxy.agent;
 
-import dev.marfien.minecraftonk8s.client.common.ClientInterface;
+import dev.marfien.minecraftonk8s.client.common.ClientAgent;
+import dev.marfien.minecraftonk8s.client.proxy.agent.configuration.ProxyConfiguration;
 
-public interface ProxyAgent extends ClientInterface {
+public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> extends ClientAgent<I, C> {
 
-    void addServer(String serverName, String address, int port);
-    void removeServer(String serverName);
-    boolean hasServer(String serverName);
+    private boolean isDraining = false;
 
+    protected ProxyAgent(I clientInterface, C configuration) {
+        super(clientInterface, configuration);
+    }
+
+    @Override
+    public void onStartup() {
+
+        super.onStartup();
+    }
 }
