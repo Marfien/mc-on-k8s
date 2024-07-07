@@ -12,7 +12,7 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
     private final MinecraftServerInformer informer;
     private boolean isDraining = false;
 
-    protected ProxyAgent(I clientInterface, C configuration) {
+    public ProxyAgent(I clientInterface, C configuration) {
         super(clientInterface, configuration);
 
         this.informer = new MinecraftServerInformer(
