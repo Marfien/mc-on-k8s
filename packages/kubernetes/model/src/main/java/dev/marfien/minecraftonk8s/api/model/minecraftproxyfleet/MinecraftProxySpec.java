@@ -1,6 +1,7 @@
 package dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet;
 
 import io.fabric8.kubernetes.api.builder.Editable;
+import io.fabric8.kubernetes.api.model.LabelSelector;
 import io.fabric8.kubernetes.api.model.PodTemplateSpec;
 import io.sundr.builder.annotations.Buildable;
 import io.sundr.builder.annotations.BuildableReference;
@@ -19,6 +20,7 @@ public class MinecraftProxySpec implements Editable<MinecraftProxySpecBuilder> {
     private PodTemplateSpec template;
 
     private String sdkServerLogLevel = "info";
+    private String labelSelectorString;
 
     @Override
     public MinecraftProxySpecBuilder edit() {

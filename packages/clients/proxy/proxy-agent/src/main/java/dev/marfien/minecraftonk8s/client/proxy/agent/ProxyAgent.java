@@ -17,7 +17,8 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
 
         this.informer = new MinecraftServerInformer(
                 clientInterface,
-                configuration.getRebuildCacheInterval().toMillis()
+                configuration.getRebuildCacheInterval().toMillis(),
+                configuration.getLabelSelector()
         );
     }
 

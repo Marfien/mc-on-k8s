@@ -11,6 +11,7 @@ public class ProxyEnvironmentConfiguration extends EnvironmentConfiguration impl
     private final Duration drainageDelay;
 
     private final String watchingNamespace;
+    private final String labelSeleector;
 
     public ProxyEnvironmentConfiguration() {
         super();
@@ -24,6 +25,7 @@ public class ProxyEnvironmentConfiguration extends EnvironmentConfiguration impl
                 ? Duration.ofHours(8)
                 : Duration.parse(System.getenv("DRAINAGE_DELAY"));
         this.watchingNamespace = System.getenv("WATCHING_NAMESPACE");
+        this.labelSeleector = System.getenv("LABEL_SELECTOR");
     }
 
     @Override
@@ -44,5 +46,10 @@ public class ProxyEnvironmentConfiguration extends EnvironmentConfiguration impl
     @Override
     public String getWatchingNamespace() {
         return this.watchingNamespace;
+    }
+
+    @Override
+    public String getLabelSelector() {
+        return this.labelSeleector;
     }
 }

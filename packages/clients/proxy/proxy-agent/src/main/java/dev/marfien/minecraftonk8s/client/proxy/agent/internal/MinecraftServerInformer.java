@@ -21,17 +21,20 @@ public class MinecraftServerInformer {
 
     private final ProxyInterface proxyInterface;
     private final long resyncPeriod;
+    private final String labelSelector;
 
     private SharedIndexInformer<MinecraftServer> informer;
 
-    public MinecraftServerInformer(ProxyInterface proxyInterface, long resyncPeriod) {
+    public MinecraftServerInformer(ProxyInterface proxyInterface, long resyncPeriod, String labelSelector) {
         this.proxyInterface = proxyInterface;
         this.resyncPeriod = resyncPeriod;
+        this.labelSelector = labelSelector;
     }
 
     public void start(String watchingNamespace) {
         this.informer = this.minecraftServerOperation
                 .inNamespace(watchingNamespace)
+                .withLabelSelector(this.labelSelector)
                 .inform(null, this.resyncPeriod);
         informer.addEventHandler(new MinecraftServerWatcherEventHandler());
     }

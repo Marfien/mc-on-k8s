@@ -63,6 +63,10 @@ public class FleetDependentResource extends CRUDKubernetesDependentResource<Flee
                                     .withName("CLUSTER_REF_NAME")
                                     .withValue(spec.getClusterRef())
                                 .endEnv()
+                                .addNewEnv()
+                                    .withName("LABEL_SELECTOR")
+                                    .withValue(template.getLabelSelectorString())
+                                .endEnv()
                                 .build()
                 )
                 .toList();
