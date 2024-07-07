@@ -40,6 +40,7 @@ public class MinecraftServerInformer {
         if (this.informer != null) {
             this.informer.stop();
         }
+        this.kubernetesClient.close();
     }
 
     private class MinecraftServerWatcherEventHandler implements

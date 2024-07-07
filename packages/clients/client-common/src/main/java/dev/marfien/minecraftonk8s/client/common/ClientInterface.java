@@ -12,12 +12,12 @@ public interface ClientInterface {
 
     RegisteredHook addHook(PlayerConnectionHook hook);
 
-    interface ScheduledTask {
-        void cancel();
-    }
-
     interface RegisteredHook {
         void unregister();
+    }
+
+    interface ScheduledTask {
+        void cancel();
     }
 
 }

@@ -31,6 +31,7 @@ public class ServiceDependentResource extends CRUDKubernetesDependentResource<Se
                 .withNewSpec()
                     .withType(spec.getServiceType().name())
                     .addToSelector("mconk8s.marfien.dev/proxy-fleet", meta.getUid())
+                    .addToSelector("mconk8s.marfien.dev/state", "running")
                     .addNewPort()
                         .withName("minecraft")
                         .withProtocol("TCP")

@@ -1,4 +1,4 @@
-package dev.marfien.minecraftonk8s.client.proxy.agent.drainage.hook;
+package dev.marfien.minecraftonk8s.client.proxy.agent.internal;
 
 import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectionHook;
 import dev.marfien.minecraftonk8s.client.proxy.agent.ProxyAgent;

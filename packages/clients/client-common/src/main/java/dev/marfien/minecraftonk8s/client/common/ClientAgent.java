@@ -2,8 +2,8 @@ package dev.marfien.minecraftonk8s.client.common;
 
 import agones.dev.sdk.Sdk.Empty;
 import agones.dev.sdk.Sdk.GameServer.ObjectMeta;
-import dev.marfien.minecraftonk8s.client.api.ClientAPI;
 import dev.marfien.minecraftonk8s.client.common.ClientInterface.ScheduledTask;
+import dev.marfien.minecraftonk8s.client.common.adapter.KubernetesAdapter;
 import dev.marfien.minecraftonk8s.client.common.config.ClientConfiguration;
 import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectionHook;
 import io.grpc.stub.StreamObserver;
@@ -13,8 +13,7 @@ import net.infumia.agones4j.Agones;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class ClientAgent<I extends ClientInterface, C extends ClientConfiguration>
-        implements ClientAPI {
+public abstract class ClientAgent<I extends ClientInterface, C extends ClientConfiguration> {
 
     protected final Logger logger = LoggerFactory.getLogger("ClientAgent");
 
@@ -24,9 +23,7 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
     protected final C configuration;
 
     private ScheduledTask healthCheckTask;
-
-    private String name;
-    private String namespace;
+    private KubernetesAdapter kubernetesAdapter;
 
     protected ClientAgent(I clientInterface, C configuration) {
         this.clientInterface = clientInterface;
@@ -45,12 +42,11 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
             this.agones.ready();
             this.agones.getGameServerFuture().thenAccept(gameServer -> {
                         ObjectMeta meta = gameServer.getObjectMeta();
-                        this.name = meta.getName();
-                        this.namespace = meta.getNamespace();
+                        this.kubernetesAdapter = new KubernetesAdapter(meta.getName(), meta.getNamespace());
                         this.logger.info(
                                 "Found backing agones game server: {}/{}",
-                                this.namespace,
-                                this.name
+                                this.kubernetesAdapter.getNamespace(),
+                                this.kubernetesAdapter.getName()
                         );
                     }
             );
@@ -81,29 +77,20 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
         }
     }
 
-    @Override
     public void allocate() {
         this.agones.allocate();
     }
 
-    @Override
     public void reserve(int seconds) {
         this.agones.reserve(Duration.ofSeconds(seconds));
     }
 
-    @Override
     public void requestShutdown() {
         this.agones.shutdown();
     }
 
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public String getNamespace() {
-        return this.namespace;
+    public KubernetesAdapter getKubernetesAdapter() {
+        return this.kubernetesAdapter;
     }
 
     private class PlayerAllocationHook implements PlayerConnectionHook {

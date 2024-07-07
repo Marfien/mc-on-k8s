@@ -16,7 +16,6 @@ include(
 )
 
 include(
-        "packages:clients:client-api",
         "packages:clients:client-common"
 )
 

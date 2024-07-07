@@ -3,6 +3,7 @@ package dev.marfien.minecraftonk8s.client.proxy.agent.configuration;
 import dev.marfien.minecraftonk8s.client.common.config.EnvironmentConfiguration;
 import java.time.Duration;
 
+// Not quite sure why IntelliJ does not find this class. But gradle build is successful, so idc.
 public class ProxyEnvironmentConfiguration extends EnvironmentConfiguration implements ProxyConfiguration {
 
     private final Duration rebuildCacheInterval;

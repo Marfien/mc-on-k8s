@@ -4,9 +4,9 @@ plugins {
 
 dependencies {
     api(libs.bundles.agones)
-    api(project(":packages:clients:client-api"))
     api(libs.slf4j.api)
     api(libs.adventure.api)
+    api(libs.kubernetes.client)
 }
 
 java {
