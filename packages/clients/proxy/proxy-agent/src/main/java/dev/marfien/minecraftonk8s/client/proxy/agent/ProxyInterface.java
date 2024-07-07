@@ -1,6 +1,7 @@
 package dev.marfien.minecraftonk8s.client.proxy.agent;
 
 import dev.marfien.minecraftonk8s.client.common.ClientInterface;
+import net.kyori.adventure.text.Component;
 
 public interface ProxyInterface extends ClientInterface {
 
@@ -8,4 +9,5 @@ public interface ProxyInterface extends ClientInterface {
     void removeServer(String serverName);
     boolean hasServer(String serverName);
 
+    void kickAll(Component s);
 }

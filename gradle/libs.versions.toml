@@ -20,6 +20,8 @@ kubernetes-crdsgen = { group = "io.fabric8", name = "crd-generator-apt", version
 quarkus-platform-core = { group = "io.quarkus.platform", name = "quarkus-bom", version.ref = "quarkus" }
 quarkus-platform-operatorsdk = { group = "io.quarkus.platform", name = "quarkus-operator-sdk-bom", version.ref = "quarkus" }
 
+adventure-api = { group = "net.kyori", name = "adventure-api", version = "4.17.0" }
+
 [plugins]
 quarkus = { id = "io.quarkus", version.ref = "quarkus" }
 shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }

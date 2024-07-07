@@ -6,4 +6,7 @@ public interface ClientAPI {
     void reserve(int seconds);
     void requestShutdown();
 
+    String getName();
+    String getNamespace();
+
 }

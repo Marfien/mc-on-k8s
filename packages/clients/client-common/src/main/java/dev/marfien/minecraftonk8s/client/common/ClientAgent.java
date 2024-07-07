@@ -1,6 +1,7 @@
 package dev.marfien.minecraftonk8s.client.common;
 
 import agones.dev.sdk.Sdk.Empty;
+import agones.dev.sdk.Sdk.GameServer.ObjectMeta;
 import dev.marfien.minecraftonk8s.client.api.ClientAPI;
 import dev.marfien.minecraftonk8s.client.common.ClientInterface.ScheduledTask;
 import dev.marfien.minecraftonk8s.client.common.config.ClientConfiguration;
@@ -24,6 +25,9 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
 
     private ScheduledTask healthCheckTask;
 
+    private String name;
+    private String namespace;
+
     protected ClientAgent(I clientInterface, C configuration) {
         this.clientInterface = clientInterface;
         this.configuration = configuration;
@@ -39,11 +43,16 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
         try {
             startHealthCheck();
             this.agones.ready();
-            this.agones.getGameServerFuture().thenAccept(gameServer ->
-                    this.logger.info("Backing agones game server: {}/{}",
-                            gameServer.getObjectMeta().getNamespace(),
-                            gameServer.getObjectMeta().getName()
-                    )
+            this.agones.getGameServerFuture().thenAccept(gameServer -> {
+                        ObjectMeta meta = gameServer.getObjectMeta();
+                        this.name = meta.getName();
+                        this.namespace = meta.getNamespace();
+                        this.logger.info(
+                                "Found backing agones game server: {}/{}",
+                                this.namespace,
+                                this.name
+                        );
+                    }
             );
 
             switch (this.configuration.getAllocationStrategy()) {
@@ -85,6 +94,16 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
     @Override
     public void requestShutdown() {
         this.agones.shutdown();
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public String getNamespace() {
+        return this.namespace;
     }
 
     private class PlayerAllocationHook implements PlayerConnectionHook {

@@ -30,8 +30,12 @@ public class MinecraftServerReconciler implements Reconciler<MinecraftServer>,
         String clusterName = minecraftServer.getSpec().getClusterRef();
         MinecraftCluster cluster = context.getClient().resources(MinecraftCluster.class).withName(clusterName).require();
         GameServer backedGameServer = context.getSecondaryResource(GameServer.class).orElseThrow();
+        String backedGameServerStatus = backedGameServer.getStatus().getState();
 
-        boolean ready = minecraftServer.getStatus().isReady() || backedGameServer.getStatus().getState().equalsIgnoreCase("ready");
+        boolean ready = minecraftServer.getStatus().isReady()
+                || backedGameServerStatus.equals("Ready")
+                || backedGameServerStatus.equals("Reserved")
+                || backedGameServerStatus.equals("Allocated");
 
         return UpdateControl.updateStatus(
                 minecraftServer.edit()

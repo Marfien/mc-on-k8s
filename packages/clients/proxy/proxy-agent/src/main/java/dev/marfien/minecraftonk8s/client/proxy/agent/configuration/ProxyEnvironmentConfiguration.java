@@ -9,6 +9,8 @@ public class ProxyEnvironmentConfiguration extends EnvironmentConfiguration impl
     private final Duration drainageDuration;
     private final Duration drainageDelay;
 
+    private final String watchingNamespace;
+
     public ProxyEnvironmentConfiguration() {
         super();
         this.rebuildCacheInterval = System.getenv("REBUILD_CACHE_INTERVAL") == null
@@ -20,6 +22,7 @@ public class ProxyEnvironmentConfiguration extends EnvironmentConfiguration impl
         this.drainageDelay = System.getenv("DRAINAGE_DELAY") == null
                 ? Duration.ofHours(8)
                 : Duration.parse(System.getenv("DRAINAGE_DELAY"));
+        this.watchingNamespace = System.getenv("WATCHING_NAMESPACE");
     }
 
     @Override
@@ -35,5 +38,10 @@ public class ProxyEnvironmentConfiguration extends EnvironmentConfiguration impl
     @Override
     public Duration getDrainageDelay() {
         return this.drainageDelay;
+    }
+
+    @Override
+    public String getWatchingNamespace() {
+        return this.watchingNamespace;
     }
 }
