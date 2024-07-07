@@ -104,9 +104,11 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
 
         @Override
         public void onPlayerDisconnected(UUID playerId) {
-            if (clientInterface.getPlayerCount() == 0) {
-                agones.ready();
-            }
+            clientInterface.scheduleTask(() -> {
+                if (clientInterface.getPlayerCount() == 0) {
+                    agones.ready();
+                }
+            }, 1);
         }
     }
 

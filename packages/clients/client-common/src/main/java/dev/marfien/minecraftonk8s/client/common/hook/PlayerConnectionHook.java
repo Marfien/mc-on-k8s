@@ -15,6 +15,8 @@ public interface PlayerConnectionHook {
 
     }
 
-    default void onPlayerDisconnected(UUID playerId) {}
+    default void onPlayerDisconnected(UUID playerId) {
+
+    }
 
 }

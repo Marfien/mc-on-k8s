@@ -22,6 +22,8 @@ quarkus-platform-operatorsdk = { group = "io.quarkus.platform", name = "quarkus-
 
 adventure-api = { group = "net.kyori", name = "adventure-api", version = "4.17.0" }
 
+proxy-velocity = { group = "com.velocitypowered", name = "velocity-api", version = "3.3.0-SNAPSHOT" }
+
 [plugins]
 quarkus = { id = "io.quarkus", version.ref = "quarkus" }
 shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }

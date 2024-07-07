@@ -3,10 +3,10 @@ package dev.marfien.minecraftonk8s.client.proxy.agent.internal;
 import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectionHook;
 import dev.marfien.minecraftonk8s.client.proxy.agent.ProxyAgent;
 import dev.marfien.minecraftonk8s.client.proxy.agent.ProxyInterface;
+import java.util.UUID;
 import net.kyori.adventure.text.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.UUID;
 
 public class DrainageHook implements PlayerConnectionHook {
 
@@ -31,11 +31,14 @@ public class DrainageHook implements PlayerConnectionHook {
     }
 
     @Override
-    public void onPlayerDisconnected(UUID playerId) {
-        if (!this.agent.isDraining()) return;
-        if (this.proxyInterface.getPlayerCount() == 0) {
-            this.logger.info("Proxy is empty. Shutting down...");
-            this.agent.shutdown();
-        }
+    public void onPlayerDisconnect(UUID playerId) {
+        this.proxyInterface.scheduleTask(() -> {
+            if (!this.agent.isDraining())
+                return;
+            if (this.proxyInterface.getPlayerCount() == 0) {
+                this.logger.info("Proxy is empty. Shutting down...");
+                this.agent.shutdown();
+            }
+        }, 1);
     }
 }
