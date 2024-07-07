@@ -1,4 +1,4 @@
-package dev.marfien.minecraftonk8s.api.model;
+package dev.marfien.minecraftonk8s.common;
 
 public class Constants {
 

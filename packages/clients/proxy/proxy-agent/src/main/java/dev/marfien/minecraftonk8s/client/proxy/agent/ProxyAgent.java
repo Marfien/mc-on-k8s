@@ -22,7 +22,7 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
     }
 
     public boolean isDraining() {
-        return isDraining;
+        return this.isDraining;
     }
 
     @Override

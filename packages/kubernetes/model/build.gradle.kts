@@ -11,6 +11,7 @@ dependencies {
 
     api(libs.kubernetes.client)
     api(project(":packages:kubernetes:agones-model"))
+    api(project(":packages:common"))
     annotationProcessor(libs.kubernetes.crdsgen)
 }
 

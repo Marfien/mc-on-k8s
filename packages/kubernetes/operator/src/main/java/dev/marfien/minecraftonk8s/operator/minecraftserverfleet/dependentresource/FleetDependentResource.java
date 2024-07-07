@@ -5,6 +5,7 @@ import dev.marfien.minecraftonk8s.agones.model.FleetBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleetSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerSpecTemplate;
+import dev.marfien.minecraftonk8s.common.Label;
 import dev.marfien.minecraftonk8s.operator.minecraftserver.MinecraftServerReconciler;
 import dev.marfien.minecraftonk8s.operator.minecraftserverfleet.MinecraftServerFleetReconciler;
 import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
@@ -17,7 +18,7 @@ import java.util.Map;
 public class FleetDependentResource extends
         CRUDKubernetesDependentResource<Fleet, MinecraftServerFleet> {
 
-    private static final Map<String, String> LABELS = Map.of(MinecraftServerFleetReconciler.SELECTOR, "true");
+    private static final Map<String, String> LABELS = Map.of(Label.CONTROLLED_BY.getName(), "fleet-reconciler");
 
     public FleetDependentResource() {
         super(Fleet.class);

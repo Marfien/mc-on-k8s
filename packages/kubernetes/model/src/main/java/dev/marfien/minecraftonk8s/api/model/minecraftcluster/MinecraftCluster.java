@@ -1,8 +1,8 @@
 package dev.marfien.minecraftonk8s.api.model.minecraftcluster;
 
-import dev.marfien.minecraftonk8s.api.model.Constants;
 import dev.marfien.minecraftonk8s.api.model.minecraftcluster.MinecraftCluster.MinecraftClusterSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftcluster.MinecraftCluster.MinecraftClusterStatus;
+import dev.marfien.minecraftonk8s.common.Constants;
 import io.fabric8.kubernetes.api.builder.Editable;
 import io.fabric8.kubernetes.client.CustomResource;
 import io.fabric8.kubernetes.model.annotation.Group;

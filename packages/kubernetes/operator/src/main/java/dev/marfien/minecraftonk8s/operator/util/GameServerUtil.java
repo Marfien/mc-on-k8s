@@ -32,6 +32,10 @@ public class GameServerUtil {
                                 .withName("MCS_TAGS")
                                 .withValue(String.join(";", spec.getTags()))
                                 .endEnv()
+                                .addNewEnv()
+                                .withName("CLUSTER_REF_NAE")
+                                .withValue(spec.getClusterRef())
+                                .endEnv()
                                 .build()
                 )
                 .toList();

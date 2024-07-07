@@ -22,7 +22,7 @@ import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
 public class MinecraftServerReconciler implements Reconciler<MinecraftServer>,
         ErrorStatusHandler<MinecraftServer>, Cleaner<MinecraftServer> {
 
-    public static final String SELECTOR = "mconk8s.marfien.dev/managed-by-mcs-reconciler";
+    public static final String SELECTOR = "mconk8s.marfien.dev/controlled-by=mc-server-reconciler";
 
     @Override
     public UpdateControl<MinecraftServer> reconcile(

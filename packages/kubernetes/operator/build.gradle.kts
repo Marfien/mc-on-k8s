@@ -16,6 +16,7 @@ dependencies {
     annotationProcessor(libs.lombok)
 
     testImplementation("io.quarkus:quarkus-junit5")
+    implementation(project(":packages:common"))
 }
 
 java {

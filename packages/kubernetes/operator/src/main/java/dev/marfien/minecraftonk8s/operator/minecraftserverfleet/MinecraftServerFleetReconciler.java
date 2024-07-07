@@ -21,7 +21,7 @@ import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
 public class MinecraftServerFleetReconciler implements Reconciler<MinecraftServerFleet>,
         ErrorStatusHandler<MinecraftServerFleet>, Cleaner<MinecraftServerFleet> {
 
-    public static final String SELECTOR = "mconk8s.marfien.dev/managed-by-mcsf-reconciler";
+    public static final String SELECTOR = "mconk8s.marfien.dev/controlled-by==fleet-reconciler";
 
     @Override
     public UpdateControl<MinecraftServerFleet> reconcile(

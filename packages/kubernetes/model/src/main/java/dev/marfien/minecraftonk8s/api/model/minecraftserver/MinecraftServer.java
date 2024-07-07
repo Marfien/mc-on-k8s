@@ -1,6 +1,6 @@
 package dev.marfien.minecraftonk8s.api.model.minecraftserver;
 
-import dev.marfien.minecraftonk8s.api.model.Constants;
+import dev.marfien.minecraftonk8s.common.Constants;
 import io.fabric8.kubernetes.api.builder.Editable;
 import io.fabric8.kubernetes.api.model.Namespaced;
 import io.fabric8.kubernetes.client.CustomResource;

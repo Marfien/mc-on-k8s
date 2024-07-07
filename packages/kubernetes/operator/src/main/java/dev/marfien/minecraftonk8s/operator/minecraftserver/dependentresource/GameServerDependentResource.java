@@ -4,6 +4,7 @@ import dev.marfien.minecraftonk8s.agones.model.GameServer;
 import dev.marfien.minecraftonk8s.agones.model.GameServerBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
+import dev.marfien.minecraftonk8s.common.Label;
 import dev.marfien.minecraftonk8s.operator.minecraftserver.MinecraftServerReconciler;
 import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class GameServerDependentResource extends
         CRUDKubernetesDependentResource<GameServer, MinecraftServer> {
 
-    private static final Map<String, String> LABELS = Map.of(MinecraftServerReconciler.SELECTOR, "true");
+    private static final Map<String, String> LABELS = Map.of(Label.CONTROLLED_BY.getName(), "mc-server-reconciler");
 
     public GameServerDependentResource() {
         super(GameServer.class);

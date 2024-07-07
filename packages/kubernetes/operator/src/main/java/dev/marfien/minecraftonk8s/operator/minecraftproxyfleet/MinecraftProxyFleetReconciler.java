@@ -3,7 +3,7 @@ package dev.marfien.minecraftonk8s.operator.minecraftproxyfleet;
 import dev.marfien.minecraftonk8s.agones.model.Fleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftcluster.MinecraftCluster;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleet;
-import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleetBuilder;
+import dev.marfien.minecraftonk8s.common.Label;
 import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresource.FleetDependentResource;
 import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresource.ServiceDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
@@ -25,7 +25,7 @@ import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
 public class MinecraftProxyFleetReconciler implements Reconciler<MinecraftProxyFleet>,
         ErrorStatusHandler<MinecraftProxyFleet>, Cleaner<MinecraftProxyFleet> {
 
-    public static final String SELECTOR = "mconk8s.marfien.dev/managed-by-mcpf-reconciler";
+    public static final String SELECTOR = "mconk8s.marfien.dev/controlled-by=proxy-fleet-reconciler";
 
     @Override
     public UpdateControl<MinecraftProxyFleet> reconcile(MinecraftProxyFleet resource,
@@ -37,16 +37,16 @@ public class MinecraftProxyFleetReconciler implements Reconciler<MinecraftProxyF
         return UpdateControl.patchStatus(
                 resource.edit()
                         .editStatus()
-                        .withClusterId(cluster.getMetadata().getUid())
-                        .withReplicas(proxyFleet.getStatus().getReplicas())
-                        .withReadyReplicas(proxyFleet.getStatus().getReadyReplicas())
-                        .withAllocatedReplicas(proxyFleet.getStatus().getAllocatedReplicas())
-                        .addNewCondition()
-                        .withStatus("True")
-                        .withType("Reconciled")
-                        .withReason("FleetReconciled")
-                        .withMessage("The fleet has been reconciled successfully.")
-                        .endCondition()
+                            .withClusterId(cluster.getMetadata().getUid())
+                            .withReplicas(proxyFleet.getStatus().getReplicas())
+                            .withReadyReplicas(proxyFleet.getStatus().getReadyReplicas())
+                            .withAllocatedReplicas(proxyFleet.getStatus().getAllocatedReplicas())
+                            .addNewCondition()
+                                .withStatus("True")
+                                .withType("Reconciled")
+                                .withReason("FleetReconciled")
+                                .withMessage("The fleet has been reconciled successfully.")
+                            .endCondition()
                         .endStatus()
                         .build()
         );

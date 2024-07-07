@@ -5,12 +5,16 @@ import dev.marfien.minecraftonk8s.agones.model.FleetBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleetSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxySpec;
+import dev.marfien.minecraftonk8s.common.Label;
+import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.MinecraftProxyFleetReconciler;
 import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource;
+import io.javaoperatorsdk.operator.processing.dependent.kubernetes.KubernetesDependent;
 import java.util.List;
 
+@KubernetesDependent(labelSelector = MinecraftProxyFleetReconciler.SELECTOR)
 public class FleetDependentResource extends CRUDKubernetesDependentResource<Fleet, MinecraftProxyFleet> {
 
     public FleetDependentResource() {
@@ -38,10 +42,10 @@ public class FleetDependentResource extends CRUDKubernetesDependentResource<Flee
                             .endSdkServer()
                             .withNewTemplateLike(template.getTemplate())
                                 .editMetadata()
-                                    .addToLabels("mconk8s.marfien.dev/proxy-fleet", metadata.getUid())
+                                    .addToLabels(Label.BELONGS_TO.getName(), metadata.getUid())
                                 .endMetadata()
                                 .editSpec()
-                                    .withContainers(patchContainers(template.getTemplate().getSpec().getContainers(), template))
+                                    .withContainers(patchContainers(template.getTemplate().getSpec().getContainers(), template, spec))
                                 .endSpec()
                             .endTemplate()
                         .endSpec()
@@ -50,17 +54,17 @@ public class FleetDependentResource extends CRUDKubernetesDependentResource<Flee
                 .build();
     }
 
-    private List<Container> patchContainers(List<Container> containers, MinecraftProxySpec spec) {
+    private List<Container> patchContainers(List<Container> containers, MinecraftProxySpec template, MinecraftProxyFleetSpec spec) {
         return containers.stream()
                 .parallel()
-//                .map(container ->
-//                        container.edit()
-//                                .addNewEnv()
-//                                .withName("MCS_TAGS")
-//                                .withValue(String.join(";", spec.getTags()))
-//                                .endEnv()
-//                                .build()
-//                )
+                .map(container ->
+                        container.edit()
+                                .addNewEnv()
+                                    .withName("CLUSTER_REF_NAME")
+                                    .withValue(spec.getClusterRef())
+                                .endEnv()
+                                .build()
+                )
                 .toList();
     }
 }

@@ -2,6 +2,7 @@ package dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresourc
 
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleetSpec;
+import dev.marfien.minecraftonk8s.common.Label;
 import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.MinecraftProxyFleetReconciler;
 import io.fabric8.kubernetes.api.model.IntOrString;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
@@ -30,8 +31,8 @@ public class ServiceDependentResource extends CRUDKubernetesDependentResource<Se
                 .endMetadata()
                 .withNewSpec()
                     .withType(spec.getServiceType().name())
-                    .addToSelector("mconk8s.marfien.dev/proxy-fleet", meta.getUid())
-                    .addToSelector("mconk8s.marfien.dev/state", "running")
+                    .addToSelector(Label.BELONGS_TO.getName(), meta.getUid())
+                    .addToSelector(Label.PROXY_STATE.getName(), "running")
                     .addNewPort()
                         .withName("minecraft")
                         .withProtocol("TCP")
