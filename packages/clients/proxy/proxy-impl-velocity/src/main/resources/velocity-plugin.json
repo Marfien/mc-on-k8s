@@ -1,0 +1,9 @@
+{
+  "id" : "minecraftonk8s-agent",
+  "name" : "MinecraftOnK8s Agent",
+  "version" : "@project.version@",
+  "description" : "Minecraft on Kubernetes Agent for connecting new servers",
+  "authors" : [],
+  "dependencies" : [],
+  "main" : "dev.marfien.minecraftonk8s.client.proxy.velocity.VelocityProxyAgentPlugin"
+}
