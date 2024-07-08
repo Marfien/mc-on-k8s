@@ -1,8 +1,8 @@
 package dev.marfien.minecraftonk8s.client.proxy.agent;
 
 import dev.marfien.minecraftonk8s.client.common.ClientAgent;
+import dev.marfien.minecraftonk8s.client.common.hook.PlayerDisconnectHook;
 import dev.marfien.minecraftonk8s.client.proxy.agent.configuration.ProxyConfiguration;
-import dev.marfien.minecraftonk8s.client.proxy.agent.internal.DrainageHook;
 import dev.marfien.minecraftonk8s.client.proxy.agent.internal.MinecraftServerInformer;
 import net.kyori.adventure.text.Component;
 
@@ -55,7 +55,7 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
     }
 
     public void startDrainage() {
-        isDraining = true;
+        this.isDraining = true;
 
         super.getKubernetesAdapter().self(
                 podResource ->
@@ -65,7 +65,25 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
                                 .endMetadata()
                                 .build()));
         super.logger.info("Start draining players. No new players are accepted on this proxy...");
-        super.clientInterface.addHook(new DrainageHook(this, this.clientInterface));
+
+        super.clientInterface.addHook(playerId -> {
+            if (this.isDraining) {
+                this.logger.info("Player {} tried to connect while proxy is draining. Kicking...", playerId);
+                return Component.text("Proxy is draining. No new players are accepted.");
+            }
+
+            return null;
+        });
+        super.clientInterface.addHook((PlayerDisconnectHook) uuid -> {
+            super.clientInterface.scheduleTask(() -> {
+                if (!this.isDraining)
+                    return;
+                if (super.clientInterface.getPlayerCount() == 0) {
+                    this.logger.info("Proxy is empty. Shutting down...");
+                    this.shutdown();
+                }
+            }, 1);
+        });
 
         if (super.clientInterface.getPlayerCount() == 0) {
             super.logger.info("Proxy is already empty. Shutting down...");

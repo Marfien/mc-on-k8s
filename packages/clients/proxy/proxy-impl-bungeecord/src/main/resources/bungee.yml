@@ -1,0 +1,4 @@
+name: minecraftonk8s-agent
+version: 1.0.0 # TODO versioning by gradle
+main: dev.marfien.minecraftonk8s.client.proxy.bungeecord.BungeecordAgentPlugin
+description: "Minecraft on Kubernetes Agent for connecting new servers"

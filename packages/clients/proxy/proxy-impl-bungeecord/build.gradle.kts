@@ -4,8 +4,9 @@ plugins {
 
 dependencies {
     implementation(project(":packages:clients:proxy:proxy-agent"))
-    compileOnly(libs.proxy.bungeecord)
     implementation(libs.adventure.serializer.bungeecord)
+
+    compileOnly(libs.proxy.bungeecord)
 }
 
 java {
