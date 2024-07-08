@@ -26,9 +26,10 @@ adventure-serializer-bungeecord = { group = "net.kyori", name = "adventure-text-
 proxy-velocity = { group = "com.velocitypowered", name = "velocity-api", version = "3.3.0-SNAPSHOT" }
 proxy-bungeecord = { group = "net.md-5", name = "bungeecord-api", version = "1.20-R0.2" }
 
+plugin-shadow = { group = "com.github.johnrengelman", name = "shadow", version = "8.1.1" }
+
 [plugins]
 quarkus = { id = "io.quarkus", version.ref = "quarkus" }
-shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
 spotless = { id = "com.diffplug.spotless", version = "6.23.2" }
 jandex = { id = "org.kordamp.gradle.jandex", version = "2.0.0" }
 

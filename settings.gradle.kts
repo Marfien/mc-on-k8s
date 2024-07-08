@@ -12,6 +12,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "minecraft-on-k8s"
 
+includeBuild("build-logic")
 include(":packages:common")
 
 include(

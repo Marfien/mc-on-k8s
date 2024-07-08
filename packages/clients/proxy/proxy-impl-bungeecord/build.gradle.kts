@@ -1,5 +1,7 @@
 plugins {
-    id("java-library")
+    id("java")
+    id("mconk8s.java-conventions")
+    id("mconk8s.shade-conventions")
 }
 
 dependencies {
@@ -7,11 +9,4 @@ dependencies {
     implementation(libs.adventure.serializer.bungeecord)
 
     compileOnly(libs.proxy.bungeecord)
-}
-
-java {
-    toolchain {
-        val javaVersion: String by project
-        languageVersion.set(JavaLanguageVersion.of(javaVersion))
-    }
 }

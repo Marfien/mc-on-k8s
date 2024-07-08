@@ -1,15 +1,17 @@
 plugins {
     id("java")
+    id("mconk8s.java-conventions")
     alias(libs.plugins.quarkus)
 }
 
 dependencies {
-    implementation("io.quarkiverse.helm:quarkus-helm:1.2.3")
     implementation(enforcedPlatform(libs.quarkus.platform.core))
     implementation(enforcedPlatform(libs.quarkus.platform.operatorsdk))
+    implementation("io.quarkiverse.helm:quarkus-helm:1.2.3")
     implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk")
     implementation("io.quarkus:quarkus-arc")
 
+    implementation(project(":packages:common"))
     implementation(project(":packages:kubernetes:model"))
     implementation(project(":packages:kubernetes:agones-model"))
 
@@ -17,14 +19,6 @@ dependencies {
     annotationProcessor(libs.lombok)
 
     testImplementation("io.quarkus:quarkus-junit5")
-    implementation(project(":packages:common"))
-}
-
-java {
-    toolchain {
-        val javaVersion: String by project
-        languageVersion.set(JavaLanguageVersion.of(javaVersion))
-    }
 }
 
 tasks.withType<Test> {

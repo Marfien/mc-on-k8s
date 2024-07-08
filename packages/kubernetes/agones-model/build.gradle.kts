@@ -1,5 +1,6 @@
 plugins {
     id("java-library")
+    id("mconk8s.java-conventions")
     alias(libs.plugins.jandex)
 }
 
@@ -10,11 +11,4 @@ dependencies {
     annotationProcessor(libs.kubernetes.client)
 
     api(libs.kubernetes.client)
-}
-
-java {
-    toolchain {
-        val javaVersion: String by project
-        languageVersion.set(JavaLanguageVersion.of(javaVersion))
-    }
 }

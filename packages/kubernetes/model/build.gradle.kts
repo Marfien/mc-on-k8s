@@ -1,5 +1,6 @@
 plugins {
     id("java-library")
+    id("mconk8s.java-conventions")
     alias(libs.plugins.jandex)
 }
 
@@ -13,11 +14,4 @@ dependencies {
     api(project(":packages:kubernetes:agones-model"))
     api(project(":packages:common"))
     annotationProcessor(libs.kubernetes.crdsgen)
-}
-
-java {
-    toolchain {
-        val javaVersion: String by project
-        languageVersion.set(JavaLanguageVersion.of(javaVersion))
-    }
 }
