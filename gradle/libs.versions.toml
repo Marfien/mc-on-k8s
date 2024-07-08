@@ -21,8 +21,10 @@ quarkus-platform-core = { group = "io.quarkus.platform", name = "quarkus-bom", v
 quarkus-platform-operatorsdk = { group = "io.quarkus.platform", name = "quarkus-operator-sdk-bom", version.ref = "quarkus" }
 
 adventure-api = { group = "net.kyori", name = "adventure-api", version = "4.17.0" }
+adventure-serializer-bungeecord = { group = "net.kyori", name = "adventure-text-serializer-bungeecord", version = "4.3.3" }
 
 proxy-velocity = { group = "com.velocitypowered", name = "velocity-api", version = "3.3.0-SNAPSHOT" }
+proxy-bungeecord = { group = "net.md-5", name = "bungeecord-api", version = "1.20-R0.2" }
 
 [plugins]
 quarkus = { id = "io.quarkus", version.ref = "quarkus" }

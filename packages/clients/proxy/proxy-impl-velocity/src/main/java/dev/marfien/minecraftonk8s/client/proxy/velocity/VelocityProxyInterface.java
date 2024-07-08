@@ -1,13 +1,20 @@
 package dev.marfien.minecraftonk8s.client.proxy.velocity;
 
+import com.velocitypowered.api.event.EventHandler;
 import com.velocitypowered.api.event.EventManager;
+import com.velocitypowered.api.event.ResultedEvent.ComponentResult;
+import com.velocitypowered.api.event.connection.DisconnectEvent;
+import com.velocitypowered.api.event.connection.LoginEvent;
+import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
-import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectionHook;
+import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectHook;
+import dev.marfien.minecraftonk8s.client.common.hook.PlayerDisconnectHook;
+import dev.marfien.minecraftonk8s.client.common.hook.PostPlayerConnectHook;
 import dev.marfien.minecraftonk8s.client.proxy.agent.ProxyInterface;
-import net.kyori.adventure.text.Component;
 import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
+import net.kyori.adventure.text.Component;
 
 public class VelocityProxyInterface implements ProxyInterface {
 
@@ -74,12 +81,41 @@ public class VelocityProxyInterface implements ProxyInterface {
     }
 
     @Override
-    public RegisteredHook addHook(PlayerConnectionHook hook) {
-        EventManager eventManager = this.proxyServer.getEventManager();
-        VelocityPlayerConnectionListener listener = new VelocityPlayerConnectionListener(hook);
+    public RegisteredHook addHook(PlayerConnectHook hook) {
+        EventHandler<LoginEvent> handler = event -> {
+            Component component = hook.onPlayerConnecting(event.getPlayer().getUniqueId());
+            if (component != null) {
+                event.setResult(ComponentResult.denied(component));
+            }
+        };
 
-        eventManager.register(this, listener);
-        return () -> eventManager.unregisterListener(this, listener);
+        EventManager eventManager = this.proxyServer.getEventManager();
+        eventManager.register(this, LoginEvent.class, handler);
+
+        return () -> eventManager.unregister(this, handler);
     }
 
+    @Override
+    public RegisteredHook addHook(PostPlayerConnectHook hook) {
+        EventHandler<PostLoginEvent> handler = event -> {
+            hook.onPlayerConnected(event.getPlayer().getUniqueId());
+        };
+
+        EventManager eventManager = this.proxyServer.getEventManager();
+        eventManager.register(this, PostLoginEvent.class, handler);
+
+        return () -> eventManager.unregister(this, handler);
+    }
+
+    @Override
+    public RegisteredHook addHook(PlayerDisconnectHook hook) {
+        EventHandler<DisconnectEvent> handler = event -> {
+            hook.onPlayerDisconnect(event.getPlayer().getUniqueId());
+        };
+
+        EventManager eventManager = this.proxyServer.getEventManager();
+        eventManager.register(this, DisconnectEvent.class, handler);
+
+        return () -> eventManager.unregister(this, handler);
+    }
 }

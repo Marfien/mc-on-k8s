@@ -1,6 +1,8 @@
 package dev.marfien.minecraftonk8s.client.common;
 
-import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectionHook;
+import dev.marfien.minecraftonk8s.client.common.hook.PlayerDisconnectHook;
+import dev.marfien.minecraftonk8s.client.common.hook.PostPlayerConnectHook;
+import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectHook;
 
 public interface ClientInterface {
 
@@ -10,7 +12,9 @@ public interface ClientInterface {
     ScheduledTask scheduleTask(Runnable task, long delay, long period);
     ScheduledTask scheduleTask(Runnable task, long delay);
 
-    RegisteredHook addHook(PlayerConnectionHook hook);
+    RegisteredHook addHook(PlayerConnectHook hook);
+    RegisteredHook addHook(PostPlayerConnectHook hook);
+    RegisteredHook addHook(PlayerDisconnectHook hook);
 
     interface RegisteredHook {
         void unregister();

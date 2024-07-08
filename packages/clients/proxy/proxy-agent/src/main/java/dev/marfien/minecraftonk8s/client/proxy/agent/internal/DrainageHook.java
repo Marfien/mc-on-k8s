@@ -1,6 +1,7 @@
 package dev.marfien.minecraftonk8s.client.proxy.agent.internal;
 
-import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectionHook;
+import dev.marfien.minecraftonk8s.client.common.hook.PlayerDisconnectHook;
+import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectHook;
 import dev.marfien.minecraftonk8s.client.proxy.agent.ProxyAgent;
 import dev.marfien.minecraftonk8s.client.proxy.agent.ProxyInterface;
 import java.util.UUID;
@@ -8,7 +9,7 @@ import net.kyori.adventure.text.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DrainageHook implements PlayerConnectionHook {
+public class DrainageHook implements PlayerConnectHook, PlayerDisconnectHook {
 
     private final Logger logger = LoggerFactory.getLogger("DrainageHook");
 
@@ -21,7 +22,7 @@ public class DrainageHook implements PlayerConnectionHook {
     }
 
     @Override
-    public Component onPlayerConnect(UUID playerId) {
+    public Component onPlayerConnecting(UUID playerId) {
         if (this.agent.isDraining()) {
             this.logger.info("Player {} tried to connect while proxy is draining. Kicking...", playerId);
             return Component.text("Proxy is draining. No new players are accepted.");

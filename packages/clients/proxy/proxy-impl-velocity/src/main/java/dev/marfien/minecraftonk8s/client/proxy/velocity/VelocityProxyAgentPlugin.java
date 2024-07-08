@@ -15,10 +15,10 @@ import jakarta.inject.Inject;
         version = "1.0.0", // TODO versioning by gradle
         description = "Minecraft on Kubernetes Agent for connecting new servers"
 )
-public class VelocityProxyAgent extends ProxyAgent<VelocityProxyInterface, ProxyEnvironmentConfiguration> {
+public class VelocityProxyAgentPlugin extends ProxyAgent<VelocityProxyInterface, ProxyEnvironmentConfiguration> {
 
     @Inject
-    public VelocityProxyAgent(ProxyServer proxyServer) {
+    public VelocityProxyAgentPlugin(ProxyServer proxyServer) {
         super(new VelocityProxyInterface(proxyServer), new ProxyEnvironmentConfiguration());
     }
 

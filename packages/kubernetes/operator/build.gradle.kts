@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+    implementation("io.quarkiverse.helm:quarkus-helm:1.2.3")
     implementation(enforcedPlatform(libs.quarkus.platform.core))
     implementation(enforcedPlatform(libs.quarkus.platform.operatorsdk))
     implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk")

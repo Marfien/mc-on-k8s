@@ -5,10 +5,10 @@ import agones.dev.sdk.Sdk.GameServer.ObjectMeta;
 import dev.marfien.minecraftonk8s.client.common.ClientInterface.ScheduledTask;
 import dev.marfien.minecraftonk8s.client.common.adapter.KubernetesAdapter;
 import dev.marfien.minecraftonk8s.client.common.config.ClientConfiguration;
-import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectionHook;
+import dev.marfien.minecraftonk8s.client.common.hook.PlayerDisconnectHook;
+import dev.marfien.minecraftonk8s.client.common.hook.PostPlayerConnectHook;
 import io.grpc.stub.StreamObserver;
 import java.time.Duration;
-import java.util.UUID;
 import net.infumia.agones4j.Agones;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +53,7 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
 
             switch (this.configuration.getAllocationStrategy()) {
                 case ALWAYS -> this.agones.allocate();
-                case PLAYERS -> this.clientInterface.addHook(new PlayerAllocationHook());
+                case PLAYERS -> this.handlePlayerAllocationStrategy();
                 default -> { /* manuel is not manged by agent */ }
             }
         } catch (Exception e) {
@@ -93,23 +93,19 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
         return this.kubernetesAdapter;
     }
 
-    private class PlayerAllocationHook implements PlayerConnectionHook {
-
-        @Override
-        public void onPlayerConnected(UUID playerId) {
+    private void handlePlayerAllocationStrategy() {
+        this.clientInterface.addHook((PostPlayerConnectHook) event -> {
             if (clientInterface.getPlayerCount() == 1) {
-                allocate();
+                this.allocate();
             }
-        }
-
-        @Override
-        public void onPlayerDisconnected(UUID playerId) {
+        });
+        this.clientInterface.addHook((PlayerDisconnectHook) event -> {
             clientInterface.scheduleTask(() -> {
                 if (clientInterface.getPlayerCount() == 0) {
                     agones.ready();
                 }
             }, 1);
-        }
+        });
     }
 
 }
