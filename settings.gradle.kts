@@ -22,7 +22,8 @@ include(
 )
 
 include(
-        "packages:clients:client-common"
+        "packages:clients:client-common",
+        "packages:clients:client-api"
 )
 
 include(

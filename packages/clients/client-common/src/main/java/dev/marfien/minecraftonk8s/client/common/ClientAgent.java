@@ -2,6 +2,7 @@ package dev.marfien.minecraftonk8s.client.common;
 
 import agones.dev.sdk.Sdk.Empty;
 import agones.dev.sdk.Sdk.GameServer.ObjectMeta;
+import dev.marfien.minecraftonk8s.client.api.ClientAPI;
 import dev.marfien.minecraftonk8s.client.common.ClientInterface.ScheduledTask;
 import dev.marfien.minecraftonk8s.client.common.adapter.KubernetesAdapter;
 import dev.marfien.minecraftonk8s.client.common.config.ClientConfiguration;
@@ -13,7 +14,7 @@ import net.infumia.agones4j.Agones;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class ClientAgent<I extends ClientInterface, C extends ClientConfiguration> {
+public abstract class ClientAgent<I extends ClientInterface, C extends ClientConfiguration> implements ClientAPI {
 
     protected final Logger logger = LoggerFactory.getLogger("ClientAgent");
 
@@ -28,6 +29,8 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
     protected ClientAgent(I clientInterface, C configuration) {
         this.clientInterface = clientInterface;
         this.configuration = configuration;
+
+        ClientAPI.set(this);
     }
 
     public void startHealthCheck() {
@@ -77,14 +80,22 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
         }
     }
 
+    @Override
     public void allocate() {
         this.agones.allocate();
     }
 
-    public void reserve(int seconds) {
-        this.agones.reserve(Duration.ofSeconds(seconds));
+    @Override
+    public void reserve(Duration duration) {
+        this.agones.reserve(duration);
     }
 
+    @Override
+    public void ready() {
+        this.agones.ready();
+    }
+
+    @Override
     public void requestShutdown() {
         this.agones.shutdown();
     }

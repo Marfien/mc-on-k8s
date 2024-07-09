@@ -10,4 +10,5 @@ dependencies {
     api(libs.kubernetes.client)
 
     api(project(":packages:common"))
+    api(project(":packages:clients:client-api"))
 }
