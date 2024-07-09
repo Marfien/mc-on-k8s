@@ -1,0 +1,20 @@
+{{ range $anamespace := .Values.agones.gameservers.namespaces }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: minecraftproxyfleetreconciler-role-binding
+  namespace: {{ $anamespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    app.kubernetes.io/managed-by: quarkus
+roleRef:
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+  name: minecraftproxyfleetreconciler-cluster-role
+subjects:
+  - kind: ServiceAccount
+    name: {{ $.Chart.Name }}
+    namespace: {{ $.Release.Namespace }}
+---
+{{- end }}

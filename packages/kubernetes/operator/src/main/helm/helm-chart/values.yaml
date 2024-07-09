@@ -1,0 +1,16 @@
+minecraftservers:
+  allocation:
+    defaultStrategy: "players"
+
+proxyfleets:
+  allocation:
+    defaultStrategy: "players"
+  drainage:
+    delay: P8h
+    duration: P12h
+  cache:
+    rebuildInterval: P5m
+
+agones:
+  gameservers:
+    namespaces: ["default"]

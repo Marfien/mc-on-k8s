@@ -1,0 +1,10 @@
+---
+name: "minecraftonk8s-operator"
+version: "@project.version@"
+apiVersion: "v2"
+appVersion: "@project.version@"
+
+dependencies:
+  - name: agones
+    version: 1.41.0
+    repository: https://agones.dev/chart/stable

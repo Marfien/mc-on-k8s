@@ -1,0 +1,16 @@
+---
+apiVersion: "rbac.authorization.k8s.io/v1"
+kind: "ClusterRole"
+metadata:
+  name: {{ .Chart.Name }}-proxy-cluster-role
+rules:
+  - apiGroups:
+      - "mconk8s.marfien.dev"
+    resources:
+      - "minecraftserver"
+      - "minecraftserver/status"
+      - "minecraftserver/finalizers"
+    verbs:
+      - "get"
+      - "list"
+      - "watch"

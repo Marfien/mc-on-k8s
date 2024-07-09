@@ -1,0 +1,44 @@
+---
+apiVersion: "rbac.authorization.k8s.io/v1"
+kind: "ClusterRole"
+metadata:
+  name: "minecraftproxyfleetreconciler-cluster-role"
+rules:
+- apiGroups:
+  - "mconk8s.marfien.dev"
+  resources:
+  - "minecraftproxyfleets"
+  - "minecraftproxyfleets/status"
+  - "minecraftproxyfleets/finalizers"
+  verbs:
+  - "get"
+  - "list"
+  - "watch"
+  - "patch"
+  - "update"
+  - "create"
+  - "delete"
+- apiGroups:
+  - "agones.dev"
+  resources:
+  - "fleets"
+  verbs:
+  - "get"
+  - "list"
+  - "watch"
+  - "patch"
+  - "update"
+  - "delete"
+  - "create"
+- apiGroups:
+  - ""
+  resources:
+  - "services"
+  verbs:
+  - "get"
+  - "list"
+  - "watch"
+  - "patch"
+  - "update"
+  - "delete"
+  - "create"

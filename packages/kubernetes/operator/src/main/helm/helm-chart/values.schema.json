@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Values",
+  "type": "object",
+  "properties": {
+    "minecraftservers": {
+      "type": "object",
+      "description" : "Configuration related for the Minecraft Servers",
+      "properties" : {
+        "allocation": {
+          "type" : "object",
+          "description" : "Configuration related to the allocation of servers",
+          "properties" : {
+            "defaultStrategy": {
+              "type": "string",
+              "enum" : ["players", "manual", "always"],
+              "description" : "The default allocation strategy"
+            }
+          }
+        }
+      }
+    },
+    "proxyfleets": {
+      "type": "object",
+      "description" : "Configuration related for the Proxy Fleets",
+      "properties" : {
+        "allocation": {
+          "type" : "object",
+          "description" : "Configuration related to the allocation of proxy fleets",
+          "properties" : {
+            "defaultStrategy": {
+              "type": "string",
+              "enum" : ["players", "manual", "always"],
+              "description" : "The default allocation strategy"
+            }
+          }
+        },
+        "drainage": {
+          "type" : "object",
+          "description" : "Configuration related to the drainage of proxy fleets",
+          "properties" : {
+            "delay": {
+              "type": "string",
+              "pattern" : "([-+]?)P(?:([-+]?[0-9]+)D)?(T(?:([-+]?[0-9]+)H)?(?:([-+]?[0-9]+)M)?(?:([-+]?[0-9]+)(?:[.,]([0-9]{0,9}))?S)?)?",
+              "description" : "The delay before a proxy fleet starts to drain players (not accepting new players anymore)"
+            },
+            "duration": {
+              "type": "string",
+              "pattern" : "([-+]?)P(?:([-+]?[0-9]+)([Dd]))?(T(?:([-+]?[0-9]+)[Hh])?(?:([-+]?[0-9]+)[Mm])?(?:([-+]?[0-9]+)(?:[.,]([0-9]{0,9}))?[Ss])?)?",
+              "description" : "The duration of the drainage of a proxy fleet. After this duration, a proxy will shutdown and kick all players"
+            }
+          }
+        },
+        "cache": {
+          "type" : "object",
+          "description" : "Configuration related to the server cache of proxy fleets",
+          "properties" : {
+            "rebuildInterval": {
+              "type" : "string",
+              "pattern" : "([-+]?)P(?:([-+]?[0-9]+)D)?(T(?:([-+]?[0-9]+)H)?(?:([-+]?[0-9]+)M)?(?:([-+]?[0-9]+)(?:[.,]([0-9]{0,9}))?S)?)?",
+              "description" : "The interval to rebuild the server cache"
+            }
+          }
+        }
+      }
+    }
+  }
+}
