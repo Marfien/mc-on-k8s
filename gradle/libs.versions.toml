@@ -30,13 +30,14 @@ proxy-bungeecord = { group = "net.md-5", name = "bungeecord-api", version = "1.2
 
 gameserver-bukkit = { group = "io.papermc.paper", name = "paper-api", version = "1.21-R0.1-SNAPSHOT" }
 gameserver-minestom = { group = "net.minestom", name = "minestom-snapshots", version = "7320437640" }
+gameserver-sponge = { group = "org.spongepowered", name = "spongeapi", version = "8.0.0" }
 
 plugin-shadow = { group = "com.github.johnrengelman", name = "shadow", version = "8.1.1" }
 
 [plugins]
 quarkus = { id = "io.quarkus", version.ref = "quarkus" }
-spotless = { id = "com.diffplug.spotless", version = "6.23.2" }
 jandex = { id = "org.kordamp.gradle.jandex", version = "2.0.0" }
+sponge = { id = "org.spongepowered.gradle.plugin", version = "2.0.2" }
 
 [bundles]
 annotations = ["lombok", "sundrio-builder"]

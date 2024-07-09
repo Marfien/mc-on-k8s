@@ -5,7 +5,7 @@ plugins {
     id("java")
     id("mconk8s.java-conventions")
     id("mconk8s.shade-conventions")
-    id("org.spongepowered.gradle.plugin") version "2.0.2"
+    alias(libs.plugins.sponge)
 }
 
 dependencies {
@@ -18,10 +18,10 @@ sponge {
         name(PluginLoaders.JAVA_PLAIN)
         version("1.0")
     }
-    license("MIT")
+    license("")
     plugin("minecraftonk8s-agent") {
         displayName("MinecraftOnK8s Agent")
-        version("0.1")
+        version(project.version.toString())
         entrypoint("dev.marfien.minecraftonk8s.client.gameserver.sponge.SpongeAgentPlugin")
         description("MinecraftOnK8s Agent for Sponge")
         dependency("spongeapi") {

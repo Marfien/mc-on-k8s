@@ -11,3 +11,7 @@ java {
         languageVersion.set(JavaLanguageVersion.of(javaVersion))
     }
 }
+
+tasks.withType<JavaCompile> {
+    options.encoding = Charsets.UTF_8.name()
+}
