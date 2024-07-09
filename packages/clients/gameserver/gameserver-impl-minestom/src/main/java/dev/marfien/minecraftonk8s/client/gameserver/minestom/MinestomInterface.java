@@ -1,4 +1,4 @@
-package dev.marfien.minecraftonk8s.client.gameserver.bukkit;
+package dev.marfien.minecraftonk8s.client.gameserver.minestom;
 
 import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectHook;
 import dev.marfien.minecraftonk8s.client.common.hook.PlayerDisconnectHook;
