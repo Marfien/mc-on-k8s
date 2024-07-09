@@ -52,8 +52,7 @@ public class MinestomInterface implements GameServerInterface {
 
     @Override
     public RegisteredHook addHook(PlayerConnectHook hook) {
-        EventNode<Event> eventNode = MinecraftServer.getGlobalEventHandler()
-                .addListener(AsyncPlayerPreLoginEvent.class, event -> {
+        EventNode<Event> eventNode = MinecraftServer.getGlobalEventHandler().addListener(AsyncPlayerPreLoginEvent.class, event -> {
                     Component component = hook.onPlayerConnecting(event.getPlayerUuid());
 
                     if (component != null) {
@@ -65,8 +64,7 @@ public class MinestomInterface implements GameServerInterface {
 
     @Override
     public RegisteredHook addHook(PostPlayerConnectHook hook) {
-        EventNode<Event> eventNode = MinecraftServer.getGlobalEventHandler()
-                .addListener(PlayerSpawnEvent.class, event -> {
+        EventNode<Event> eventNode = MinecraftServer.getGlobalEventHandler().addListener(PlayerSpawnEvent.class, event -> {
                     if (event.isFirstSpawn()) {
                         hook.onPlayerConnected(event.getPlayer().getUuid());
                     }
@@ -76,8 +74,7 @@ public class MinestomInterface implements GameServerInterface {
 
     @Override
     public RegisteredHook addHook(PlayerDisconnectHook hook) {
-        EventNode<Event> eventNode = MinecraftServer.getGlobalEventHandler().addListener(
-                PlayerDisconnectEvent.class, event -> {
+        EventNode<Event> eventNode = MinecraftServer.getGlobalEventHandler().addListener(PlayerDisconnectEvent.class, event -> {
                     hook.onPlayerDisconnect(event.getPlayer().getUuid());
                 });
         return () -> MinecraftServer.getGlobalEventHandler().removeChild(eventNode);

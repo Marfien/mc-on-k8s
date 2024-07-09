@@ -1,0 +1,4 @@
+name: minecraftonk8s-agent
+version: @project.version@
+main: dev.marfien.minecraftonk8s.client.gameserver.bukkit.BukkitAgentPlugin
+description: "Minecraft on Kubernetes Agent for ˚automatic allocation"
