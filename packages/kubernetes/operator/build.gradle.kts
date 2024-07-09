@@ -29,3 +29,31 @@ tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
     options.compilerArgs.add("-parameters")
 }
+
+tasks {
+    val copyCRDs = register<Copy>("copyCRDs") {
+        group = "helm"
+        description = "Copys the generated CRDs to the Helm chart"
+
+        from(project.layout.buildDirectory.dir("kubernetes")) {
+            include("*mconk8s.marfien.dev*.yml")
+        }
+        into(project.layout.buildDirectory.dir("helm/crds"))
+
+        // quarkusAppPartsBuild generates the CRDs
+        dependsOn("quarkusAppPartsBuild")
+    }
+
+    val genHelmChart = register<ProcessResources>("generateHelmChart") {
+        group = "helm"
+        description = "Generates Helm chart from Helm template files"
+
+        from(project.layout.projectDirectory.dir("src/main/helm"))
+        into(project.layout.buildDirectory.dir("helm"))
+        finalizedBy(copyCRDs)
+    }
+
+    build {
+        dependsOn(genHelmChart)
+    }
+}
