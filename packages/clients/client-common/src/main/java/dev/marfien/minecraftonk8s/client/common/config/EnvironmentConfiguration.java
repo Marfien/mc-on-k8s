@@ -2,7 +2,7 @@ package dev.marfien.minecraftonk8s.client.common.config;
 
 import dev.marfien.minecraftonk8s.client.common.AllocationStrategy;
 
-public abstract class EnvironmentConfiguration implements ClientConfiguration {
+public class EnvironmentConfiguration implements ClientConfiguration {
 
     private final AllocationStrategy allocationStrategy;
 

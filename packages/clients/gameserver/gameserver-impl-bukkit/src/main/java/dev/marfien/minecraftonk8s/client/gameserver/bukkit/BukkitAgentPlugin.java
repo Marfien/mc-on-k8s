@@ -60,13 +60,13 @@ public class BukkitAgentPlugin extends JavaPlugin implements GameServerInterface
 
     @Override
     public ScheduledTask scheduleTask(Runnable task, long delay, long period) {
-        var bukkitTask = this.getServer().getScheduler().runTaskTimer(this, task, delay, period);
+        var bukkitTask = this.getServer().getScheduler().runTaskTimer(this, task, 20 * delay, 20 * period);
         return bukkitTask::cancel;
     }
 
     @Override
     public ScheduledTask scheduleTask(Runnable task, long delay) {
-        var bukkitTask = this.getServer().getScheduler().runTaskLater(this, task, delay);
+        var bukkitTask = this.getServer().getScheduler().runTaskLater(this, task, 20 * delay);
         return bukkitTask::cancel;
     }
 
