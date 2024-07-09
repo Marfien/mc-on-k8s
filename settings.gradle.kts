@@ -32,7 +32,7 @@ include(
 )
 
 include(
-        ":packages:clients:gameserver:gameserver-api",
+        ":packages:clients:gameserver:gameserver-agent",
         ":packages:clients:gameserver:gameserver-impl-bukkit",
         ":packages:clients:gameserver:gameserver-impl-sponge",
         ":packages:clients:gameserver:gameserver-impl-minestom"

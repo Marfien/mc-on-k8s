@@ -4,6 +4,7 @@ import dev.marfien.minecraftonk8s.client.common.ClientAgent;
 import dev.marfien.minecraftonk8s.client.common.hook.PlayerDisconnectHook;
 import dev.marfien.minecraftonk8s.client.proxy.agent.configuration.ProxyConfiguration;
 import dev.marfien.minecraftonk8s.client.proxy.agent.internal.MinecraftServerInformer;
+import dev.marfien.minecraftonk8s.common.Label;
 import net.kyori.adventure.text.Component;
 
 public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> extends
@@ -38,7 +39,7 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
         super.getKubernetesAdapter().self(podResource ->
                 podResource.edit(pod -> pod.edit()
                         .editMetadata()
-                        .addToLabels("mconk8s.marfien.dev/state", "running")
+                        .addToLabels(Label.PROXY_STATE.getName(), "running")
                         .endMetadata()
                         .build()
         ));
@@ -61,7 +62,7 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
                 podResource ->
                         podResource.edit(pod -> pod.edit()
                                 .editMetadata()
-                                .addToLabels("mconk8s.marfien.dev/state", "draining")
+                                .addToLabels(Label.PROXY_STATE.getName(), "draining")
                                 .endMetadata()
                                 .build()));
         super.logger.info("Start draining players. No new players are accepted on this proxy...");

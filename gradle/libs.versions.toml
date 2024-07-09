@@ -1,6 +1,7 @@
 [versions]
 grpc = "1.64.1"
 quarkus = "3.10.2"
+adventure = "4.17.0"
 
 [libraries]
 lombok = { group = "org.projectlombok", name = "lombok", version = "1.18.32" }
@@ -20,11 +21,14 @@ kubernetes-crdsgen = { group = "io.fabric8", name = "crd-generator-apt", version
 quarkus-platform-core = { group = "io.quarkus.platform", name = "quarkus-bom", version.ref = "quarkus" }
 quarkus-platform-operatorsdk = { group = "io.quarkus.platform", name = "quarkus-operator-sdk-bom", version.ref = "quarkus" }
 
-adventure-api = { group = "net.kyori", name = "adventure-api", version = "4.17.0" }
+adventure-api = { group = "net.kyori", name = "adventure-api", version.ref = "adventure" }
+adventure-serializer-legacy = { group = "net.kyori", name = "adventure-text-serializer-legacy", version.ref = "adventure" }
 adventure-serializer-bungeecord = { group = "net.kyori", name = "adventure-text-serializer-bungeecord", version = "4.3.3" }
 
 proxy-velocity = { group = "com.velocitypowered", name = "velocity-api", version = "3.3.0-SNAPSHOT" }
 proxy-bungeecord = { group = "net.md-5", name = "bungeecord-api", version = "1.20-R0.2" }
+
+gameserver-bukkit = { group = "io.papermc.paper", name = "paper-api", version = "1.21-R0.1-SNAPSHOT" }
 
 plugin-shadow = { group = "com.github.johnrengelman", name = "shadow", version = "8.1.1" }
 

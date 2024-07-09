@@ -4,6 +4,5 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":packages:kubernetes:model"))
     api(project(":packages:clients:client-common"))
 }

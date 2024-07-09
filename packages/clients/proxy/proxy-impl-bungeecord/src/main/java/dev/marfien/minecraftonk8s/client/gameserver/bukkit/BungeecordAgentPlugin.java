@@ -1,4 +1,4 @@
-package dev.marfien.minecraftonk8s.client.proxy.bungeecord;
+package dev.marfien.minecraftonk8s.client.gameserver.bukkit;
 
 import dev.marfien.minecraftonk8s.client.proxy.agent.ProxyAgent;
 import dev.marfien.minecraftonk8s.client.proxy.agent.configuration.ProxyEnvironmentConfiguration;

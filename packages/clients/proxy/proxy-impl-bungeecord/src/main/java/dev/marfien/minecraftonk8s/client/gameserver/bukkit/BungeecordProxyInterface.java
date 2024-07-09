@@ -1,4 +1,4 @@
-package dev.marfien.minecraftonk8s.client.proxy.bungeecord;
+package dev.marfien.minecraftonk8s.client.gameserver.bukkit;
 
 import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectHook;
 import dev.marfien.minecraftonk8s.client.common.hook.PlayerDisconnectHook;
