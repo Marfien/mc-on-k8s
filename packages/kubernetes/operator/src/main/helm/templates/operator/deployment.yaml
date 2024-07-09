@@ -46,12 +46,6 @@ spec:
           value: {{ .Values.minecraftservers.allocation.defaultStrategy }}
         - name: "PROXY_FLEET_ALLOCATION_DEFAULTSTRATEGY"
           value: {{ .Values.proxyfleets.allocation.defaultStrategy }}
-        - name: "PROXY_FLEET_DRAINAGE_DELAY"
-          value: {{ .Values.proxyfleets.drainage.delay }}
-        - name: "PROXY_FLEET_DRAINAGE_DURATION"
-          value: {{ .Values.proxyfleets.drainage.duration}}
-        - name: "PROXY_FLEET_CACHE_REBUILDINTERVAL"
-          value: {{ .Values.proxyfleets.drainage.duration}}
         - name: "PROXY_SERVICE_ACCOUNT"
           value: {{ .Chart.Name }}-proxy
         image: "ghcr.io/marfien/mc-on-k8s/operator:{{ .Chart.AppVersion }}"

@@ -26,8 +26,6 @@ public class MinecraftServerStatus implements Editable<MinecraftServerStatusBuil
     private String ip;
     private int port;
 
-    private String clusterId;
-
     private List<Condition> conditions;
 
     @Override

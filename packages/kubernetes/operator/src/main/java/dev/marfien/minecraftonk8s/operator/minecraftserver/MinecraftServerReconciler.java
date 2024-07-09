@@ -1,7 +1,6 @@
 package dev.marfien.minecraftonk8s.operator.minecraftserver;
 
 import dev.marfien.minecraftonk8s.agones.model.GameServer;
-import dev.marfien.minecraftonk8s.api.model.minecraftcluster.MinecraftCluster;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
 import dev.marfien.minecraftonk8s.operator.minecraftserver.dependentresource.GameServerDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
@@ -27,8 +26,6 @@ public class MinecraftServerReconciler implements Reconciler<MinecraftServer>,
     @Override
     public UpdateControl<MinecraftServer> reconcile(
             MinecraftServer minecraftServer, Context<MinecraftServer> context) throws Exception {
-        String clusterName = minecraftServer.getSpec().getClusterRef();
-        MinecraftCluster cluster = context.getClient().resources(MinecraftCluster.class).withName(clusterName).require();
         GameServer backedGameServer = context.getSecondaryResource(GameServer.class).orElseThrow();
         String backedGameServerStatus = backedGameServer.getStatus().getState();
 
@@ -40,7 +37,6 @@ public class MinecraftServerReconciler implements Reconciler<MinecraftServer>,
         return UpdateControl.updateStatus(
                 minecraftServer.edit()
                         .editStatus()
-                            .withClusterId(cluster.getMetadata().getUid())
                             .withIp(backedGameServer.getStatus().getAddress())
                             // TODO: This should be the actual port of the game server
                             .withPort(25565)

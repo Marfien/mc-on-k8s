@@ -7,6 +7,7 @@ import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFl
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxySpec;
 import dev.marfien.minecraftonk8s.common.Label;
 import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.MinecraftProxyFleetReconciler;
+import dev.marfien.minecraftonk8s.operator.util.Configuration;
 import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
@@ -60,12 +61,12 @@ public class FleetDependentResource extends CRUDKubernetesDependentResource<Flee
                 .map(container ->
                         container.edit()
                                 .addNewEnv()
-                                    .withName("CLUSTER_REF_NAME")
-                                    .withValue(spec.getClusterRef())
-                                .endEnv()
-                                .addNewEnv()
                                     .withName("LABEL_SELECTOR")
                                     .withValue(template.getLabelSelectorString())
+                                .endEnv()
+                                .addNewEnv()
+                                    .withName("PROXY_FLEET_ALLOCATION_DEFAULTSTRATEGY")
+                                    .withValue(Configuration.PROXY_FLEET_ALLOCATION_DEFAULTSTRATEGY)
                                 .endEnv()
                                 .build()
                 )
