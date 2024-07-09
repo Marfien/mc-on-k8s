@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("mconk8s.replace-tokens")
     id("mconk8s.java-conventions")
     alias(libs.plugins.quarkus)
 }
@@ -7,7 +8,6 @@ plugins {
 dependencies {
     implementation(enforcedPlatform(libs.quarkus.platform.core))
     implementation(enforcedPlatform(libs.quarkus.platform.operatorsdk))
-    implementation("io.quarkiverse.helm:quarkus-helm:1.2.3")
     implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk")
     implementation("io.quarkus:quarkus-arc")
 
