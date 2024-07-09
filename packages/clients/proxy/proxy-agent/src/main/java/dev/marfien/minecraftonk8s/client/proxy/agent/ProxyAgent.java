@@ -30,11 +30,7 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
     @Override
     public void onStartup() {
         super.onStartup();
-        this.informer.start(
-                super.configuration.getWatchingNamespace() == null
-                        ? super.getKubernetesAdapter().getNamespace()
-                        : super.configuration.getWatchingNamespace()
-        );
+        this.informer.start();
 
         super.getKubernetesAdapter().self(podResource ->
                 podResource.edit(pod -> pod.edit()

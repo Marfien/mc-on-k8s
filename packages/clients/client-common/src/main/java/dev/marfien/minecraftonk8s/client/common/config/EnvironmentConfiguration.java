@@ -1,15 +1,14 @@
 package dev.marfien.minecraftonk8s.client.common.config;
 
 import dev.marfien.minecraftonk8s.client.common.AllocationStrategy;
+import dev.marfien.minecraftonk8s.common.Environment;
 
 public class EnvironmentConfiguration implements ClientConfiguration {
 
     private final AllocationStrategy allocationStrategy;
 
     protected EnvironmentConfiguration() {
-        this.allocationStrategy = System.getenv("ALLOCATION_STRATEGY") == null
-                ? AllocationStrategy.PLAYERS
-                : AllocationStrategy.valueOf(System.getenv("ALLOCATION_STRATEGY"));
+        this.allocationStrategy = AllocationStrategy.valueOf(Environment.get("ALLOCATION_STRATEGY", Environment.require("DEFAULT_ALLOCATION_STRATEGY")));
     }
 
     @Override

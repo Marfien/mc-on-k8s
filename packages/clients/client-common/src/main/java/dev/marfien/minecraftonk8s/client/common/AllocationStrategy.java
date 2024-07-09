@@ -6,11 +6,4 @@ public enum AllocationStrategy {
     PLAYERS,
     ALWAYS;
 
-    private static final AllocationStrategy CONFIGURED_STRATEGY;
-
-    static {
-        String strategy = System.getenv("ALLOCATION_STRATEGY");
-        CONFIGURED_STRATEGY = AllocationStrategy.valueOf(strategy);
-    }
-
 }

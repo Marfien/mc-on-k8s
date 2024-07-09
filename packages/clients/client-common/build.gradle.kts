@@ -8,4 +8,6 @@ dependencies {
     api(libs.slf4j.api)
     api(libs.adventure.api)
     api(libs.kubernetes.client)
+
+    api(project(":packages:common"))
 }

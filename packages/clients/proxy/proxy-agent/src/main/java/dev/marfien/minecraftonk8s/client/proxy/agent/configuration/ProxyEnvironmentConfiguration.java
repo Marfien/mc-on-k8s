@@ -1,6 +1,7 @@
 package dev.marfien.minecraftonk8s.client.proxy.agent.configuration;
 
 import dev.marfien.minecraftonk8s.client.common.config.EnvironmentConfiguration;
+import dev.marfien.minecraftonk8s.common.Environment;
 import java.time.Duration;
 
 public class ProxyEnvironmentConfiguration extends EnvironmentConfiguration implements ProxyConfiguration {
@@ -9,22 +10,14 @@ public class ProxyEnvironmentConfiguration extends EnvironmentConfiguration impl
     private final Duration drainageDuration;
     private final Duration drainageDelay;
 
-    private final String watchingNamespace;
     private final String labelSeleector;
 
     public ProxyEnvironmentConfiguration() {
         super();
-        this.rebuildCacheInterval = System.getenv("REBUILD_CACHE_INTERVAL") == null
-                ? Duration.ofMinutes(5)
-                : Duration.parse(System.getenv("REBUILD_CACHE_INTERVAL"));
-        this.drainageDuration = System.getenv("DRAINAGE_DURATION") == null
-                ? Duration.ofHours(12)
-                : Duration.parse(System.getenv("DRAINAGE_DURATION"));
-        this.drainageDelay = System.getenv("DRAINAGE_DELAY") == null
-                ? Duration.ofHours(8)
-                : Duration.parse(System.getenv("DRAINAGE_DELAY"));
-        this.watchingNamespace = System.getenv("WATCHING_NAMESPACE");
-        this.labelSeleector = System.getenv("LABEL_SELECTOR");
+        this.rebuildCacheInterval = Duration.parse(Environment.get("REBUILD_CACHE_INTERVAL", "PT5M"));
+        this.drainageDuration = Duration.parse(Environment.get("DRAINAGE_DURATION", "PT12H"));
+        this.drainageDelay = Duration.parse(Environment.get("DRAINAGE_DELAY", "PT8H"));
+        this.labelSeleector = Environment.get("LABEL_SELECTOR", "");
     }
 
     @Override
@@ -40,11 +33,6 @@ public class ProxyEnvironmentConfiguration extends EnvironmentConfiguration impl
     @Override
     public Duration getDrainageDelay() {
         return this.drainageDelay;
-    }
-
-    @Override
-    public String getWatchingNamespace() {
-        return this.watchingNamespace;
     }
 
     @Override

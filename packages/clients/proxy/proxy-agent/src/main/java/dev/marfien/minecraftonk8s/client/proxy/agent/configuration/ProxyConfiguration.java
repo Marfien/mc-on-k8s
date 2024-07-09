@@ -10,7 +10,5 @@ public interface ProxyConfiguration extends ClientConfiguration {
 
     Duration getRebuildCacheInterval();
 
-    String getWatchingNamespace();
-
     String getLabelSelector();
 }

@@ -31,9 +31,9 @@ public class MinecraftServerInformer {
         this.labelSelector = labelSelector;
     }
 
-    public void start(String watchingNamespace) {
+    public void start() {
         this.informer = this.minecraftServerOperation
-                .inNamespace(watchingNamespace)
+                .inAnyNamespace() // TODO restrict namespace?
                 .withLabelSelector(this.labelSelector)
                 .inform(null, this.resyncPeriod);
         informer.addEventHandler(new MinecraftServerWatcherEventHandler());
