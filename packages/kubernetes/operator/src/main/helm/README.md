@@ -3,6 +3,11 @@
 The following values are configurable:
 - `rbac`:
   - `enabled` - whether to enable RBAC. Default is `true`.
+- `serviceAccounts`:
+  - `operator` - operator service account configuration
+    - `name` - service account name
+  - `proxy` - proxy service account configuration
+    - `name` - service account name
 - `minecraftservers` - configuration related to minecraft servers:
   - `allocation`:
     - `defaultStrategy` - default strategy for allocating servers. One of `players`, `manual`, `always`.
@@ -23,4 +28,3 @@ The following values are configurable:
   - `nodeSelector` - operator pod node selector
   - `imagePullSecrets` - operator image pull secrets
   - `imagePullPolicy` - operator image pull policy
-  - 
