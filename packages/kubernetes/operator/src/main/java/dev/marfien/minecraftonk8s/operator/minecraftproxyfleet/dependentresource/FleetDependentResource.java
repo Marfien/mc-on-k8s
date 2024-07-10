@@ -46,6 +46,7 @@ public class FleetDependentResource extends CRUDKubernetesDependentResource<Flee
                                     .addToLabels(Label.BELONGS_TO.getName(), metadata.getUid())
                                 .endMetadata()
                                 .editSpec()
+                                    .withServiceAccountName(Configuration.PROXY_SERVICE_ACCOUNT)
                                     .withContainers(patchContainers(template.getTemplate().getSpec().getContainers(), template, spec))
                                 .endSpec()
                             .endTemplate()

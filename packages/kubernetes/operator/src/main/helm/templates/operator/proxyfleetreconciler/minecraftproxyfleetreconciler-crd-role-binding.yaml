@@ -15,7 +15,7 @@ roleRef:
   name: minecraftproxyfleetreconciler-cluster-role
 subjects:
   - kind: ServiceAccount
-    name: {{ $.Chart.Name }}
+    name: {{ .Values.serviceAccounts.operator.name }}
     namespace: {{ $.Release.Namespace }}
 ---
 {{- end }}

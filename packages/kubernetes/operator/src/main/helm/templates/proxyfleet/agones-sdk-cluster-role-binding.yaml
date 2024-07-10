@@ -13,6 +13,6 @@ roleRef:
   name: {{ default "agones-sdk" .Values.agones.serviceaccount.sdk.name }}
 subjects:
   - kind: ServiceAccount
-    name: {{ .Chart.Name }}-proxy
+    name: {{ .Values.serviceAccounts.proxy.name }}
     namespace: {{ .Release.Namespace }}
 {{- end }}

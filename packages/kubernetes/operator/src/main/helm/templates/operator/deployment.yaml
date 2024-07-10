@@ -53,7 +53,7 @@ spec:
         - name: "PROXY_FLEET_ALLOCATION_DEFAULTSTRATEGY"
           value: {{ .Values.proxyfleets.allocation.defaultStrategy }}
         - name: "PROXY_SERVICE_ACCOUNT"
-          value: {{ .Chart.Name }}-proxy
+          value: {{ .Values.serviceAccounts.proxy.name }}
         image: "{{ .Values.operator.image.repository }}:{{ .Values.operator.image.tag }}"
         imagePullPolicy: "{{ .Values.operator.imagePullPolicy }}"
         resources:
@@ -98,4 +98,4 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 10
-      serviceAccountName: "operator"
+      serviceAccountName: {{ .Values.serviceAccounts.operator.name }}

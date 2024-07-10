@@ -12,6 +12,29 @@
         }
       }
     },
+    "serviceAccounts": {
+      "type": "object",
+      "properties": {
+        "operator": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the operator service account"
+            }
+          }
+        },
+        "proxy": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the proxy service account"
+            }
+          }
+        }
+      }
+    },
     "operator" : {
       "type" : "object",
       "properties" : {

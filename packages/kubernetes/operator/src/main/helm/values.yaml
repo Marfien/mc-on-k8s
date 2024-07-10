@@ -1,6 +1,12 @@
 rbac:
   enabled: true
 
+serviceAccounts:
+  operator:
+    name: "minecraft-on-k8s-operator"
+  proxy:
+    name: "minecraft-on-k8s-proxy"
+
 minecraftservers:
   allocation:
     defaultStrategy: "players"
