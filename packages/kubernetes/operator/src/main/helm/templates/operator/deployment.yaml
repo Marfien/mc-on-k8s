@@ -30,6 +30,14 @@ spec:
         app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
         app.kubernetes.io/name: "operator"
     spec:
+    {{- with .Values.operator.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      nodeSelector:
+        {{- toYaml .Values.operator.nodeSelector | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.operator.affinity | nindent 8 }}
       containers:
       - env:
         - name: "KUBERNETES_NAMESPACE"
@@ -48,8 +56,15 @@ spec:
           value: {{ .Values.proxyfleets.allocation.defaultStrategy }}
         - name: "PROXY_SERVICE_ACCOUNT"
           value: {{ .Chart.Name }}-proxy
-        image: "ghcr.io/marfien/mc-on-k8s/operator:{{ .Chart.AppVersion }}"
-        imagePullPolicy: "Always"
+        image: "{{ .Values.operator.image.repository }}:{{ .Values.operator.image.tag }}"
+        imagePullPolicy: "{{ .Values.operator.imagePullPolicy }}"
+        resources:
+          limits:
+            cpu: "{{ .Values.operator.resources.limits.cpu }}"
+            memory: "{{ .Values.operator.resources.limits.memory }}"
+          requests:
+            cpu: "{{ .Values.operator.resources.requests.cpu }}"
+            memory: "{{ .Values.operator.resources.requests.memory }}"
         livenessProbe:
           failureThreshold: 3
           httpGet:

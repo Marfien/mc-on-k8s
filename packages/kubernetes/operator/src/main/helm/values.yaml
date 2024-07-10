@@ -11,7 +11,7 @@ proxyfleets:
 
 operator:
   image:
-    repository: "ghcr.io/marfien/minecraftonk8s/operator"
+    repository: "ghcr.io/marfien/mc-on-k8s/operator"
     tag: "@project.version@"
   imagePullPolicy: "Always"
   imagePullSecrets: []
@@ -23,7 +23,6 @@ operator:
       cpu: "500m"
       memory: "512Mi"
   nodeSelector: {}
-  tolerations: []
   affinity: {}
 
 agones:
