@@ -1,3 +1,4 @@
+{{- if .Values.rbac.enabled . }}
 {{ range $anamespace := .Values.agones.gameservers.namespaces }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -17,4 +18,5 @@ subjects:
     name: {{ $.Chart.Name }}
     namespace: {{ $.Release.Namespace }}
 ---
+{{- end }}
 {{- end }}
