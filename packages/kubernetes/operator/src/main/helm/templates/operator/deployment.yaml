@@ -36,8 +36,6 @@ spec:
     {{- end }}
       nodeSelector:
         {{- toYaml .Values.operator.nodeSelector | nindent 8 }}
-      affinity:
-        {{- toYaml .Values.operator.affinity | nindent 8 }}
       containers:
       - env:
         - name: "KUBERNETES_NAMESPACE"

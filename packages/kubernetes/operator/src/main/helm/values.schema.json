@@ -1,41 +1,135 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
-  "title": "Values",
-  "type": "object",
-  "properties": {
-    "minecraftservers": {
-      "type": "object",
-      "description" : "Configuration related for the Minecraft Servers",
+  "$schema" : "https://json-schema.org/draft-07/schema#",
+  "title" : "Values",
+  "type" : "object",
+  "properties" : {
+    "rbac" : {
+      "type" : "object",
       "properties" : {
-        "allocation": {
-          "type" : "object",
-          "description" : "Configuration related to the allocation of servers",
-          "properties" : {
-            "defaultStrategy": {
-              "type": "string",
-              "enum" : ["players", "manual", "always"],
-              "description" : "The default allocation strategy"
-            }
-          }
+        "create" : {
+          "type" : "boolean",
+          "description" : "Create RBAC resources"
         }
       }
     },
-    "proxyfleets": {
-      "type": "object",
-      "description" : "Configuration related for the Proxy Fleets",
+    "operator" : {
+      "type" : "object",
       "properties" : {
-        "allocation": {
+        "image" : {
           "type" : "object",
-          "description" : "Configuration related to the allocation of proxy fleets",
+          "description" : "The image to be used by this deployment",
           "properties" : {
-            "defaultStrategy": {
-              "type": "string",
-              "enum" : ["players", "manual", "always"],
-              "description" : "The default allocation strategy"
+            "repository" : {
+              "type" : "string",
+              "description" : "The repository of the image"
+            },
+            "tag" : {
+              "type" : "string",
+              "description" : "The tag of the image"
             }
+          }
+        },
+        "imagePullPolicy" : {
+          "type" : "string",
+          "description" : "The image pull policy",
+          "enum" : [
+            "Always",
+            "IfNotPresent",
+            "Never"
+          ]
+        },
+        "imagePullSecrets" : {
+          "type" : "array",
+          "description" : "The image pull secrets",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "resources" : {
+          "type" : "object",
+          "description" : "The resources to be allocated to the operator",
+          "properties" : {
+            "requests" : {
+              "type" : "object",
+              "description" : "The requested resources",
+              "properties" : {
+                "cpu" : {
+                  "type" : "string",
+                  "description" : "The CPU request"
+                },
+                "memory" : {
+                  "type" : "string",
+                  "description" : "The memory request"
+                }
+              }
+            },
+            "limits" : {
+              "type" : "object",
+              "description" : "The maximum resources to be allocated to the operator",
+              "properties" : {
+                "cpu" : {
+                  "type" : "string",
+                  "description" : "The CPU limit"
+                },
+                "memory" : {
+                  "type" : "string",
+                  "description" : "The memory limit"
+                }
+              }
+            }
+          }
+        },
+        "nodeSelector" : {
+          "type" : "object",
+          "description" : "The node selector to be used by the operator",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  },
+  "minecraftservers" : {
+    "type" : "object",
+    "description" : "Configuration related for the Minecraft Servers",
+    "properties" : {
+      "allocation" : {
+        "type" : "object",
+        "description" : "Configuration related to the allocation of servers",
+        "properties" : {
+          "defaultStrategy" : {
+            "type" : "string",
+            "enum" : [
+              "players",
+              "manual",
+              "always"
+            ],
+            "description" : "The default allocation strategy"
+          }
+        }
+      }
+    }
+  },
+  "proxyfleets" : {
+    "type" : "object",
+    "description" : "Configuration related for the Proxy Fleets",
+    "properties" : {
+      "allocation" : {
+        "type" : "object",
+        "description" : "Configuration related to the allocation of proxy fleets",
+        "properties" : {
+          "defaultStrategy" : {
+            "type" : "string",
+            "enum" : [
+              "players",
+              "manual",
+              "always"
+            ],
+            "description" : "The default allocation strategy"
           }
         }
       }
     }
   }
+}
 }

@@ -23,7 +23,6 @@ operator:
       cpu: "500m"
       memory: "512Mi"
   nodeSelector: {}
-  affinity: {}
 
 agones:
   gameservers:
