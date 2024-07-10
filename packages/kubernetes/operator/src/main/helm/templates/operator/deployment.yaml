@@ -54,6 +54,10 @@ spec:
           value: {{ .Values.proxyfleets.allocation.defaultStrategy }}
         - name: "PROXY_SERVICE_ACCOUNT"
           value: {{ .Values.serviceAccounts.proxy.name }}
+        - name: "QUARKUS_MICROMETER_EXPORT_PROMETHEUS_PATH"
+          value: {{ .Values.operator.prometheus.path }}
+        - name: "QUARKUS_MICROMETER_EXPORT_PROMETHEUS_ENABLED"
+          value: {{ .Values.operator.prometheus.enabled }}
         image: "{{ .Values.operator.image.repository }}:{{ .Values.operator.image.tag }}"
         imagePullPolicy: "{{ .Values.operator.imagePullPolicy }}"
         resources:

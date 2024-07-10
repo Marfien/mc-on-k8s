@@ -8,6 +8,7 @@ plugins {
 dependencies {
     implementation(enforcedPlatform(libs.quarkus.platform.core))
     implementation(enforcedPlatform(libs.quarkus.platform.operatorsdk))
+    implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
     implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk")
     implementation("io.quarkus:quarkus-arc")
 

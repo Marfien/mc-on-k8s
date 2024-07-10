@@ -29,6 +29,9 @@ operator:
       cpu: "500m"
       memory: "512Mi"
   nodeSelector: {}
+  prometheus:
+    enabled: true
+    path: "/metrics"
 
 agones:
   gameservers:

@@ -109,6 +109,20 @@
             "type" : "string"
           }
         }
+      },
+      "prometheus" : {
+        "type" : "object",
+        "properties" : {
+          "enabled" : {
+            "type" : "boolean",
+            "description" : "Enable Prometheus metrics"
+          },
+          "path" : {
+            "type" : "string",
+            "description" : "The path of the prometheus metrics endpoint",
+            "pattern": "^(/?[a-zA-Z0-9]+)+$"
+          }
+        }
       }
     }
   },
