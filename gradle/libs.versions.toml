@@ -32,7 +32,7 @@ gameserver-bukkit = { group = "io.papermc.paper", name = "paper-api", version = 
 gameserver-minestom = { group = "net.minestom", name = "minestom-snapshots", version = "7320437640" }
 gameserver-sponge = { group = "org.spongepowered", name = "spongeapi", version = "8.0.0" }
 
-plugin-shadow = { group = "com.github.johnrengelman", name = "shadow", version = "8.1.1" }
+plugin-shadow = { group = "com.gradleup.shadow", name = "com.gradleup.shadow.gradle.plugin", version = "8.3.6" }
 
 [plugins]
 quarkus = { id = "io.quarkus", version.ref = "quarkus" }
