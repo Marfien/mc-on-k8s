@@ -1,7 +1,7 @@
 allprojects {
-    val group: String by project
+    val groupId: String by project
     val version: String by project
 
-    this.group = group
+    this.group = groupId
     this.version = version
 }
