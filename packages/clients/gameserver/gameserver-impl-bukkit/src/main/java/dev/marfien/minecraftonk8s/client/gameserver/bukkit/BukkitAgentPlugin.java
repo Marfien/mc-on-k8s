@@ -105,7 +105,11 @@ public class BukkitAgentPlugin extends JavaPlugin implements GameServerInterface
         });
     }
 
-    private <E> RegisteredHook registerEvent(Class<E> eventClass, Consumer<E> consumer) {
+    private <E> RegisteredHook registerEvent(
+            // Class needs to be given as a parameter because of type erasure
+            // Otherwise, every consumer needs to be casted to the correct type
+            Class<E> eventClass,
+            Consumer<E> consumer) {
         Listener listener = new Listener() {
 
             @EventHandler

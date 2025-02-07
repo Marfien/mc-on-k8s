@@ -27,7 +27,7 @@ public class MinestomInterface implements GameServerInterface {
 
     @Override
     public int getPlayerCapacity() {
-        // I don't think Minestom has a max player count
+        // I couldn't find any reference to a maximum player count in Minestom
         return Integer.MAX_VALUE;
     }
 

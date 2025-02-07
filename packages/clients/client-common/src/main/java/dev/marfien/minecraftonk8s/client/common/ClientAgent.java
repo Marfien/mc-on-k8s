@@ -43,6 +43,7 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
         try {
             startHealthCheck();
             this.agones.ready();
+            // Create async k8s adapter
             this.agones.getGameServerFuture().thenAccept(gameServer -> {
                         ObjectMeta meta = gameServer.getObjectMeta();
                         this.kubernetesAdapter = new KubernetesAdapter(meta.getName(), meta.getNamespace());
@@ -54,10 +55,12 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
                     }
             );
 
-            switch (this.configuration.getAllocationStrategy()) {
+            AllocationStrategy allocationStrategy = this.configuration.getAllocationStrategy();
+            switch (allocationStrategy) {
                 case ALWAYS -> this.agones.allocate();
                 case PLAYERS -> this.handlePlayerAllocationStrategy();
-                default -> { /* manuel is not manged by agent */ }
+                case MANUAL -> { /* manuel is not manged by agent */ }
+                default -> throw new UnsupportedOperationException("Unsupported allocation strategy: %s".formatted(allocationStrategy));
             }
         } catch (Exception e) {
             this.logger.error("Failed to initialize agent. Stopping", e);
@@ -73,6 +76,7 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
 
     public void shutdown() {
         try {
+            this.logger.info("Requesting graceful shutdown from agones");
             this.agones.shutdown();
         } catch (Exception e) {
             this.logger.error("Failed to request shutdown from agones. Shutting down manually", e);
@@ -82,21 +86,25 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
 
     @Override
     public void allocate() {
+        this.logger.debug("Allocating game server");
         this.agones.allocate();
     }
 
     @Override
     public void reserve(Duration duration) {
+        this.logger.debug("Reserving game server for %s".formatted(duration));
         this.agones.reserve(duration);
     }
 
     @Override
     public void ready() {
+        this.logger.debug("Marking game server as ready");
         this.agones.ready();
     }
 
     @Override
     public void requestShutdown() {
+        this.logger.debug("Requesting shutdown from agones");
         this.agones.shutdown();
     }
 

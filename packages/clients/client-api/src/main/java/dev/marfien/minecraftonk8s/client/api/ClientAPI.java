@@ -15,6 +15,9 @@ public interface ClientAPI {
     }
 
     static void set(ClientAPI instance) {
+        if (InstanceHolder.instance != null) {
+            throw new IllegalStateException("ClientAPI instance already set");
+        }
         InstanceHolder.instance = instance;
     }
 
