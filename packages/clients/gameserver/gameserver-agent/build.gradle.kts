@@ -1,6 +1,6 @@
 plugins {
     id("java-library")
-    id("mconk8s.java-conventions")
+    id("mconk8s.client-conventions")
 }
 
 dependencies {

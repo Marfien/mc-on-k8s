@@ -57,21 +57,25 @@ public class SpongeAgentPlugin implements GameServerInterface {
 
     @Override
     public ScheduledTask scheduleTask(Runnable task, long delay, long period) {
-        var scheduledTask = this.game.asyncScheduler().submit(Task.builder()
-                .execute(task)
-                .delay(Duration.ofSeconds(delay))
-                .interval(Duration.ofSeconds(period))
-                .build());
-        return scheduledTask::cancel;
+        // The lambda to cancel will be returned
+        return this.game.asyncScheduler().submit(
+                Task.builder()
+                        .execute(task)
+                        .delay(Duration.ofSeconds(delay))
+                        .interval(Duration.ofSeconds(period))
+                        .build()
+        )::cancel;
     }
 
     @Override
     public ScheduledTask scheduleTask(Runnable task, long delay) {
-        var scheduledTask = this.game.asyncScheduler().submit(Task.builder()
-                .execute(task)
-                .delay(Duration.ofSeconds(delay))
-                .build());
-        return scheduledTask::cancel;
+        // The lambda to cancel will be returned
+        return this.game.asyncScheduler().submit(
+                Task.builder()
+                        .execute(task)
+                        .delay(Duration.ofSeconds(delay))
+                        .build()
+        )::cancel;
     }
 
     @Override

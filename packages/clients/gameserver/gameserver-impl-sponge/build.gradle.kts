@@ -3,7 +3,7 @@ import org.spongepowered.plugin.metadata.model.PluginDependency
 
 plugins {
     id("java")
-    id("mconk8s.java-conventions")
+    id("mconk8s.client-conventions")
     id("mconk8s.shade-conventions")
     alias(libs.plugins.sponge)
 }

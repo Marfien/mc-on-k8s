@@ -28,9 +28,9 @@ adventure-serializer-bungeecord = { group = "net.kyori", name = "adventure-text-
 proxy-velocity = { group = "com.velocitypowered", name = "velocity-api", version = "3.3.0-SNAPSHOT" }
 proxy-bungeecord = { group = "net.md-5", name = "bungeecord-api", version = "1.20-R0.2" }
 
-gameserver-bukkit = { group = "io.papermc.paper", name = "paper-api", version = "1.21-R0.1-SNAPSHOT" }
+gameserver-bukkit-legacy = { group = "com.destroystokyo.paper", name = "paper-api", version = "1.11.2-R0.1-SNAPSHOT" }
+gameserver-bukkit-modern = { group = "io.papermc.paper", name = "paper-api", version = "1.21-R0.1-SNAPSHOT" }
 gameserver-minestom = { group = "net.minestom", name = "minestom-snapshots", version = "7320437640" }
-gameserver-sponge = { group = "org.spongepowered", name = "spongeapi", version = "8.0.0" }
 
 plugin-shadow = { group = "com.gradleup.shadow", name = "com.gradleup.shadow.gradle.plugin", version = "8.3.6" }
 

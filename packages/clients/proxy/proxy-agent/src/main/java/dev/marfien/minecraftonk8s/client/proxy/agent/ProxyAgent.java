@@ -54,6 +54,8 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
     public void startDrainage() {
         this.isDraining = true;
 
+        // Add label to the pod to indicate that the proxy is draining
+        // This is important for any service referring to this pod to know that the pod should not be used for new connections
         super.getKubernetesAdapter().self(
                 podResource ->
                         podResource.edit(pod -> pod.edit()
@@ -77,7 +79,7 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
                     return;
                 if (super.clientInterface.getPlayerCount() == 0) {
                     this.logger.info("Proxy is empty. Shutting down...");
-                    this.shutdown();
+                    super.shutdown();
                 }
             }, 1);
         });

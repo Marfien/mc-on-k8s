@@ -41,7 +41,7 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
 
     public void onStartup() {
         try {
-            startHealthCheck();
+            this.startHealthCheck();
             this.agones.ready();
             // Create async k8s adapter
             this.agones.getGameServerFuture().thenAccept(gameServer -> {
@@ -57,14 +57,14 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
 
             AllocationStrategy allocationStrategy = this.configuration.getAllocationStrategy();
             switch (allocationStrategy) {
-                case ALWAYS -> this.agones.allocate();
-                case PLAYERS -> this.handlePlayerAllocationStrategy();
-                case MANUAL -> { /* manuel is not manged by agent */ }
-                default -> throw new UnsupportedOperationException("Unsupported allocation strategy: %s".formatted(allocationStrategy));
+                case ALWAYS: this.agones.allocate(); break;
+                case PLAYERS: this.handlePlayerAllocationStrategy(); break;
+                case MANUAL: { /* manuel is not manged by agent */ } break;
+                default: throw new UnsupportedOperationException(String.format("Unsupported allocation strategy: %s", allocationStrategy));
             }
         } catch (Exception e) {
             this.logger.error("Failed to initialize agent. Stopping", e);
-            shutdown();
+            this.shutdown();
         }
     }
 
@@ -92,7 +92,7 @@ public abstract class ClientAgent<I extends ClientInterface, C extends ClientCon
 
     @Override
     public void reserve(Duration duration) {
-        this.logger.debug("Reserving game server for %s".formatted(duration));
+        this.logger.debug("Reserving game server for {}", duration);
         this.agones.reserve(duration);
     }
 
