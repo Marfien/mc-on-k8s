@@ -9,7 +9,6 @@ import dev.marfien.minecraftonk8s.client.proxy.agent.configuration.GameServerEnv
 import java.lang.reflect.Method;
 import java.util.function.Consumer;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -83,6 +82,7 @@ public class BukkitAgentPlugin extends JavaPlugin implements GameServerInterface
                 return;
             }
 
+            // This is version specific
             EventDisallowComponentAdapter.disallow(event, component);
         });
     }

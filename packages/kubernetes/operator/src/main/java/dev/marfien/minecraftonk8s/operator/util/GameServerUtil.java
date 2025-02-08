@@ -4,8 +4,8 @@ import dev.marfien.minecraftonk8s.agones.model.GameServerSpec;
 import dev.marfien.minecraftonk8s.agones.model.GameServerSpecBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
 import io.fabric8.kubernetes.api.model.Container;
-import lombok.experimental.UtilityClass;
 import java.util.List;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class GameServerUtil {

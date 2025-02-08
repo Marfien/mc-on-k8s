@@ -1,8 +1,8 @@
 package dev.marfien.minecraftonk8s.client.common;
 
+import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectHook;
 import dev.marfien.minecraftonk8s.client.common.hook.PlayerDisconnectHook;
 import dev.marfien.minecraftonk8s.client.common.hook.PostPlayerConnectHook;
-import dev.marfien.minecraftonk8s.client.common.hook.PlayerConnectHook;
 
 public interface ClientInterface {
 
