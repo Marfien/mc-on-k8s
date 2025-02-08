@@ -8,17 +8,33 @@ import dev.marfien.minecraftonk8s.client.proxy.agent.GameServerInterface;
 import dev.marfien.minecraftonk8s.client.proxy.agent.configuration.GameServerEnvironmentConfiguration;
 import java.util.function.Consumer;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 public class BukkitAgentPlugin extends JavaPlugin implements GameServerInterface {
+
+    private static final boolean ADVENTURE_TEXT_SUPPORTED;
+
+    static {
+        boolean supported = true;
+        try {
+            Class<PlayerLoginEvent> clazz = PlayerLoginEvent.class;
+            clazz.getMethod("disallow", Result.class, Component.class);
+        } catch (NoSuchMethodException e) {
+            supported = false;
+        }
+
+        ADVENTURE_TEXT_SUPPORTED = supported;
+    }
 
     private final GameServerAgent<GameServerInterface, GameServerEnvironmentConfiguration> agent
             = new GameServerAgent<>(this, new GameServerEnvironmentConfiguration());
@@ -64,8 +80,18 @@ public class BukkitAgentPlugin extends JavaPlugin implements GameServerInterface
                 return;
             }
 
-            // This is version specific
-            EventDisallowComponentAdapter.disallow(event, component);
+            if (ADVENTURE_TEXT_SUPPORTED) {
+                event.disallow(
+                        Result.KICK_OTHER,
+                        component
+                );
+            } else {
+                event.disallow(
+                        Result.KICK_OTHER,
+                        LegacyComponentSerializer.legacySection()
+                                .serialize(component)
+                );
+            }
         });
     }
 

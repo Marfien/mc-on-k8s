@@ -9,6 +9,5 @@ dependencies {
     implementation(project(":packages:clients:gameserver:gameserver-agent"))
     implementation(libs.adventure.serializer.legacy)
 
-    compileOnly(libs.gameserver.bukkit.legacy)
-    javaLatestCompileOnly(libs.gameserver.bukkit.modern)
+    compileOnly(libs.gameserver.bukkit.modern)
 }
