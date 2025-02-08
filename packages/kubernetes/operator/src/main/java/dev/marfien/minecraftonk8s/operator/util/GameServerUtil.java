@@ -5,20 +5,22 @@ import dev.marfien.minecraftonk8s.agones.model.GameServerSpecBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
 import io.fabric8.kubernetes.api.model.Container;
 import java.util.List;
-import lombok.experimental.UtilityClass;
 
-@UtilityClass
-public class GameServerUtil {
+public final class GameServerUtil {
+
+    private GameServerUtil() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
 
     public static GameServerSpec toGameServerSpec(MinecraftServerSpec spec) {
         return new GameServerSpecBuilder()
                 .withNewSdkServer()
-                    .withLogLevel(spec.getSdkServerLogLevel())
+                .withLogLevel(spec.getSdkServerLogLevel())
                 .endSdkServer()
                 .withNewTemplateLike(spec.getTemplate())
-                    .editSpec()
-                        .withContainers(patchContainers(spec.getTemplate().getSpec().getContainers(), spec))
-                    .endSpec()
+                .editSpec()
+                .withContainers(patchContainers(spec.getTemplate().getSpec().getContainers(), spec))
+                .endSpec()
                 .endTemplate()
                 .build();
     }
@@ -29,12 +31,12 @@ public class GameServerUtil {
                 .map(container ->
                         container.edit()
                                 .addNewEnv()
-                                    .withName("MCS_TAGS")
-                                    .withValue(String.join(";", spec.getTags()))
+                                .withName("MCS_TAGS")
+                                .withValue(String.join(";", spec.getTags()))
                                 .endEnv()
                                 .addNewEnv()
-                                    .withName("MINECRAFT_SERVER_ALLOCATION_DEFAULTSTRATEGY")
-                                    .withValue(Configuration.MINECRAFT_SERVER_ALLOCATION_DEFAULTSTRATEGY)
+                                .withName("MINECRAFT_SERVER_ALLOCATION_DEFAULTSTRATEGY")
+                                .withValue(Configuration.MINECRAFT_SERVER_ALLOCATION_DEFAULTSTRATEGY)
                                 .endEnv()
                                 .build()
                 )

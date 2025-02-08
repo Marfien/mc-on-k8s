@@ -1,6 +1,6 @@
 [versions]
 grpc = "1.64.1"
-quarkus = "3.10.2"
+quarkus = "3.18.2"
 adventure = "4.17.0"
 
 [libraries]

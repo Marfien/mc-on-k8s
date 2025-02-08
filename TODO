@@ -1,4 +1,3 @@
 - Operator: Extensive Logging
 - Testing operator and helmchart
 - testing client core
-- building clients in java8 and java 21

@@ -16,9 +16,6 @@ dependencies {
     implementation(project(":packages:kubernetes:model"))
     implementation(project(":packages:kubernetes:agones-model"))
 
-    implementation(libs.lombok)
-    annotationProcessor(libs.lombok)
-
     testImplementation("io.quarkus:quarkus-junit5")
 }
 
@@ -27,7 +24,6 @@ tasks.withType<Test> {
 }
 
 tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
     options.compilerArgs.add("-parameters")
 }
 
