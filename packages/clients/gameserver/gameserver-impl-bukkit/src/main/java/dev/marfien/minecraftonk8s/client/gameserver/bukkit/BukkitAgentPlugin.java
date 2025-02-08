@@ -6,13 +6,17 @@ import dev.marfien.minecraftonk8s.client.common.hook.PostPlayerConnectHook;
 import dev.marfien.minecraftonk8s.client.proxy.agent.GameServerAgent;
 import dev.marfien.minecraftonk8s.client.proxy.agent.GameServerInterface;
 import dev.marfien.minecraftonk8s.client.proxy.agent.configuration.GameServerEnvironmentConfiguration;
+import java.lang.reflect.Method;
 import java.util.function.Consumer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -21,6 +25,22 @@ public class BukkitAgentPlugin extends JavaPlugin implements GameServerInterface
 
     private final GameServerAgent<GameServerInterface, GameServerEnvironmentConfiguration> agent
             = new GameServerAgent<>(this, new GameServerEnvironmentConfiguration());
+
+    private static final Method ADVENTURE_DISALLOW_METHOD;
+
+    static {
+        Method method;
+        try {
+            Class<PlayerLoginEvent> clazz = PlayerLoginEvent.class;
+            method = clazz.getMethod("disallow", Result.class, Component.class);
+        } catch (NoSuchMethodException e) {
+            // Adventure text is not supported
+            // Then we will use legacy text instead
+            method = null;
+        }
+
+        ADVENTURE_DISALLOW_METHOD = method;
+    }
 
     @Override
     public void onEnable() {
@@ -56,7 +76,15 @@ public class BukkitAgentPlugin extends JavaPlugin implements GameServerInterface
 
     @Override
     public RegisteredHook addHook(PlayerConnectHook hook) {
-        return this.registerEvent(PlayerLoginEvent.class, new PlayerConnectHookHandler(hook));
+        return this.registerEvent(PlayerLoginEvent.class, event -> {
+            Component component = hook.onPlayerConnecting(event.getPlayer().getUniqueId());
+
+            if (component == null) {
+                return;
+            }
+
+            EventDisallowComponentAdapter.disallow(event, component);
+        });
     }
 
     @Override
