@@ -6,11 +6,22 @@ plugins {
 }
 
 dependencies {
+    // imported platforms (imported pom dependency management in maven)
     implementation(enforcedPlatform(libs.quarkus.platform.core))
     implementation(enforcedPlatform(libs.quarkus.platform.operatorsdk))
-    implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
+
+    // operator-sdk dependencies
     implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk")
+    implementation("io.quarkiverse.operatorsdk:quarkus-operator-sdk-bundle-generator")
+
+    // quarkus dependencies
+    implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
     implementation("io.quarkus:quarkus-arc")
+
+    // To ensure compatibility with k3s-based kubernetes distros (such as k3d, rancher)
+    // https://javaoperatorsdk.io/docs/faq/#q-how-to-fix-sunsecurityprovidercertpathsuncertpathbuilderexception-on-rancher-desktop-and-k3dk3s-kubernetes
+    implementation("org.bouncycastle:bcprov-jdk18on")
+    implementation("org.bouncycastle:bcpkix-jdk18on")
 
     implementation(project(":packages:common"))
     implementation(project(":packages:crds"))
@@ -25,32 +36,4 @@ tasks.withType<Test> {
 
 tasks.withType<JavaCompile> {
     options.compilerArgs.add("-parameters")
-}
-
-tasks {
-    val copyCRDs = register<Copy>("copyCRDs") {
-        group = "helm"
-        description = "Copys the generated CRDs to the Helm chart"
-
-        from(project.layout.buildDirectory.dir("kubernetes")) {
-            include("*mconk8s.marfien.dev*.yml")
-        }
-        into(project.layout.buildDirectory.dir("helm/crds"))
-
-        // quarkusAppPartsBuild generates the CRDs
-        dependsOn("quarkusAppPartsBuild")
-    }
-
-    val genHelmChart = register<ProcessResources>("generateHelmChart") {
-        group = "helm"
-        description = "Generates Helm chart from Helm template files"
-
-        from(project.layout.projectDirectory.dir("src/main/helm"))
-        into(project.layout.buildDirectory.dir("helm"))
-        finalizedBy(copyCRDs)
-    }
-
-    build {
-        dependsOn(genHelmChart)
-    }
 }

@@ -18,7 +18,7 @@ include(":packages:common")
 include(
         ":packages:agones-crds",
         ":packages:crds",
-        //":packages:operator"
+        ":packages:operator"
 )
 
 include(

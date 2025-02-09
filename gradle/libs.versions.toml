@@ -9,7 +9,6 @@ sundrio-builder = { group = "io.sundr", name = "builder-annotations", version = 
 
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "2.0.13" }
 
-grpc-netty = { group = "io.grpc", name = "grpc-netty", version.ref = "grpc" }
 grpc-stub = { group = "io.grpc", name = "grpc-stub", version.ref = "grpc" }
 grpc-protobuf = { group = "io.grpc", name = "grpc-protobuf", version.ref = "grpc" }
 tomcat-annotations-api = { group = "org.apache.tomcat", name = "annotations-api", version = "6.0.53" }
