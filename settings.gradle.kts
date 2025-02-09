@@ -16,25 +16,24 @@ includeBuild("build-logic")
 include(":packages:common")
 
 include(
-        ":packages:kubernetes:agones-model",
-        ":packages:kubernetes:model",
-        ":packages:kubernetes:operator"
+        ":packages:agones-crds",
+        ":packages:crds",
+        //":packages:operator"
 )
 
 include(
-        "packages:clients:client-common",
-        "packages:clients:client-api"
+        "packages:clients:api"
 )
 
 include(
-        ":packages:clients:proxy:proxy-agent",
-        ":packages:clients:proxy:proxy-impl-bungeecord",
-        ":packages:clients:proxy:proxy-impl-velocity"
+        ":packages:clients:proxy:agent",
+        ":packages:clients:proxy:impl-bungeecord",
+        ":packages:clients:proxy:impl-velocity"
 )
 
 include(
-        ":packages:clients:gameserver:gameserver-agent",
-        ":packages:clients:gameserver:gameserver-impl-bukkit",
-        ":packages:clients:gameserver:gameserver-impl-sponge",
-        ":packages:clients:gameserver:gameserver-impl-minestom"
+        ":packages:clients:gameserver:agent",
+        ":packages:clients:gameserver:impl-bukkit",
+        ":packages:clients:gameserver:impl-sponge",
+        ":packages:clients:gameserver:impl-minestom"
 )

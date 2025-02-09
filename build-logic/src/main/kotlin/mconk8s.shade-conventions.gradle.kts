@@ -8,8 +8,8 @@ tasks.withType<ShadowJar> {
     this.isEnableRelocation = true
     this.minimize {
         // Exclude those tons of classes if they aren't needed
-        include(project(":packages:kubernetes:model"))
-        include(project(":packages:kubernetes:agones-model"))
+        include(project(":packages:crds"))
+        include(project(":packages:agones-crds"))
     }
 }
 
