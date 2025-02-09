@@ -1,5 +1,9 @@
 package dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet;
 
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import dev.marfien.minecraftonk8s.common.AllocationStrategy;
+import io.fabric8.generator.annotation.Default;
+import io.fabric8.generator.annotation.Pattern;
 import io.fabric8.kubernetes.api.builder.Editable;
 import io.fabric8.kubernetes.api.model.PodTemplateSpec;
 import io.sundr.builder.annotations.Buildable;
@@ -16,10 +20,20 @@ import lombok.NoArgsConstructor;
 })
 public class MinecraftProxySpec implements Editable<MinecraftProxySpecBuilder> {
 
+    @JsonPropertyDescription("The template for the underlying proxy pod")
     private PodTemplateSpec template;
 
+    @Default("info")
+    @Pattern("^(trace|debug|info|warn|error)$")
+    @JsonPropertyDescription("The log level for the Agones SDK server")
     private String sdkServerLogLevel = "info";
+
+    @JsonPropertyDescription("The label selector for filtering the Minecraft servers to add to the proxy")
     private String labelSelectorString;
+
+    @Default("PLAYERS")
+    @JsonPropertyDescription("The allocation strategy for the Minecraft server")
+    private AllocationStrategy allocationStrategy = AllocationStrategy.PLAYERS;
 
     @Override
     public MinecraftProxySpecBuilder edit() {

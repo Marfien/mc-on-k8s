@@ -75,8 +75,8 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
         });
         super.clientInterface.addHook((PlayerDisconnectHook) uuid -> {
             super.clientInterface.scheduleTask(() -> {
-                if (!this.isDraining)
-                    return;
+                if (!this.isDraining) return;
+
                 if (super.clientInterface.getPlayerCount() == 0) {
                     this.logger.info("Proxy is empty. Shutting down...");
                     super.shutdown();

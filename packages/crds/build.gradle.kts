@@ -5,6 +5,7 @@ plugins {
 }
 
 dependencies {
+    compileOnly("io.fabric8:crd-generator-api-v2:7.1.0")
     compileOnly(libs.bundles.annotations)
     annotationProcessor(libs.bundles.annotations)
     // https://github.com/sundrio/sundrio/issues/104#issuecomment-460770907

@@ -1,6 +1,6 @@
 package dev.marfien.minecraftonk8s.client.api.config;
 
-import dev.marfien.minecraftonk8s.client.api.AllocationStrategy;
+import dev.marfien.minecraftonk8s.common.AllocationStrategy;
 import dev.marfien.minecraftonk8s.common.Environment;
 
 public class EnvironmentConfiguration implements ClientConfiguration {

@@ -7,6 +7,7 @@ import dev.marfien.minecraftonk8s.client.api.adapter.KubernetesAdapter;
 import dev.marfien.minecraftonk8s.client.api.config.ClientConfiguration;
 import dev.marfien.minecraftonk8s.client.api.hook.PlayerDisconnectHook;
 import dev.marfien.minecraftonk8s.client.api.hook.PostPlayerConnectHook;
+import dev.marfien.minecraftonk8s.common.AllocationStrategy;
 import io.grpc.stub.StreamObserver;
 import java.time.Duration;
 import net.infumia.agones4j.Agones;

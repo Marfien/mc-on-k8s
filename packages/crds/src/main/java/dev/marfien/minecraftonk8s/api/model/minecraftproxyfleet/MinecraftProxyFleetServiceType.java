@@ -1,14 +1,16 @@
 package dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum MinecraftProxyFleetServiceType {
 
-    @JsonAlias("LoadBalancer")
+    @JsonProperty("LoadBalancer")
     LOAD_BALANCER,
-    @JsonAlias("NodePort")
+
+    @JsonProperty("NodePort")
     NODE_PORT,
-    @JsonAlias("ClusterIP")
+
+    @JsonProperty("ClusterIP")
     CLUSTER_IP,
 
 }
