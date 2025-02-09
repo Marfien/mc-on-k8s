@@ -5,6 +5,7 @@ import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
 import dev.marfien.minecraftonk8s.operator.minecraftserver.dependentresource.GameServerDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
+import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
 import io.javaoperatorsdk.operator.api.reconciler.DeleteControl;
 import io.javaoperatorsdk.operator.api.reconciler.ErrorStatusUpdateControl;
 import io.javaoperatorsdk.operator.api.reconciler.Reconciler;
@@ -13,8 +14,9 @@ import io.javaoperatorsdk.operator.api.reconciler.Workflow;
 import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
 
 @Workflow(dependents = {
-                @Dependent(type = GameServerDependentResource.class)
-        })
+        @Dependent(type = GameServerDependentResource.class)
+})
+@ControllerConfiguration
 public class MinecraftServerReconciler implements Reconciler<MinecraftServer>, Cleaner<MinecraftServer> {
 
     public static final String SELECTOR = "mconk8s.marfien.dev/controlled-by=mc-server-reconciler";

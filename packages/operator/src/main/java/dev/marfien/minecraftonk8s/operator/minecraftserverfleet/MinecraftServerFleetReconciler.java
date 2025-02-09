@@ -5,16 +5,19 @@ import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServer
 import dev.marfien.minecraftonk8s.operator.minecraftserverfleet.dependentresource.FleetDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
+import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
 import io.javaoperatorsdk.operator.api.reconciler.DeleteControl;
 import io.javaoperatorsdk.operator.api.reconciler.ErrorStatusUpdateControl;
 import io.javaoperatorsdk.operator.api.reconciler.Reconciler;
 import io.javaoperatorsdk.operator.api.reconciler.UpdateControl;
 import io.javaoperatorsdk.operator.api.reconciler.Workflow;
 import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
+import io.quarkiverse.operatorsdk.annotations.CSVMetadata;
 
 @Workflow(dependents = {
         @Dependent(type = FleetDependentResource.class)
 })
+@ControllerConfiguration
 public class MinecraftServerFleetReconciler
         implements Reconciler<MinecraftServerFleet>, Cleaner<MinecraftServerFleet> {
 

@@ -15,13 +15,13 @@ public final class GameServerUtil {
     public static GameServerSpec toGameServerSpec(MinecraftServerSpec spec) {
         return new GameServerSpecBuilder()
                 .withNewSdkServer()
-                .withLogLevel(spec.getSdkServerLogLevel())
-                .endSdkServer()
+                    .withLogLevel(spec.getSdkServerLogLevel())
+                    .endSdkServer()
                 .withNewTemplateLike(spec.getTemplate())
-                .editSpec()
-                .withContainers(patchContainers(spec.getTemplate().getSpec().getContainers(), spec))
-                .endSpec()
-                .endTemplate()
+                    .editSpec()
+                        .withContainers(patchContainers(spec.getTemplate().getSpec().getContainers(), spec))
+                        .endSpec()
+                    .endTemplate()
                 .build();
     }
 
@@ -31,13 +31,13 @@ public final class GameServerUtil {
                 .map(container ->
                         container.edit()
                                 .addNewEnv()
-                                .withName("MCS_TAGS")
-                                .withValue(String.join(";", spec.getTags()))
-                                .endEnv()
+                                    .withName("MCS_TAGS")
+                                    .withValue(String.join(";", spec.getTags()))
+                                    .endEnv()
                                 .addNewEnv()
-                                .withName("MINECRAFT_SERVER_ALLOCATION_DEFAULTSTRATEGY")
-                                .withValue(Configuration.MINECRAFT_SERVER_ALLOCATION_DEFAULTSTRATEGY)
-                                .endEnv()
+                                    .withName("MINECRAFT_SERVER_ALLOCATION_DEFAULTSTRATEGY")
+                                    .withValue(Configuration.MINECRAFT_SERVER_ALLOCATION_DEFAULTSTRATEGY)
+                                    .endEnv()
                                 .build()
                 )
                 .toList();

@@ -7,7 +7,6 @@ import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFl
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxySpec;
 import dev.marfien.minecraftonk8s.common.Label;
 import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.MinecraftProxyFleetReconciler;
-import dev.marfien.minecraftonk8s.operator.util.Configuration;
 import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.javaoperatorsdk.operator.api.config.informer.Informer;
@@ -15,9 +14,16 @@ import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.KubernetesDependent;
 import java.util.List;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @KubernetesDependent(informer = @Informer(labelSelector = MinecraftProxyFleetReconciler.SELECTOR))
 public class FleetDependentResource extends CRUDKubernetesDependentResource<Fleet, MinecraftProxyFleet> {
+
+    @ConfigProperty(name = "minecraftonk8s.proxy.allocation-strategy.default")
+    String proxyDefaultAllocationStrategy;
+
+    @ConfigProperty(name = "minecraftonk8s.proxy.serviceaccount.name")
+    String proxyServiceAccount;
 
     public FleetDependentResource() {
         super(Fleet.class);
@@ -47,7 +53,7 @@ public class FleetDependentResource extends CRUDKubernetesDependentResource<Flee
                                     .addToLabels(Label.BELONGS_TO.getName(), metadata.getUid())
                                 .endMetadata()
                                 .editSpec()
-                                    .withServiceAccountName(Configuration.PROXY_SERVICE_ACCOUNT)
+                                    .withServiceAccountName(proxyServiceAccount)
                                     .withContainers(patchContainers(template.getTemplate().getSpec().getContainers(), template, spec))
                                 .endSpec()
                             .endTemplate()
@@ -68,7 +74,7 @@ public class FleetDependentResource extends CRUDKubernetesDependentResource<Flee
                                 .endEnv()
                                 .addNewEnv()
                                     .withName("PROXY_FLEET_ALLOCATION_DEFAULTSTRATEGY")
-                                    .withValue(Configuration.PROXY_FLEET_ALLOCATION_DEFAULTSTRATEGY)
+                                    .withValue(proxyDefaultAllocationStrategy)
                                 .endEnv()
                                 .build()
                 )

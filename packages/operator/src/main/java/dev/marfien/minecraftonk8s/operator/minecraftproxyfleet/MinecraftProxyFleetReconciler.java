@@ -6,6 +6,7 @@ import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresource
 import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresource.ServiceDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
+import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
 import io.javaoperatorsdk.operator.api.reconciler.DeleteControl;
 import io.javaoperatorsdk.operator.api.reconciler.ErrorStatusUpdateControl;
 import io.javaoperatorsdk.operator.api.reconciler.Reconciler;
@@ -17,6 +18,7 @@ import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
         @Dependent(type = FleetDependentResource.class),
         @Dependent(type = ServiceDependentResource.class)
 })
+@ControllerConfiguration
 public class MinecraftProxyFleetReconciler
         implements Reconciler<MinecraftProxyFleet>, Cleaner<MinecraftProxyFleet> {
 
