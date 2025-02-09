@@ -6,22 +6,19 @@ import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresource
 import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresource.ServiceDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
-import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
 import io.javaoperatorsdk.operator.api.reconciler.DeleteControl;
-import io.javaoperatorsdk.operator.api.reconciler.ErrorStatusHandler;
 import io.javaoperatorsdk.operator.api.reconciler.ErrorStatusUpdateControl;
 import io.javaoperatorsdk.operator.api.reconciler.Reconciler;
 import io.javaoperatorsdk.operator.api.reconciler.UpdateControl;
+import io.javaoperatorsdk.operator.api.reconciler.Workflow;
 import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
 
-@ControllerConfiguration(
-        dependents = {
-                @Dependent(type = FleetDependentResource.class),
-                @Dependent(type = ServiceDependentResource.class)
-        }
-)
-public class MinecraftProxyFleetReconciler implements Reconciler<MinecraftProxyFleet>,
-        ErrorStatusHandler<MinecraftProxyFleet>, Cleaner<MinecraftProxyFleet> {
+@Workflow(dependents = {
+        @Dependent(type = FleetDependentResource.class),
+        @Dependent(type = ServiceDependentResource.class)
+})
+public class MinecraftProxyFleetReconciler
+        implements Reconciler<MinecraftProxyFleet>, Cleaner<MinecraftProxyFleet> {
 
     public static final String SELECTOR = "mconk8s.marfien.dev/controlled-by=proxy-fleet-reconciler";
 
@@ -33,15 +30,15 @@ public class MinecraftProxyFleetReconciler implements Reconciler<MinecraftProxyF
         return UpdateControl.patchStatus(
                 resource.edit()
                         .editStatus()
-                            .withReplicas(proxyFleet.getStatus().getReplicas())
-                            .withReadyReplicas(proxyFleet.getStatus().getReadyReplicas())
-                            .withAllocatedReplicas(proxyFleet.getStatus().getAllocatedReplicas())
-                            .addNewCondition()
-                                .withStatus("True")
-                                .withType("Reconciled")
-                                .withReason("FleetReconciled")
-                                .withMessage("The fleet has been reconciled successfully.")
-                            .endCondition()
+                        .withReplicas(proxyFleet.getStatus().getReplicas())
+                        .withReadyReplicas(proxyFleet.getStatus().getReadyReplicas())
+                        .withAllocatedReplicas(proxyFleet.getStatus().getAllocatedReplicas())
+                        .addNewCondition()
+                        .withStatus("True")
+                        .withType("Reconciled")
+                        .withReason("FleetReconciled")
+                        .withMessage("The fleet has been reconciled successfully.")
+                        .endCondition()
                         .endStatus()
                         .build()
         );
@@ -53,12 +50,12 @@ public class MinecraftProxyFleetReconciler implements Reconciler<MinecraftProxyF
         return ErrorStatusUpdateControl.patchStatus(
                 resource.edit()
                         .editStatus()
-                            .addNewCondition()
-                                .withStatus("False")
-                                .withType("Error")
-                                .withReason("ReconcileError")
-                                .withMessage(e.getMessage())
-                            .endCondition()
+                        .addNewCondition()
+                        .withStatus("False")
+                        .withType("Error")
+                        .withReason("ReconcileError")
+                        .withMessage(e.getMessage())
+                        .endCondition()
                         .endStatus()
                         .build());
     }

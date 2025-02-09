@@ -10,12 +10,13 @@ import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.MinecraftProxyFle
 import dev.marfien.minecraftonk8s.operator.util.Configuration;
 import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
+import io.javaoperatorsdk.operator.api.config.informer.Informer;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.KubernetesDependent;
 import java.util.List;
 
-@KubernetesDependent(labelSelector = MinecraftProxyFleetReconciler.SELECTOR)
+@KubernetesDependent(informer = @Informer(labelSelector = MinecraftProxyFleetReconciler.SELECTOR))
 public class FleetDependentResource extends CRUDKubernetesDependentResource<Fleet, MinecraftProxyFleet> {
 
     public FleetDependentResource() {

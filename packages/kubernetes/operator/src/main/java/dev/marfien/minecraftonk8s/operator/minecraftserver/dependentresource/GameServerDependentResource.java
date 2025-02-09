@@ -7,12 +7,13 @@ import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
 import dev.marfien.minecraftonk8s.common.Label;
 import dev.marfien.minecraftonk8s.operator.minecraftserver.MinecraftServerReconciler;
 import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
+import io.javaoperatorsdk.operator.api.config.informer.Informer;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.KubernetesDependent;
 import java.util.Map;
 
-@KubernetesDependent(labelSelector = MinecraftServerReconciler.SELECTOR)
+@KubernetesDependent(informer = @Informer(labelSelector = MinecraftServerReconciler.SELECTOR))
 public class GameServerDependentResource extends
         CRUDKubernetesDependentResource<GameServer, MinecraftServer> {
 

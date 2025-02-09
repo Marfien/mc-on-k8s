@@ -5,21 +5,17 @@ import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
 import dev.marfien.minecraftonk8s.operator.minecraftserver.dependentresource.GameServerDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
-import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
 import io.javaoperatorsdk.operator.api.reconciler.DeleteControl;
-import io.javaoperatorsdk.operator.api.reconciler.ErrorStatusHandler;
 import io.javaoperatorsdk.operator.api.reconciler.ErrorStatusUpdateControl;
 import io.javaoperatorsdk.operator.api.reconciler.Reconciler;
 import io.javaoperatorsdk.operator.api.reconciler.UpdateControl;
+import io.javaoperatorsdk.operator.api.reconciler.Workflow;
 import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
 
-@ControllerConfiguration(
-        dependents = {
+@Workflow(dependents = {
                 @Dependent(type = GameServerDependentResource.class)
-        }
-)
-public class MinecraftServerReconciler implements Reconciler<MinecraftServer>,
-        ErrorStatusHandler<MinecraftServer>, Cleaner<MinecraftServer> {
+        })
+public class MinecraftServerReconciler implements Reconciler<MinecraftServer>, Cleaner<MinecraftServer> {
 
     public static final String SELECTOR = "mconk8s.marfien.dev/controlled-by=mc-server-reconciler";
 
@@ -34,7 +30,7 @@ public class MinecraftServerReconciler implements Reconciler<MinecraftServer>,
                 || backedGameServerStatus.equals("Reserved")
                 || backedGameServerStatus.equals("Allocated");
 
-        return UpdateControl.updateStatus(
+        return UpdateControl.patchStatus(
                 minecraftServer.edit()
                         .editStatus()
                             .withIp(backedGameServer.getStatus().getAddress())
@@ -56,7 +52,7 @@ public class MinecraftServerReconciler implements Reconciler<MinecraftServer>,
     @Override
     public ErrorStatusUpdateControl<MinecraftServer> updateErrorStatus(MinecraftServer resource,
             Context<MinecraftServer> context, Exception e) {
-        return ErrorStatusUpdateControl.updateStatus(
+        return ErrorStatusUpdateControl.patchStatus(
                 resource.edit()
                         .editStatus()
                             .addNewCondition()

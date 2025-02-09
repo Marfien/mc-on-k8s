@@ -5,27 +5,24 @@ import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServer
 import dev.marfien.minecraftonk8s.operator.minecraftserverfleet.dependentresource.FleetDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
-import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
 import io.javaoperatorsdk.operator.api.reconciler.DeleteControl;
-import io.javaoperatorsdk.operator.api.reconciler.ErrorStatusHandler;
 import io.javaoperatorsdk.operator.api.reconciler.ErrorStatusUpdateControl;
 import io.javaoperatorsdk.operator.api.reconciler.Reconciler;
 import io.javaoperatorsdk.operator.api.reconciler.UpdateControl;
+import io.javaoperatorsdk.operator.api.reconciler.Workflow;
 import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
 
-@ControllerConfiguration(
-        dependents = {
-                @Dependent(type = FleetDependentResource.class)
-        }
-)
-public class MinecraftServerFleetReconciler implements Reconciler<MinecraftServerFleet>,
-        ErrorStatusHandler<MinecraftServerFleet>, Cleaner<MinecraftServerFleet> {
+@Workflow(dependents = {
+        @Dependent(type = FleetDependentResource.class)
+})
+public class MinecraftServerFleetReconciler
+        implements Reconciler<MinecraftServerFleet>, Cleaner<MinecraftServerFleet> {
 
     public static final String SELECTOR = "mconk8s.marfien.dev/controlled-by==fleet-reconciler";
 
     @Override
     public UpdateControl<MinecraftServerFleet> reconcile(
-            MinecraftServerFleet resource, Context<MinecraftServerFleet> context) throws Exception {
+            MinecraftServerFleet resource, Context<MinecraftServerFleet> context) {
         Fleet dependent = context.getSecondaryResource(Fleet.class).orElseThrow();
 
         return UpdateControl.patchStatus(
@@ -39,8 +36,8 @@ public class MinecraftServerFleetReconciler implements Reconciler<MinecraftServe
                                 .withType("Reconciled")
                                 .withReason("FleetReconciled")
                                 .withMessage("The fleet has been reconciled successfully.")
-                            .endCondition()
-                        .endStatus()
+                                .endCondition()
+                            .endStatus()
                         .build()
         );
     }
@@ -50,21 +47,20 @@ public class MinecraftServerFleetReconciler implements Reconciler<MinecraftServe
             MinecraftServerFleet resource, Context<MinecraftServerFleet> context, Exception e) {
         return ErrorStatusUpdateControl.patchStatus(
                 resource.edit()
-                    .editStatus()
-                        .addNewCondition()
-                            .withStatus("False")
-                            .withType("Error")
-                            .withReason("ReconcileError")
-                            .withMessage(e.getMessage())
-                        .endCondition()
-                    .endStatus()
-                .build()
+                        .editStatus()
+                            .addNewCondition()
+                                .withStatus("False")
+                                .withType("Error")
+                                .withReason("ReconcileError")
+                                .withMessage(e.getMessage())
+                                .endCondition()
+                            .endStatus()
+                        .build()
         );
     }
 
     @Override
-    public DeleteControl cleanup(MinecraftServerFleet resource,
-            Context<MinecraftServerFleet> context) {
+    public DeleteControl cleanup(MinecraftServerFleet resource, Context<MinecraftServerFleet> context) {
         return DeleteControl.defaultDelete();
     }
 
