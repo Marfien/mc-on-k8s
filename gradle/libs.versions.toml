@@ -37,7 +37,7 @@ plugin-shadow = { group = "com.gradleup.shadow", name = "com.gradleup.shadow.gra
 [plugins]
 quarkus = { id = "io.quarkus", version.ref = "quarkus" }
 jandex = { id = "org.kordamp.gradle.jandex", version = "2.0.0" }
-sponge = { id = "org.spongepowered.gradle.plugin", version = "2.0.2" }
+sponge = { id = "org.spongepowered.gradle.plugin", version = "2.3.0" }
 
 [bundles]
 annotations = ["lombok", "sundrio-builder"]
