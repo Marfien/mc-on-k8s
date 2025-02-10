@@ -1,11 +1,10 @@
-package dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresource;
+package dev.marfien.minecraftonk8s.operator.minecraftproxyfleet;
 
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleetSpec;
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import dev.marfien.minecraftonk8s.common.Constant.ProxyState;
-import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.MinecraftProxyFleetReconciler;
 import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
 import io.fabric8.kubernetes.api.model.IntOrString;
 import io.fabric8.kubernetes.api.model.ObjectMeta;

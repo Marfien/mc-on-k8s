@@ -1,11 +1,10 @@
-package dev.marfien.minecraftonk8s.operator.minecraftserver.dependentresource;
+package dev.marfien.minecraftonk8s.operator.minecraftserver;
 
 import dev.marfien.minecraftonk8s.agones.model.GameServer;
 import dev.marfien.minecraftonk8s.agones.model.GameServerBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
 import dev.marfien.minecraftonk8s.common.Constant;
-import dev.marfien.minecraftonk8s.operator.minecraftserver.MinecraftServerReconciler;
 import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
 import io.javaoperatorsdk.operator.api.config.informer.Informer;
 import io.javaoperatorsdk.operator.api.reconciler.Context;

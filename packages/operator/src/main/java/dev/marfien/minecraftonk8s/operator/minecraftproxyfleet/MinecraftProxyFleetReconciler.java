@@ -5,8 +5,6 @@ import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFl
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import dev.marfien.minecraftonk8s.common.Constant.K8sLabel;
-import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresource.FleetDependentResource;
-import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresource.ServiceDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;

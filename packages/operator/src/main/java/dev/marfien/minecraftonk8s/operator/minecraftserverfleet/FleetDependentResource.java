@@ -1,4 +1,4 @@
-package dev.marfien.minecraftonk8s.operator.minecraftserverfleet.dependentresource;
+package dev.marfien.minecraftonk8s.operator.minecraftserverfleet;
 
 import dev.marfien.minecraftonk8s.agones.model.Fleet;
 import dev.marfien.minecraftonk8s.agones.model.FleetBuilder;
@@ -6,7 +6,6 @@ import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServer
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleetSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerSpecTemplate;
 import dev.marfien.minecraftonk8s.common.Constant;
-import dev.marfien.minecraftonk8s.operator.minecraftserverfleet.MinecraftServerFleetReconciler;
 import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
 import io.javaoperatorsdk.operator.api.config.informer.Informer;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
