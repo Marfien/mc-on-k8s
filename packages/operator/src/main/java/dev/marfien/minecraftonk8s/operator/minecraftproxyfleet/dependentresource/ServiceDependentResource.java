@@ -2,8 +2,11 @@ package dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.dependentresourc
 
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleetSpec;
-import dev.marfien.minecraftonk8s.common.Label;
+import dev.marfien.minecraftonk8s.common.Constant;
+import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
+import dev.marfien.minecraftonk8s.common.Constant.ProxyState;
 import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.MinecraftProxyFleetReconciler;
+import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
 import io.fabric8.kubernetes.api.model.IntOrString;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.api.model.Service;
@@ -13,7 +16,7 @@ import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.KubernetesDependent;
 
-@KubernetesDependent(informer = @Informer(labelSelector = MinecraftProxyFleetReconciler.SELECTOR))
+@KubernetesDependent(informer = @Informer(labelSelector = MinecraftProxyFleetReconciler.LABEL_SELECTOR))
 public class ServiceDependentResource extends CRUDKubernetesDependentResource<Service, MinecraftProxyFleet> {
 
     public ServiceDependentResource() {
@@ -25,22 +28,18 @@ public class ServiceDependentResource extends CRUDKubernetesDependentResource<Se
         MinecraftProxyFleetSpec spec = primary.getSpec();
         ObjectMeta meta = primary.getMetadata();
         return new ServiceBuilder()
-                .withNewMetadata()
-                    .withName(meta.getName())
-                    .withNamespace(meta.getNamespace())
-                    .addToLabels(MinecraftProxyFleetReconciler.SELECTOR, "true")
-                .endMetadata()
+                .withMetadata(GameServerUtil.clonePrimary(primary, Constant.MinecraftProxyFleet.RECONCILER))
                 .withNewSpec()
                     .withType(spec.getServiceType().name())
-                    .addToSelector(Label.BELONGS_TO.getName(), meta.getUid())
-                    .addToSelector(Label.PROXY_STATE.getName(), "running")
+                    .addToSelector(AppLabel.BELONGS_TO, meta.getUid())
+                    .addToSelector(AppLabel.PROXY_STATE, ProxyState.RUNNING)
                     .addNewPort()
                         .withName("minecraft")
                         .withProtocol("TCP")
                         .withPort(25565)
                         .withTargetPort(new IntOrString(25565))
-                    .endPort()
-                .endSpec()
+                        .endPort()
+                    .endSpec()
                 .build();
 
     }

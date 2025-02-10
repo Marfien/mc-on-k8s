@@ -5,20 +5,17 @@ import dev.marfien.minecraftonk8s.agones.model.FleetBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleetSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerSpecTemplate;
-import dev.marfien.minecraftonk8s.common.Label;
-import dev.marfien.minecraftonk8s.operator.minecraftserver.MinecraftServerReconciler;
+import dev.marfien.minecraftonk8s.common.Constant;
+import dev.marfien.minecraftonk8s.operator.minecraftserverfleet.MinecraftServerFleetReconciler;
 import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
 import io.javaoperatorsdk.operator.api.config.informer.Informer;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.KubernetesDependent;
-import java.util.Map;
 
-@KubernetesDependent(informer = @Informer(labelSelector = MinecraftServerReconciler.SELECTOR))
+@KubernetesDependent(informer = @Informer(labelSelector = MinecraftServerFleetReconciler.LABEL_SELECTOR))
 public class FleetDependentResource extends
         CRUDKubernetesDependentResource<Fleet, MinecraftServerFleet> {
-
-    private static final Map<String, String> LABELS = Map.of(Label.CONTROLLED_BY.getName(), "fleet-reconciler");
 
     public FleetDependentResource() {
         super(Fleet.class);
@@ -31,11 +28,7 @@ public class FleetDependentResource extends
         MinecraftServerSpecTemplate template = spec.getTemplate();
 
         return new FleetBuilder()
-                .withNewMetadata()
-                    .withName(primary.getMetadata().getName())
-                    .addToLabels(LABELS)
-                    .withNamespace(primary.getMetadata().getNamespace())
-                .endMetadata()
+                .withMetadata(GameServerUtil.clonePrimary(primary, Constant.MinecraftServerFleet.RECONCILER))
                 .withNewSpec()
                     .withNewTemplate()
                         .withMetadata(template.getMetadata())

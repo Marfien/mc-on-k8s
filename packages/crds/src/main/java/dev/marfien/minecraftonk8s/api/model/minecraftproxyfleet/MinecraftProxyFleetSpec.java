@@ -33,9 +33,6 @@ public class MinecraftProxyFleetSpec implements Editable<MinecraftProxyFleetSpec
     @JsonPropertyDescription("The service type for the fleet. See Kubernetes documentation for more information.")
     private MinecraftProxyFleetServiceType serviceType = MinecraftProxyFleetServiceType.LOAD_BALANCER;
 
-    @JsonPropertyDescription("The drainage configuration for all the proxies in this fleet.")
-    private DrainageSpec drainage;
-
     @Override
     public MinecraftProxyFleetSpecBuilder edit() {
         return new MinecraftProxyFleetSpecBuilder(this);

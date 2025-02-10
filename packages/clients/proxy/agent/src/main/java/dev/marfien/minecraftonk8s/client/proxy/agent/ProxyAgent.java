@@ -4,7 +4,9 @@ import dev.marfien.minecraftonk8s.client.api.ClientAgent;
 import dev.marfien.minecraftonk8s.client.api.hook.PlayerDisconnectHook;
 import dev.marfien.minecraftonk8s.client.proxy.agent.configuration.ProxyConfiguration;
 import dev.marfien.minecraftonk8s.client.proxy.agent.internal.MinecraftServerInformer;
-import dev.marfien.minecraftonk8s.common.Label;
+import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
+import dev.marfien.minecraftonk8s.common.Constant.ProxyState;
+import java.util.concurrent.TimeUnit;
 import net.kyori.adventure.text.Component;
 
 public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> extends
@@ -18,7 +20,7 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
 
         this.informer = new MinecraftServerInformer(
                 clientInterface,
-                configuration.getRebuildCacheInterval().toMillis(),
+                TimeUnit.MINUTES.toMillis(configuration.getRebuildCacheIntervalMinutes()),
                 configuration.getLabelSelector()
         );
     }
@@ -35,13 +37,13 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
         super.getKubernetesAdapter().self(podResource ->
                 podResource.edit(pod -> pod.edit()
                         .editMetadata()
-                        .addToLabels(Label.PROXY_STATE.getName(), "running")
-                        .endMetadata()
+                            .addToLabels(AppLabel.PROXY_STATE, ProxyState.RUNNING)
+                            .endMetadata()
                         .build()
         ));
         this.clientInterface.scheduleTask(
                 this::startDrainage,
-                this.configuration.getDrainageDelay().toSeconds()
+                TimeUnit.HOURS.toSeconds(this.configuration.getDrainageDelayHours())
         );
     }
 
@@ -60,8 +62,8 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
                 podResource ->
                         podResource.edit(pod -> pod.edit()
                                 .editMetadata()
-                                .addToLabels(Label.PROXY_STATE.getName(), "draining")
-                                .endMetadata()
+                                    .addToLabels(AppLabel.PROXY_STATE, ProxyState.DRAINING)
+                                    .endMetadata()
                                 .build()));
         super.logger.info("Start draining players. No new players are accepted on this proxy...");
 
@@ -96,7 +98,7 @@ public class ProxyAgent<I extends ProxyInterface, C extends ProxyConfiguration> 
             super.clientInterface.kickAll(
                     Component.text("You've played long enough. Touch some grass now!"));
             super.shutdown();
-        }, this.configuration.getDrainageDuration().toSeconds());
+        }, TimeUnit.HOURS.toSeconds(this.configuration.getDrainageTimeoutHours()));
     }
 
 }

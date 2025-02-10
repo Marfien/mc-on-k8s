@@ -5,7 +5,9 @@ import dev.marfien.minecraftonk8s.agones.model.FleetBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleetSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxySpec;
-import dev.marfien.minecraftonk8s.common.Label;
+import dev.marfien.minecraftonk8s.common.Constant;
+import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
+import dev.marfien.minecraftonk8s.operator.Config;
 import dev.marfien.minecraftonk8s.operator.minecraftproxyfleet.MinecraftProxyFleetReconciler;
 import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
@@ -13,17 +15,14 @@ import io.javaoperatorsdk.operator.api.config.informer.Informer;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.KubernetesDependent;
+import jakarta.inject.Inject;
 import java.util.List;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-@KubernetesDependent(informer = @Informer(labelSelector = MinecraftProxyFleetReconciler.SELECTOR))
+@KubernetesDependent(informer = @Informer(labelSelector = MinecraftProxyFleetReconciler.LABEL_SELECTOR))
 public class FleetDependentResource extends CRUDKubernetesDependentResource<Fleet, MinecraftProxyFleet> {
 
-    @ConfigProperty(name = "minecraftonk8s.proxy.allocation-strategy.default")
-    String proxyDefaultAllocationStrategy;
-
-    @ConfigProperty(name = "minecraftonk8s.proxy.serviceaccount.name")
-    String proxyServiceAccount;
+    @Inject
+    Config config;
 
     public FleetDependentResource() {
         super(Fleet.class);
@@ -39,7 +38,7 @@ public class FleetDependentResource extends CRUDKubernetesDependentResource<Flee
                 .withNewMetadata()
                     .withName(metadata.getName())
                     .withNamespace(metadata.getNamespace())
-                .endMetadata()
+                    .endMetadata()
                 .withNewSpec()
                     .withDeploymentStrategy(spec.getDeploymentStrategy())
                     .withReplicas(spec.getReplicas())
@@ -47,19 +46,19 @@ public class FleetDependentResource extends CRUDKubernetesDependentResource<Flee
                         .withNewSpec()
                             .withNewSdkServer()
                                 .withLogLevel(template.getSdkServerLogLevel())
-                            .endSdkServer()
+                                .endSdkServer()
                             .withNewTemplateLike(template.getTemplate())
                                 .editMetadata()
-                                    .addToLabels(Label.BELONGS_TO.getName(), metadata.getUid())
-                                .endMetadata()
+                                    .addToLabels(AppLabel.BELONGS_TO, metadata.getUid())
+                                    .endMetadata()
                                 .editSpec()
-                                    .withServiceAccountName(proxyServiceAccount)
+                                    .withServiceAccountName(this.config.proxy().serviceaccountName())
                                     .withContainers(patchContainers(template.getTemplate().getSpec().getContainers(), template, spec))
-                                .endSpec()
-                            .endTemplate()
-                        .endSpec()
-                    .endTemplate()
-                .endSpec()
+                                    .endSpec()
+                                .endTemplate()
+                            .endSpec()
+                        .endTemplate()
+                    .endSpec()
                 .build();
     }
 
@@ -69,13 +68,25 @@ public class FleetDependentResource extends CRUDKubernetesDependentResource<Flee
                 .map(container ->
                         container.edit()
                                 .addNewEnv()
-                                    .withName("LABEL_SELECTOR")
-                                    .withValue(template.getLabelSelectorString())
-                                .endEnv()
+                                    .withName(Constant.Env.CONFIG_ALLOCATION_STRATEGY)
+                                    .withValue(template.getAllocationStrategy().name())
+                                    .endEnv()
                                 .addNewEnv()
-                                    .withName("PROXY_FLEET_ALLOCATION_DEFAULTSTRATEGY")
-                                    .withValue(proxyDefaultAllocationStrategy)
-                                .endEnv()
+                                    .withName(Constant.Env.PROXY_CONFIG_LABEL_SELECTOR)
+                                    .withValue(template.getLabelSelectorString())
+                                    .endEnv()
+                                .addNewEnv()
+                                    .withName(Constant.Env.PROXY_CONFIG_DRAINAGE_DELAY)
+                                    .withValue(String.valueOf(template.getDrainage().getDelayHours()))
+                                    .endEnv()
+                                .addNewEnv()
+                                    .withName(Constant.Env.PROXY_CONFIG_DRAINAGE_TIMEOUT)
+                                    .withValue(String.valueOf(template.getDrainage().getTimeoutHours()))
+                                    .endEnv()
+                                .addNewEnv()
+                                    .withName(Constant.Env.PROXY_CONFIG_REBUILD_CACHE_INTERVALL)
+                                    .withValue(String.valueOf(template.getCacheRebuildIntervalMinutes()))
+                                    .endEnv()
                                 .build()
                 )
                 .toList();

@@ -3,6 +3,7 @@ package dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import dev.marfien.minecraftonk8s.common.AllocationStrategy;
 import io.fabric8.generator.annotation.Default;
+import io.fabric8.generator.annotation.Min;
 import io.fabric8.generator.annotation.Pattern;
 import io.fabric8.kubernetes.api.builder.Editable;
 import io.fabric8.kubernetes.api.model.PodTemplateSpec;
@@ -28,12 +29,20 @@ public class MinecraftProxySpec implements Editable<MinecraftProxySpecBuilder> {
     @JsonPropertyDescription("The log level for the Agones SDK server")
     private String sdkServerLogLevel = "info";
 
+    @Min(1)
+    @Default("5")
+    @JsonPropertyDescription("The interval in minutes to rebuild the informer cache. If you don't know what this is, don't change it.")
+    private int cacheRebuildIntervalMinutes = 5;
+
     @JsonPropertyDescription("The label selector for filtering the Minecraft servers to add to the proxy")
     private String labelSelectorString;
 
     @Default("PLAYERS")
     @JsonPropertyDescription("The allocation strategy for the Minecraft server")
     private AllocationStrategy allocationStrategy = AllocationStrategy.PLAYERS;
+
+    @JsonPropertyDescription("The drainage configuration for all the proxies in this fleet.")
+    private DrainageSpec drainage;
 
     @Override
     public MinecraftProxySpecBuilder edit() {

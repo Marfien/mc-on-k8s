@@ -3,13 +3,31 @@ package dev.marfien.minecraftonk8s.operator.util;
 import dev.marfien.minecraftonk8s.agones.model.GameServerSpec;
 import dev.marfien.minecraftonk8s.agones.model.GameServerSpecBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
+import dev.marfien.minecraftonk8s.common.Constant;
+import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import io.fabric8.kubernetes.api.model.Container;
+import io.fabric8.kubernetes.api.model.ObjectMeta;
+import io.fabric8.kubernetes.api.model.ObjectMetaBuilder;
+import io.fabric8.kubernetes.client.CustomResource;
 import java.util.List;
 
 public final class GameServerUtil {
 
     private GameServerUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
+
+    public static ObjectMeta clonePrimary(CustomResource<?, ?> primary, String reconciler) {
+        ObjectMeta primaryMetadata = primary.getMetadata();
+
+        return new ObjectMetaBuilder()
+                .withName(primaryMetadata.getName())
+                .withNamespace(primaryMetadata.getNamespace())
+                .withLabels(primaryMetadata.getLabels())
+                .addToLabels(Constant.K8sLabel.MANAGED_BY, Constant.OPERATOR_NAME)
+                .addToLabels(AppLabel.RECONCILER, reconciler)
+                .withAnnotations(primaryMetadata.getAnnotations())
+                .build();
     }
 
     public static GameServerSpec toGameServerSpec(MinecraftServerSpec spec) {
@@ -31,11 +49,11 @@ public final class GameServerUtil {
                 .map(container ->
                         container.edit()
                                 .addNewEnv()
-                                    .withName("MCS_TAGS")
+                                    .withName("MCS_TAGS") // TODO tags?????? what?
                                     .withValue(String.join(";", spec.getTags()))
                                     .endEnv()
                                 .addNewEnv()
-                                    .withName("ALLOCATION_STRATEGY")
+                                    .withName(Constant.Env.CONFIG_ALLOCATION_STRATEGY)
                                     .withValue(spec.getAllocationStrategy().name())
                                     .endEnv()
                                 .build()

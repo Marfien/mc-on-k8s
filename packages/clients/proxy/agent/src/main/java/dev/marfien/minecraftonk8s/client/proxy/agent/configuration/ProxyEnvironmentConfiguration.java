@@ -1,38 +1,39 @@
 package dev.marfien.minecraftonk8s.client.proxy.agent.configuration;
 
 import dev.marfien.minecraftonk8s.client.api.config.EnvironmentConfiguration;
+import dev.marfien.minecraftonk8s.common.Constant.Env;
 import dev.marfien.minecraftonk8s.common.Environment;
-import java.time.Duration;
 
 public class ProxyEnvironmentConfiguration extends EnvironmentConfiguration implements ProxyConfiguration {
 
-    private final Duration rebuildCacheInterval;
-    private final Duration drainageDuration;
-    private final Duration drainageDelay;
+    private final int rebuildCacheIntervalMinutes;
+    private final int drainageTimeoutHours;
+    private final int drainageDelayHours;
 
     private final String labelSeleector;
 
     public ProxyEnvironmentConfiguration() {
         super();
-        this.rebuildCacheInterval = Duration.parse(Environment.get("REBUILD_CACHE_INTERVAL", "PT5M"));
-        this.drainageDuration = Duration.parse(Environment.get("DRAINAGE_DURATION", "PT12H"));
-        this.drainageDelay = Duration.parse(Environment.get("DRAINAGE_DELAY", "PT8H"));
-        this.labelSeleector = Environment.get("LABEL_SELECTOR", "");
+        // TODO config
+        this.rebuildCacheIntervalMinutes = Environment.requireInt(Env.PROXY_CONFIG_REBUILD_CACHE_INTERVALL);
+        this.drainageTimeoutHours = Environment.requireInt(Env.PROXY_CONFIG_DRAINAGE_TIMEOUT);
+        this.drainageDelayHours = Environment.requireInt(Env.PROXY_CONFIG_DRAINAGE_DELAY);
+        this.labelSeleector = Environment.require(Env.PROXY_CONFIG_LABEL_SELECTOR);
     }
 
     @Override
-    public Duration getRebuildCacheInterval() {
-        return this.rebuildCacheInterval;
+    public int getRebuildCacheIntervalMinutes() {
+        return this.rebuildCacheIntervalMinutes;
     }
 
     @Override
-    public Duration getDrainageDuration() {
-        return this.drainageDuration;
+    public int getDrainageTimeoutHours() {
+        return this.drainageTimeoutHours;
     }
 
     @Override
-    public Duration getDrainageDelay() {
-        return this.drainageDelay;
+    public int getDrainageDelayHours() {
+        return this.drainageDelayHours;
     }
 
     @Override

@@ -2,6 +2,9 @@ package dev.marfien.minecraftonk8s.operator.minecraftserver;
 
 import dev.marfien.minecraftonk8s.agones.model.GameServer;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
+import dev.marfien.minecraftonk8s.common.Constant;
+import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
+import dev.marfien.minecraftonk8s.common.Constant.K8sLabel;
 import dev.marfien.minecraftonk8s.operator.minecraftserver.dependentresource.GameServerDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
@@ -19,11 +22,13 @@ import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
 @ControllerConfiguration
 public class MinecraftServerReconciler implements Reconciler<MinecraftServer>, Cleaner<MinecraftServer> {
 
-    public static final String SELECTOR = "mconk8s.marfien.dev/controlled-by=mc-server-reconciler";
+    public static final String LABEL_SELECTOR =
+            K8sLabel.MANAGED_BY + "=" + Constant.OPERATOR_NAME + "," +
+            AppLabel.RECONCILER + "=" + Constant.MinecraftServer.RECONCILER;
 
     @Override
     public UpdateControl<MinecraftServer> reconcile(
-            MinecraftServer minecraftServer, Context<MinecraftServer> context) throws Exception {
+            MinecraftServer minecraftServer, Context<MinecraftServer> context) {
         GameServer backedGameServer = context.getSecondaryResource(GameServer.class).orElseThrow();
         String backedGameServerStatus = backedGameServer.getStatus().getState();
 

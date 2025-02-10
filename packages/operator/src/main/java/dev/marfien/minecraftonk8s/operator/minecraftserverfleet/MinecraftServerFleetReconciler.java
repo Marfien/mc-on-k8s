@@ -2,6 +2,9 @@ package dev.marfien.minecraftonk8s.operator.minecraftserverfleet;
 
 import dev.marfien.minecraftonk8s.agones.model.Fleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleet;
+import dev.marfien.minecraftonk8s.common.Constant;
+import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
+import dev.marfien.minecraftonk8s.common.Constant.K8sLabel;
 import dev.marfien.minecraftonk8s.operator.minecraftserverfleet.dependentresource.FleetDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
@@ -21,7 +24,9 @@ import io.quarkiverse.operatorsdk.annotations.CSVMetadata;
 public class MinecraftServerFleetReconciler
         implements Reconciler<MinecraftServerFleet>, Cleaner<MinecraftServerFleet> {
 
-    public static final String SELECTOR = "mconk8s.marfien.dev/controlled-by==fleet-reconciler";
+    public static final String LABEL_SELECTOR =
+            K8sLabel.MANAGED_BY + "=" + Constant.OPERATOR_NAME + "," +
+            AppLabel.RECONCILER + "=" + Constant.MinecraftServerFleet.RECONCILER;
 
     @Override
     public UpdateControl<MinecraftServerFleet> reconcile(

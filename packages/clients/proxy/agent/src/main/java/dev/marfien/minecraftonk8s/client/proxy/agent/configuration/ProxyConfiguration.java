@@ -5,10 +5,10 @@ import java.time.Duration;
 
 public interface ProxyConfiguration extends ClientConfiguration {
 
-    Duration getDrainageDelay();
-    Duration getDrainageDuration();
+    int getDrainageDelayHours();
+    int getDrainageTimeoutHours();
 
-    Duration getRebuildCacheInterval();
+    int getRebuildCacheIntervalMinutes();
 
     String getLabelSelector();
 }
