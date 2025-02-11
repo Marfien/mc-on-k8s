@@ -26,7 +26,6 @@ public class ServiceSpec implements Editable<ServiceSpecBuilder> {
     @JsonPropertyDescription("The port to expose on the service.")
     private Integer port;
 
-    // TODO error
     @Required
     @JsonPropertyDescription("The target port for the service. Must match with a port configured in the MinecraftProxySpec.")
     private IntOrString targetPort;

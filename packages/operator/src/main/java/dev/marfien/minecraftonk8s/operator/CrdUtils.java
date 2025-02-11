@@ -1,4 +1,4 @@
-package dev.marfien.minecraftonk8s.operator.util;
+package dev.marfien.minecraftonk8s.operator;
 
 import dev.marfien.minecraftonk8s.agones.model.GameServerSpec;
 import dev.marfien.minecraftonk8s.agones.model.GameServerSpecBuilder;
@@ -6,18 +6,21 @@ import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import io.fabric8.kubernetes.api.model.Container;
+import io.fabric8.kubernetes.api.model.ContainerPort;
+import io.fabric8.kubernetes.api.model.IntOrString;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.api.model.ObjectMetaBuilder;
 import io.fabric8.kubernetes.client.CustomResource;
 import java.util.List;
+import java.util.Objects;
 
-public final class GameServerUtil {
+public final class CrdUtils {
 
-    private GameServerUtil() {
+    private CrdUtils() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
-    public static ObjectMeta clonePrimary(CustomResource<?, ?> primary, String reconciler) {
+    public static ObjectMeta clonePrimaryMeta(CustomResource<?, ?> primary, String reconciler) {
         ObjectMeta primaryMetadata = primary.getMetadata();
 
         return new ObjectMetaBuilder()
@@ -59,6 +62,11 @@ public final class GameServerUtil {
                                 .build()
                 )
                 .toList();
+    }
+
+    public static boolean containerPortEquals(ContainerPort port, IntOrString other) {
+        return Objects.equals(port.getContainerPort(), other.getIntVal())
+                || Objects.equals(port.getName(), other.getStrVal());
     }
 
 }

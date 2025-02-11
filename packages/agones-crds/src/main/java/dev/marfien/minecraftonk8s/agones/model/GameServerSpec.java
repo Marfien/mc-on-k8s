@@ -1,7 +1,7 @@
 package dev.marfien.minecraftonk8s.agones.model;
 
+import io.fabric8.kubernetes.api.builder.Editable;
 import io.fabric8.kubernetes.api.model.PodTemplateSpec;
-import io.sundr.builder.Editable;
 import io.sundr.builder.annotations.Buildable;
 import io.sundr.builder.annotations.BuildableReference;
 import java.util.List;

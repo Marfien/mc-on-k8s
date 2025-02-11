@@ -6,7 +6,7 @@ import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServer
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerFleetSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServerSpecTemplate;
 import dev.marfien.minecraftonk8s.common.Constant;
-import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
+import dev.marfien.minecraftonk8s.operator.CrdUtils;
 import io.javaoperatorsdk.operator.api.config.informer.Informer;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource;
@@ -27,11 +27,11 @@ public class FleetDependentResource extends
         MinecraftServerSpecTemplate template = spec.getTemplate();
 
         return new FleetBuilder()
-                .withMetadata(GameServerUtil.clonePrimary(primary, Constant.MinecraftServerFleet.RECONCILER))
+                .withMetadata(CrdUtils.clonePrimaryMeta(primary, Constant.MinecraftServerFleet.RECONCILER))
                 .withNewSpec()
                     .withNewTemplate()
                         .withMetadata(template.getMetadata())
-                        .withSpec(GameServerUtil.toGameServerSpec(template.getSpec()))
+                        .withSpec(CrdUtils.toGameServerSpec(template.getSpec()))
                     .endTemplate()
                 .endSpec()
                 .build();

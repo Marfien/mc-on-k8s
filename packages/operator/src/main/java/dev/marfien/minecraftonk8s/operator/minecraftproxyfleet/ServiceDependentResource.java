@@ -6,8 +6,7 @@ import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.ServiceSpec;
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import dev.marfien.minecraftonk8s.common.Constant.ProxyState;
-import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
-import io.fabric8.kubernetes.api.model.IntOrString;
+import dev.marfien.minecraftonk8s.operator.CrdUtils;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.api.model.Service;
 import io.fabric8.kubernetes.api.model.ServiceBuilder;
@@ -31,7 +30,7 @@ public class ServiceDependentResource extends CRUDKubernetesDependentResource<Se
         ServiceSpec serviceSpec = spec.getService();
 
         return new ServiceBuilder()
-                .withMetadata(GameServerUtil.clonePrimary(primary, Constant.MinecraftProxyFleet.RECONCILER))
+                .withMetadata(CrdUtils.clonePrimaryMeta(primary, Constant.MinecraftProxyFleet.RECONCILER))
                 .withNewSpec()
                     .withType(serviceSpec.getType().getKubeType())
                     .addToSelector(AppLabel.BELONGS_TO, meta.getUid())

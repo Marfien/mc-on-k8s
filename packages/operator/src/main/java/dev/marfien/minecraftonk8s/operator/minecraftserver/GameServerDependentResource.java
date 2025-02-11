@@ -5,7 +5,7 @@ import dev.marfien.minecraftonk8s.agones.model.GameServerBuilder;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServerSpec;
 import dev.marfien.minecraftonk8s.common.Constant;
-import dev.marfien.minecraftonk8s.operator.util.GameServerUtil;
+import dev.marfien.minecraftonk8s.operator.CrdUtils;
 import io.javaoperatorsdk.operator.api.config.informer.Informer;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource;
@@ -23,8 +23,8 @@ public class GameServerDependentResource extends
     protected GameServer desired(MinecraftServer primary, Context<MinecraftServer> context) {
         MinecraftServerSpec spec = primary.getSpec();
         return new GameServerBuilder()
-                .withMetadata(GameServerUtil.clonePrimary(primary, Constant.MinecraftServer.RECONCILER))
-                .withSpec(GameServerUtil.toGameServerSpec(spec))
+                .withMetadata(CrdUtils.clonePrimaryMeta(primary, Constant.MinecraftServer.RECONCILER))
+                .withSpec(CrdUtils.toGameServerSpec(spec))
                 .build();
     }
 }

@@ -14,7 +14,6 @@ public class ProxyEnvironmentConfiguration extends EnvironmentConfiguration impl
 
     public ProxyEnvironmentConfiguration() {
         super();
-        // TODO config
         this.rebuildCacheIntervalMinutes = Environment.requireInt(Env.PROXY_CONFIG_REBUILD_CACHE_INTERVALL);
         this.drainageTimeoutHours = Environment.requireInt(Env.PROXY_CONFIG_DRAINAGE_TIMEOUT);
         this.drainageDelayHours = Environment.requireInt(Env.PROXY_CONFIG_DRAINAGE_DELAY);
