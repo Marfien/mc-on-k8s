@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import io.fabric8.crd.generator.annotation.SelectableField;
 import io.fabric8.generator.annotation.Default;
 import io.fabric8.generator.annotation.Required;
+import io.fabric8.kubernetes.api.builder.Editable;
 import io.fabric8.kubernetes.api.model.IntOrString;
 import io.sundr.builder.annotations.Buildable;
 import lombok.AllArgsConstructor;

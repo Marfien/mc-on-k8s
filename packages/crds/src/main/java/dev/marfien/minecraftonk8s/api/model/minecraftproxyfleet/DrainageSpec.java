@@ -27,6 +27,6 @@ public class DrainageSpec implements Editable<DrainageSpecBuilder> {
 
     @Override
     public DrainageSpecBuilder edit() {
-        return new MinecraftProxyFleetSpecBuilder(this);
+        return new DrainageSpecBuilder(this);
     }
 }
