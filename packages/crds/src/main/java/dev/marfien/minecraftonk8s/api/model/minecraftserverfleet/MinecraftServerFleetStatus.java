@@ -2,6 +2,7 @@ package dev.marfien.minecraftonk8s.api.model.minecraftserverfleet;
 
 import io.fabric8.kubernetes.api.builder.Editable;
 import io.fabric8.kubernetes.api.model.Condition;
+import io.fabric8.kubernetes.model.annotation.StatusReplicas;
 import io.sundr.builder.annotations.Buildable;
 import io.sundr.builder.annotations.BuildableReference;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import lombok.NoArgsConstructor;
 })
 public class MinecraftServerFleetStatus implements Editable<MinecraftServerFleetStatusBuilder> {
 
+    @StatusReplicas
     private int replicas;
     private int readyReplicas;
     private int allocatedReplicas;

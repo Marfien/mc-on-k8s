@@ -5,6 +5,7 @@ import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFl
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import dev.marfien.minecraftonk8s.common.Constant.K8sLabel;
+import io.fabric8.kubernetes.api.model.IntOrString;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
@@ -31,6 +32,16 @@ public class MinecraftProxyFleetReconciler
     public UpdateControl<MinecraftProxyFleet> reconcile(MinecraftProxyFleet resource,
             Context<MinecraftProxyFleet> context) throws Exception {
         Fleet proxyFleet = context.getSecondaryResource(Fleet.class).orElseThrow();
+
+        IntOrString serviceTargetPort = resource.getSpec().getService().getTargetPort();
+
+        // Check if the target port has a matching container port
+        if (proxyFleet.getSpec().getTemplate()
+                .getSpec().getTemplate().getContainers().stream()
+                .noneMatch(container -> container.getPorts().stream()
+                        .anyMatch(port -> port.getContainerPort().equals(serviceTargetPort)))) {
+            throw new IllegalArgumentException("The target port does not match any container port.");
+        }
 
         return UpdateControl.patchStatus(
                 resource.edit()

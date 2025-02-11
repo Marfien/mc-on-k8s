@@ -1,6 +1,7 @@
 package dev.marfien.minecraftonk8s.agones.model;
 
 import io.fabric8.kubernetes.api.model.Namespaced;
+import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.client.CustomResource;
 import io.fabric8.kubernetes.model.annotation.Group;
 import io.fabric8.kubernetes.model.annotation.Kind;
@@ -13,7 +14,7 @@ import io.sundr.builder.annotations.BuildableReference;
 @Kind("GameServerSet")
 @Buildable(editableEnabled = false, builderPackage = "io.fabric8.kubernetes.api.builder",
         lazyCollectionInitEnabled = false, refs = {
-        @BuildableReference(io.fabric8.kubernetes.api.model.ObjectMeta.class),
+        @BuildableReference(ObjectMeta.class),
         @BuildableReference(CustomResource.class),
 })
 public class GameServerSet extends CustomResource<GameServerSetSpec, GameServerSetStatus> implements

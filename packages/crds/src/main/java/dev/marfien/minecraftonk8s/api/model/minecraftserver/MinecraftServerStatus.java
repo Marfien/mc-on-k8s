@@ -1,5 +1,6 @@
 package dev.marfien.minecraftonk8s.api.model.minecraftserver;
 
+import io.fabric8.crd.generator.annotation.SelectableField;
 import io.fabric8.kubernetes.api.builder.Editable;
 import io.fabric8.kubernetes.api.model.Condition;
 import io.sundr.builder.annotations.Buildable;
@@ -22,6 +23,7 @@ import lombok.NoArgsConstructor;
 )
 public class MinecraftServerStatus implements Editable<MinecraftServerStatusBuilder> {
 
+    @SelectableField
     private boolean ready;
     private String ip;
     private int port;

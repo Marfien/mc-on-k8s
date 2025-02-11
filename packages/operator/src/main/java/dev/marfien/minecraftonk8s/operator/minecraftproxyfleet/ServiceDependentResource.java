@@ -2,6 +2,7 @@ package dev.marfien.minecraftonk8s.operator.minecraftproxyfleet;
 
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleet;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleetSpec;
+import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.ServiceSpec;
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import dev.marfien.minecraftonk8s.common.Constant.ProxyState;
@@ -26,17 +27,19 @@ public class ServiceDependentResource extends CRUDKubernetesDependentResource<Se
     protected Service desired(MinecraftProxyFleet primary, Context<MinecraftProxyFleet> context) {
         MinecraftProxyFleetSpec spec = primary.getSpec();
         ObjectMeta meta = primary.getMetadata();
+
+        ServiceSpec serviceSpec = spec.getService();
+
         return new ServiceBuilder()
                 .withMetadata(GameServerUtil.clonePrimary(primary, Constant.MinecraftProxyFleet.RECONCILER))
                 .withNewSpec()
-                    .withType(spec.getServiceType().name())
+                    .withType(serviceSpec.getType().getKubeType())
                     .addToSelector(AppLabel.BELONGS_TO, meta.getUid())
                     .addToSelector(AppLabel.PROXY_STATE, ProxyState.RUNNING)
                     .addNewPort()
-                        .withName("minecraft")
-                        .withProtocol("TCP")
-                        .withPort(25565)
-                        .withTargetPort(new IntOrString(25565))
+                        .withProtocol(serviceSpec.getProtocol())
+                        .withPort(serviceSpec.getPort())
+                        .withTargetPort(serviceSpec.getTargetPort())
                         .endPort()
                     .endSpec()
                 .build();
