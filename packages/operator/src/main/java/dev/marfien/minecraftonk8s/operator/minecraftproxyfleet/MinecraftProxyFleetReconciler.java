@@ -6,6 +6,7 @@ import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFl
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import dev.marfien.minecraftonk8s.common.Constant.K8sLabel;
+import dev.marfien.minecraftonk8s.operator.BinariesConfigMapChecker;
 import dev.marfien.minecraftonk8s.operator.CrdUtils;
 import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.ContainerPort;
@@ -19,6 +20,7 @@ import io.javaoperatorsdk.operator.api.reconciler.Reconciler;
 import io.javaoperatorsdk.operator.api.reconciler.UpdateControl;
 import io.javaoperatorsdk.operator.api.reconciler.Workflow;
 import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
+import jakarta.inject.Inject;
 import java.util.List;
 
 @Workflow(dependents = {
@@ -33,9 +35,13 @@ public class MinecraftProxyFleetReconciler
             K8sLabel.MANAGED_BY + "=" + Constant.OPERATOR_NAME + "," +
             AppLabel.RECONCILER + "=" + Constant.MinecraftProxyFleet.RECONCILER;
 
+    @Inject
+    BinariesConfigMapChecker binariesConfigMapChecker;
+
     @Override
     public UpdateControl<MinecraftProxyFleet> reconcile(MinecraftProxyFleet resource,
             Context<MinecraftProxyFleet> context) throws Exception {
+        this.binariesConfigMapChecker.checkBinariesConfigMap();
         Fleet proxyFleet = context.getSecondaryResource(Fleet.class).orElseThrow();
 
         IntOrString serviceTargetPort = resource.getSpec().getService().getTargetPort();

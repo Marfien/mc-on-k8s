@@ -5,6 +5,7 @@ import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServer
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import dev.marfien.minecraftonk8s.common.Constant.K8sLabel;
+import dev.marfien.minecraftonk8s.operator.BinariesConfigMapChecker;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
@@ -14,6 +15,7 @@ import io.javaoperatorsdk.operator.api.reconciler.Reconciler;
 import io.javaoperatorsdk.operator.api.reconciler.UpdateControl;
 import io.javaoperatorsdk.operator.api.reconciler.Workflow;
 import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
+import jakarta.inject.Inject;
 
 @Workflow(dependents = {
         @Dependent(type = FleetDependentResource.class)
@@ -26,9 +28,13 @@ public class MinecraftServerFleetReconciler
             K8sLabel.MANAGED_BY + "=" + Constant.OPERATOR_NAME + "," +
             AppLabel.RECONCILER + "=" + Constant.MinecraftServerFleet.RECONCILER;
 
+    @Inject
+    BinariesConfigMapChecker binariesConfigMapChecker;
+
     @Override
     public UpdateControl<MinecraftServerFleet> reconcile(
             MinecraftServerFleet resource, Context<MinecraftServerFleet> context) {
+        this.binariesConfigMapChecker.checkBinariesConfigMap();
         Fleet dependent = context.getSecondaryResource(Fleet.class).orElseThrow();
 
         return UpdateControl.patchStatus(

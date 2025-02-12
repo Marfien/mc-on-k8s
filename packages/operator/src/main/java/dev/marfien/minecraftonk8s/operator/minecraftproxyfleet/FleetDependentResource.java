@@ -7,7 +7,7 @@ import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFl
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxySpec;
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
-import dev.marfien.minecraftonk8s.operator.Config;
+import dev.marfien.minecraftonk8s.operator.OperatorConfig;
 import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.javaoperatorsdk.operator.api.config.informer.Informer;
@@ -21,7 +21,7 @@ import java.util.List;
 public class FleetDependentResource extends CRUDKubernetesDependentResource<Fleet, MinecraftProxyFleet> {
 
     @Inject
-    Config config;
+    OperatorConfig config;
 
     public FleetDependentResource() {
         super(Fleet.class);
