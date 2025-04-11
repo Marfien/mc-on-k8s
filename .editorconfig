@@ -14,6 +14,7 @@ ij_smart_tabs = false
 ij_wrap_on_typing = false
 
 [*.java]
+ij_java_keep_builder_methods_indents = true
 ij_java_align_consecutive_assignments = false
 ij_java_align_consecutive_variable_declarations = false
 ij_java_align_group_field_declarations = false

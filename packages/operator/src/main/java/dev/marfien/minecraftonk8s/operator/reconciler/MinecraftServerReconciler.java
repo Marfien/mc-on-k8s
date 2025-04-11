@@ -7,6 +7,8 @@ import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import dev.marfien.minecraftonk8s.common.Constant.K8sLabel;
 import dev.marfien.minecraftonk8s.operator.application.BinariesConfigMapEnforcer;
 import dev.marfien.minecraftonk8s.operator.dependentresource.minecraftserver.AgonesGameServerDependentResource;
+import dev.marfien.minecraftonk8s.operator.service.ConditionService;
+import dev.marfien.minecraftonk8s.operator.service.MinecraftServerService;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
@@ -29,53 +31,21 @@ public class MinecraftServerReconciler implements Reconciler<MinecraftServer>, C
             AppLabel.RECONCILER + "=" + Constant.MinecraftServer.RECONCILER;
 
     @Inject
-    BinariesConfigMapEnforcer binariesConfigMapEnforcer;
+    MinecraftServerService minecraftServerService;
 
     @Override
     public UpdateControl<MinecraftServer> reconcile(MinecraftServer minecraftServer, Context<MinecraftServer> context) {
-        this.binariesConfigMapEnforcer.ensureAgentBinary();
-
         GameServer backedGameServer = context.getSecondaryResource(GameServer.class).orElseThrow();
-        String backedGameServerStatus = backedGameServer.getStatus().getState();
-
-        boolean ready = minecraftServer.getStatus().isReady()
-                || backedGameServerStatus.equals("Ready")
-                || backedGameServerStatus.equals("Reserved")
-                || backedGameServerStatus.equals("Allocated");
 
         return UpdateControl.patchStatus(
-                minecraftServer.edit()
-                        .editStatus()
-                            .withIp(backedGameServer.getStatus().getAddress())
-                            // TODO: This should be the actual port of the game server
-                            .withPort(25565)
-                            .withReady(ready)
-                            .addNewCondition()
-                                .withStatus(ready ? "True" : "False")
-                                .withType("Ready")
-                                .withReason("GameServerReady")
-                                .withMessage("The game server is ready")
-                            .endCondition()
-                        .endStatus()
-                        .build()
+                this.minecraftServerService.patch(minecraftServer, backedGameServer)
         );
     }
 
-
     @Override
-    public ErrorStatusUpdateControl<MinecraftServer> updateErrorStatus(MinecraftServer resource,
-            Context<MinecraftServer> context, Exception e) {
+    public ErrorStatusUpdateControl<MinecraftServer> updateErrorStatus(MinecraftServer resource, Context<MinecraftServer> context, Exception e) {
         return ErrorStatusUpdateControl.patchStatus(
-                resource.edit()
-                        .editStatus()
-                            .addNewCondition()
-                                .withStatus("False")
-                                .withType("Error")
-                                .withReason("ReconcileError")
-                                .withMessage(e.getMessage())
-                            .endCondition()
-                        .endStatus()
-                        .build()
+                this.minecraftServerService.patchErrorStatus(resource, e)
         );
     }
 

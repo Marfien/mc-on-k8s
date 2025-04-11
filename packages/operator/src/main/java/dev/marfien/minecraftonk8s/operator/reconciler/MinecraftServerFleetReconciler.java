@@ -5,8 +5,8 @@ import dev.marfien.minecraftonk8s.api.model.minecraftserverfleet.MinecraftServer
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import dev.marfien.minecraftonk8s.common.Constant.K8sLabel;
-import dev.marfien.minecraftonk8s.operator.application.BinariesConfigMapEnforcer;
 import dev.marfien.minecraftonk8s.operator.dependentresource.minecraftserver.AgonesFleetDependentResource;
+import dev.marfien.minecraftonk8s.operator.service.MinecraftServerFleetService;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
@@ -29,45 +29,21 @@ public class MinecraftServerFleetReconciler implements Reconciler<MinecraftServe
             AppLabel.RECONCILER + "=" + Constant.MinecraftServerFleet.RECONCILER;
 
     @Inject
-    BinariesConfigMapEnforcer binariesConfigMapEnforcer;
+    MinecraftServerFleetService fleetService;
 
     @Override
     public UpdateControl<MinecraftServerFleet> reconcile(MinecraftServerFleet resource, Context<MinecraftServerFleet> context) {
-        this.binariesConfigMapEnforcer.ensureAgentBinary();
-
         Fleet dependent = context.getSecondaryResource(Fleet.class).orElseThrow();
 
         return UpdateControl.patchStatus(
-                resource.edit()
-                        .editStatus()
-                            .withReplicas(dependent.getStatus().getReplicas())
-                            .withReadyReplicas(dependent.getStatus().getReadyReplicas())
-                            .withAllocatedReplicas(dependent.getStatus().getAllocatedReplicas())
-                            .addNewCondition()
-                                .withStatus("True")
-                                .withType("Reconciled")
-                                .withReason("FleetReconciled")
-                                .withMessage("The fleet has been reconciled successfully.")
-                                .endCondition()
-                            .endStatus()
-                        .build()
+                this.fleetService.patch(resource, dependent)
         );
     }
 
     @Override
-    public ErrorStatusUpdateControl<MinecraftServerFleet> updateErrorStatus(
-            MinecraftServerFleet resource, Context<MinecraftServerFleet> context, Exception e) {
+    public ErrorStatusUpdateControl<MinecraftServerFleet> updateErrorStatus(MinecraftServerFleet resource, Context<MinecraftServerFleet> context, Exception e) {
         return ErrorStatusUpdateControl.patchStatus(
-                resource.edit()
-                        .editStatus()
-                            .addNewCondition()
-                                .withStatus("False")
-                                .withType("Error")
-                                .withReason("ReconcileError")
-                                .withMessage(e.getMessage())
-                                .endCondition()
-                            .endStatus()
-                        .build()
+                this.fleetService.patchErrorStatus(resource, e)
         );
     }
 

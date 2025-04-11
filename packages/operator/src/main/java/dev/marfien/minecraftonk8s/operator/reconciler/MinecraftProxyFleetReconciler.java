@@ -1,17 +1,13 @@
 package dev.marfien.minecraftonk8s.operator.reconciler;
 
 import dev.marfien.minecraftonk8s.agones.model.Fleet;
-import dev.marfien.minecraftonk8s.agones.model.GameServerTemplateSpec;
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFleet;
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import dev.marfien.minecraftonk8s.common.Constant.K8sLabel;
-import dev.marfien.minecraftonk8s.operator.application.BinariesConfigMapEnforcer;
-import dev.marfien.minecraftonk8s.operator.util.CrdUtils;
 import dev.marfien.minecraftonk8s.operator.dependentresource.proxy.AgonesFleetDependentResource;
 import dev.marfien.minecraftonk8s.operator.dependentresource.proxy.ServiceDependentResource;
-import io.fabric8.kubernetes.api.model.Container;
-import io.fabric8.kubernetes.api.model.IntOrString;
+import dev.marfien.minecraftonk8s.operator.service.MinecraftProxyFleetService;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
@@ -22,7 +18,6 @@ import io.javaoperatorsdk.operator.api.reconciler.UpdateControl;
 import io.javaoperatorsdk.operator.api.reconciler.Workflow;
 import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
 import jakarta.inject.Inject;
-import java.util.List;
 
 @Workflow(dependents = {
         @Dependent(type = AgonesFleetDependentResource.class),
@@ -36,56 +31,22 @@ public class MinecraftProxyFleetReconciler implements Reconciler<MinecraftProxyF
             AppLabel.RECONCILER + "=" + Constant.MinecraftProxyFleet.RECONCILER;
 
     @Inject
-    BinariesConfigMapEnforcer binariesConfigMapEnforcer;
+    MinecraftProxyFleetService fleetService;
 
     @Override
     public UpdateControl<MinecraftProxyFleet> reconcile(MinecraftProxyFleet resource, Context<MinecraftProxyFleet> context) {
-        this.binariesConfigMapEnforcer.ensureAgentBinary();
-
         Fleet proxyFleet = context.getSecondaryResource(Fleet.class).orElseThrow();
 
-        IntOrString serviceTargetPort = resource.getSpec().getService().getTargetPort();
-
-        // Check if the target port has a matching container port
-        GameServerTemplateSpec gsSpec = proxyFleet.getSpec().getTemplate();
-        List<Container> containers = gsSpec.getSpec().getTemplate().getSpec().getContainers();
-        if (containers.stream()
-                .flatMap(c -> c.getPorts().stream())
-                .noneMatch(port -> CrdUtils.containerPortEquals(port, serviceTargetPort))) {
-            throw new IllegalArgumentException("The target port does not match any container port.");
-        }
-
         return UpdateControl.patchStatus(
-                resource.edit()
-                        .editStatus()
-                            .withReplicas(proxyFleet.getStatus().getReplicas())
-                            .withReadyReplicas(proxyFleet.getStatus().getReadyReplicas())
-                            .withAllocatedReplicas(proxyFleet.getStatus().getAllocatedReplicas())
-                                .addNewCondition()
-                                .withStatus("True")
-                                .withType("Reconciled")
-                                .withReason("FleetReconciled")
-                                .withMessage("The fleet has been reconciled successfully.")
-                                .endCondition()
-                            .endStatus()
-                        .build()
+                this.fleetService.patchStatus(resource, proxyFleet)
         );
     }
 
     @Override
-    public ErrorStatusUpdateControl<MinecraftProxyFleet> updateErrorStatus(
-            MinecraftProxyFleet resource, Context<MinecraftProxyFleet> context, Exception e) {
+    public ErrorStatusUpdateControl<MinecraftProxyFleet> updateErrorStatus(MinecraftProxyFleet resource, Context<MinecraftProxyFleet> context, Exception e) {
         return ErrorStatusUpdateControl.patchStatus(
-                resource.edit()
-                        .editStatus()
-                            .addNewCondition()
-                                .withStatus("False")
-                                .withType("Error")
-                                .withReason("ReconcileError")
-                                .withMessage(e.getMessage())
-                                .endCondition()
-                            .endStatus()
-                        .build());
+                this.fleetService.patchErrorStatus(resource, e)
+        );
     }
 
     @Override
