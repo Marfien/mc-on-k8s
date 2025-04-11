@@ -1,11 +1,12 @@
-package dev.marfien.minecraftonk8s.operator.minecraftserver;
+package dev.marfien.minecraftonk8s.operator.reconciler;
 
 import dev.marfien.minecraftonk8s.agones.model.GameServer;
 import dev.marfien.minecraftonk8s.api.model.minecraftserver.MinecraftServer;
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import dev.marfien.minecraftonk8s.common.Constant.K8sLabel;
-import dev.marfien.minecraftonk8s.operator.BinariesConfigMapChecker;
+import dev.marfien.minecraftonk8s.operator.application.BinariesConfigMapEnforcer;
+import dev.marfien.minecraftonk8s.operator.dependentresource.minecraftserver.AgonesGameServerDependentResource;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.api.reconciler.ControllerConfiguration;
@@ -18,7 +19,7 @@ import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
 import jakarta.inject.Inject;
 
 @Workflow(dependents = {
-        @Dependent(type = GameServerDependentResource.class)
+        @Dependent(type = AgonesGameServerDependentResource.class)
 })
 @ControllerConfiguration
 public class MinecraftServerReconciler implements Reconciler<MinecraftServer>, Cleaner<MinecraftServer> {
@@ -28,12 +29,12 @@ public class MinecraftServerReconciler implements Reconciler<MinecraftServer>, C
             AppLabel.RECONCILER + "=" + Constant.MinecraftServer.RECONCILER;
 
     @Inject
-    BinariesConfigMapChecker binariesConfigMapChecker;
+    BinariesConfigMapEnforcer binariesConfigMapEnforcer;
 
     @Override
-    public UpdateControl<MinecraftServer> reconcile(
-            MinecraftServer minecraftServer, Context<MinecraftServer> context) {
-        this.binariesConfigMapChecker.checkBinariesConfigMap();
+    public UpdateControl<MinecraftServer> reconcile(MinecraftServer minecraftServer, Context<MinecraftServer> context) {
+        this.binariesConfigMapEnforcer.ensureAgentBinary();
+
         GameServer backedGameServer = context.getSecondaryResource(GameServer.class).orElseThrow();
         String backedGameServerStatus = backedGameServer.getStatus().getState();
 

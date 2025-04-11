@@ -28,8 +28,8 @@ public class Constant {
 
         public static final String
             MANAGED_BY = PREFIX + "managed-by",
-            INSTANCE = PREFIX + "instance",
-            COMPONENT = PREFIX + "component";
+            COMPONENT = PREFIX + "component",
+            VERSION = PREFIX + "version";
 
     }
 

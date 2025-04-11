@@ -1,5 +1,5 @@
 - Operator: Extensive Logging
-- Testing operator and helmchart
 - testing client core
-- remote configuration class in operator
 - quarkus image extension
+- proxy protocol - real ip address
+- Limbo server support?

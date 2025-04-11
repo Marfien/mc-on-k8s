@@ -24,12 +24,6 @@ import lombok.NoArgsConstructor;
 })
 public class MinecraftServerSpec implements Editable<MinecraftServerSpecBuilder> {
 
-    // TODO: what are tags for again?
-    @Nullable
-    @SelectableField
-    @JsonPropertyDescription("The tags to apply to the Minecraft server")
-    private Set<@Pattern("^[a-z0-9-_]+$") String> tags;
-
     @Required
     @JsonPropertyDescription("The underlying pod template for the Minecraft server")
     private PodTemplateSpec template;

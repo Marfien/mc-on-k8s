@@ -1,4 +1,4 @@
-package dev.marfien.minecraftonk8s.operator.minecraftproxyfleet;
+package dev.marfien.minecraftonk8s.operator.dependentresource.proxy;
 
 import dev.marfien.minecraftonk8s.agones.model.Fleet;
 import dev.marfien.minecraftonk8s.agones.model.FleetBuilder;
@@ -7,7 +7,9 @@ import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFl
 import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxySpec;
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
-import dev.marfien.minecraftonk8s.operator.OperatorConfig;
+import dev.marfien.minecraftonk8s.operator.application.BinariesConfigMapEnforcer;
+import dev.marfien.minecraftonk8s.operator.application.MinecraftOnK8sConfig;
+import dev.marfien.minecraftonk8s.operator.reconciler.MinecraftProxyFleetReconciler;
 import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.javaoperatorsdk.operator.api.config.informer.Informer;
@@ -18,17 +20,22 @@ import jakarta.inject.Inject;
 import java.util.List;
 
 @KubernetesDependent(informer = @Informer(labelSelector = MinecraftProxyFleetReconciler.LABEL_SELECTOR))
-public class FleetDependentResource extends CRUDKubernetesDependentResource<Fleet, MinecraftProxyFleet> {
+public class AgonesFleetDependentResource extends CRUDKubernetesDependentResource<Fleet, MinecraftProxyFleet> {
 
     @Inject
-    OperatorConfig config;
+    MinecraftOnK8sConfig config;
 
-    public FleetDependentResource() {
+    @Inject
+    BinariesConfigMapEnforcer binariesConfigMapEnforcer;
+
+    AgonesFleetDependentResource() {
         super(Fleet.class);
     }
 
     @Override
     protected Fleet desired(MinecraftProxyFleet primary, Context<MinecraftProxyFleet> context) {
+        this.binariesConfigMapEnforcer.ensureAgentBinary();
+
         MinecraftProxyFleetSpec spec = primary.getSpec();
         MinecraftProxySpec template = spec.getTemplate();
         ObjectMeta metadata = primary.getMetadata();

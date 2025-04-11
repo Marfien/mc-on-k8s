@@ -1,4 +1,4 @@
-package dev.marfien.minecraftonk8s.operator;
+package dev.marfien.minecraftonk8s.operator.util;
 
 import dev.marfien.minecraftonk8s.agones.model.GameServerSpec;
 import dev.marfien.minecraftonk8s.agones.model.GameServerSpecBuilder;
@@ -51,10 +51,6 @@ public final class CrdUtils {
                 .parallel()
                 .map(container ->
                         container.edit()
-                                .addNewEnv()
-                                    .withName("MCS_TAGS") // TODO tags?????? what?
-                                    .withValue(String.join(";", spec.getTags()))
-                                    .endEnv()
                                 .addNewEnv()
                                     .withName(Constant.Env.CONFIG_ALLOCATION_STRATEGY)
                                     .withValue(spec.getAllocationStrategy().name())

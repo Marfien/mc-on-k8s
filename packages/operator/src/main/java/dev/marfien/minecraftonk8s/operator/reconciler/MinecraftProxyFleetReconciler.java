@@ -1,4 +1,4 @@
-package dev.marfien.minecraftonk8s.operator.minecraftproxyfleet;
+package dev.marfien.minecraftonk8s.operator.reconciler;
 
 import dev.marfien.minecraftonk8s.agones.model.Fleet;
 import dev.marfien.minecraftonk8s.agones.model.GameServerTemplateSpec;
@@ -6,10 +6,11 @@ import dev.marfien.minecraftonk8s.api.model.minecraftproxyfleet.MinecraftProxyFl
 import dev.marfien.minecraftonk8s.common.Constant;
 import dev.marfien.minecraftonk8s.common.Constant.AppLabel;
 import dev.marfien.minecraftonk8s.common.Constant.K8sLabel;
-import dev.marfien.minecraftonk8s.operator.BinariesConfigMapChecker;
-import dev.marfien.minecraftonk8s.operator.CrdUtils;
+import dev.marfien.minecraftonk8s.operator.application.BinariesConfigMapEnforcer;
+import dev.marfien.minecraftonk8s.operator.util.CrdUtils;
+import dev.marfien.minecraftonk8s.operator.dependentresource.proxy.AgonesFleetDependentResource;
+import dev.marfien.minecraftonk8s.operator.dependentresource.proxy.ServiceDependentResource;
 import io.fabric8.kubernetes.api.model.Container;
-import io.fabric8.kubernetes.api.model.ContainerPort;
 import io.fabric8.kubernetes.api.model.IntOrString;
 import io.javaoperatorsdk.operator.api.reconciler.Cleaner;
 import io.javaoperatorsdk.operator.api.reconciler.Context;
@@ -24,24 +25,23 @@ import jakarta.inject.Inject;
 import java.util.List;
 
 @Workflow(dependents = {
-        @Dependent(type = FleetDependentResource.class),
+        @Dependent(type = AgonesFleetDependentResource.class),
         @Dependent(type = ServiceDependentResource.class)
 })
 @ControllerConfiguration
-public class MinecraftProxyFleetReconciler
-        implements Reconciler<MinecraftProxyFleet>, Cleaner<MinecraftProxyFleet> {
+public class MinecraftProxyFleetReconciler implements Reconciler<MinecraftProxyFleet>, Cleaner<MinecraftProxyFleet> {
 
     public static final String LABEL_SELECTOR =
             K8sLabel.MANAGED_BY + "=" + Constant.OPERATOR_NAME + "," +
             AppLabel.RECONCILER + "=" + Constant.MinecraftProxyFleet.RECONCILER;
 
     @Inject
-    BinariesConfigMapChecker binariesConfigMapChecker;
+    BinariesConfigMapEnforcer binariesConfigMapEnforcer;
 
     @Override
-    public UpdateControl<MinecraftProxyFleet> reconcile(MinecraftProxyFleet resource,
-            Context<MinecraftProxyFleet> context) throws Exception {
-        this.binariesConfigMapChecker.checkBinariesConfigMap();
+    public UpdateControl<MinecraftProxyFleet> reconcile(MinecraftProxyFleet resource, Context<MinecraftProxyFleet> context) {
+        this.binariesConfigMapEnforcer.ensureAgentBinary();
+
         Fleet proxyFleet = context.getSecondaryResource(Fleet.class).orElseThrow();
 
         IntOrString serviceTargetPort = resource.getSpec().getService().getTargetPort();
